@@ -77,6 +77,8 @@ public class GrafoPlanta extends Grafo<Planta> {
 		Map<Planta, Integer> distancias = this.caminosMinimoDikstra(inicial);
 		List<Planta> plantas = this.recorridoTopologico();
 		plantas.remove(inicial);
+		plantas = plantas.stream().filter(s -> s.necesitaInsumo(i)).collect(Collectors.toList());
+		System.out.print(plantas);
 		for (Planta planta : plantas) {
 			if (planta.necesitaInsumo(i)) {
 				if (distancias.get(planta) < dist) {

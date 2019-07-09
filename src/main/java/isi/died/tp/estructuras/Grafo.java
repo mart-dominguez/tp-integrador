@@ -255,8 +255,6 @@ public class Grafo<T> {
         		}
         	}    		
     	}
-    	System.out.println("DISTANCIAS DESDE "+origen);
-    	System.out.println("Resultado: "+distancias);
     	return distancias;
     }
     
