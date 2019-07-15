@@ -2,7 +2,7 @@ package isi.died.tp.dominio;
 
 import java.util.ArrayList;
 
-public class Stock {
+public class Stock implements Comparable<Stock> {
 	private Integer id;
 	private Integer cantidad;
 	private Integer puntoPedido;
@@ -34,5 +34,8 @@ public class Stock {
 	public String toString() {
 		return this.insumo.toString();
 	}
-
+	@Override
+	public int compareTo(Stock o) {
+		return this.id.compareTo(o.id);
+	}
 }

@@ -1,8 +1,8 @@
 package isi.died.tp.estructuras;
 
 public class Arista<T> {
-	private Vertice<T> inicio;
-	private Vertice<T> fin;
+	protected Vertice<T> inicio;
+	protected Vertice<T> fin;
 	private Number valor;
 
 	public Arista(){

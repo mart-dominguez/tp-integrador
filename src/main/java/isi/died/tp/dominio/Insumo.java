@@ -1,7 +1,7 @@
 package isi.died.tp.dominio;
 
 public class Insumo implements Comparable<Insumo>{
-	private int id;
+	private Integer id;
 	private String descripcion;
 	private UnidadMedida unidadDeMedida;
 	private Integer stock;
@@ -65,11 +65,11 @@ public class Insumo implements Comparable<Insumo>{
 	}
 
 	public int compareTo(Insumo i) {
-		return this.stock.compareTo(((Insumo)i).stock);
+		return this.id.compareTo(((Insumo)i).id);
 	}
 	@Override
 	public boolean equals(Object obj) {
-		if(this.id == ((Insumo) obj).id) {
+		if(this.compareTo((Insumo)obj)== 0) {
 			return true;
 		}
 		return false;

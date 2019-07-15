@@ -1,4 +1,4 @@
-package isi.died.tp.estructuras;
+package isi.died.tp.dominio;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,20 +11,13 @@ import java.util.Stack;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import isi.died.tp.dominio.Insumo;
-import isi.died.tp.dominio.Planta;
-import isi.died.tp.dominio.Stock;
+import isi.died.tp.estructuras.Grafo;
+import isi.died.tp.estructuras.Vertice;
 
-public class GrafoPlanta extends Grafo<Planta> {
-	public void imprimirDistanciaAdyacentes(Planta inicial) {
-		List<Planta> adyacentes = super.getAdyacentes(inicial);
-		for (Planta unAdyacente : adyacentes) {
-			Arista<Planta> camino = super.buscarArista(inicial, unAdyacente);
-			System.out.println("camino de " + inicial.getNombre() + " a " + unAdyacente.getNombre() + " tiene valor de "
-					+ camino.getValor());
-		}
+public class Mapa extends Grafo<Planta> {
+	private void conectar(Vertice<Planta> nodo1,Vertice<Planta> nodo2,Double dist,Double dur,Double pesomax){
+		this.aristas.add(new Ruta(nodo1,nodo2,dist,dur,pesomax));
 	}
-
 	// a
 	public Planta buscarPlanta(Planta inicial, Insumo i, Integer saltos) {
 		Planta result = null;
@@ -101,18 +94,13 @@ public class GrafoPlanta extends Grafo<Planta> {
 			// para cada planta
 			if (actualPlanta.necesitaInsumo(i)) {
 				// si necesita el insumo la evaluo
-				// tomo todo su stock
-				List<Stock> actualStocks = actualPlanta.getStock();
-				for (Stock sto : actualStocks) {
-					// busco el stock i
-					if (sto.getInsumo() == i) {
-						// si el la cantidad que necesita - la cantidad que tiene es mayor al encontrado
-						// anteriormente lo guardo siendo el con mayor diferencia;
-						if (sto.getPuntoPedido() - sto.getCantidad() > necesita) {
-							necesita = sto.getPuntoPedido() - sto.getCantidad();
-							resultado = actualPlanta;
-						}
-					}
+				// tomo todo su stock y busco el insumo i
+				Stock actualStock = actualPlanta.getAlmacen().buscarInsumo(i);
+				if(actualStock.getPuntoPedido()- actualStock.getCantidad()> necesita) {
+					// si el la cantidad que necesita - la cantidad que tiene es mayor al encontrado
+					// anteriormente lo guardo siendo el con mayor diferencia;
+					necesita = actualStock.getPuntoPedido() - actualStock.getCantidad();
+					resultado = actualPlanta;
 				}
 			}
 		}

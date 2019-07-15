@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArbolBinarioBusqueda<E extends Comparable<E>> extends Arbol<E> {
-
 	protected Arbol<E> izquierdo;
 	protected Arbol<E> derecho;
 
@@ -88,7 +87,18 @@ public class ArbolBinarioBusqueda<E extends Comparable<E>> extends Arbol<E> {
 				this.izquierdo.agregar(a);
 		}
 	}
-
+	public E buscar(E val) {
+		if(this.valor.compareTo(val)==0) {
+			return this.valor();
+		}else{
+			if(this.valor.compareTo(val)<1) {
+				return this.derecho().buscar(val);
+			}
+			else{
+				return this.izquierdo().buscar(val);
+			}
+		}
+	}
 	@Override
 	public boolean equals(Arbol<E> unArbol) {
 		return this.valor.equals(unArbol.valor()) && this.izquierdo.equals(unArbol.izquierdo())

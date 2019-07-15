@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 
 
 public class Grafo<T> {
-	private List<Arista<T>> aristas;
-	private List<Vertice<T>> vertices;
+	protected List<Arista<T>> aristas;
+	protected List<Vertice<T>> vertices;
 
 	public Grafo(){
 		this.aristas = new ArrayList<Arista<T>>();

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import isi.died.tp.dominio.GrafoPlanta;
 import isi.died.tp.dominio.Insumo;
 import isi.died.tp.dominio.Planta;
 import isi.died.tp.dominio.Stock;

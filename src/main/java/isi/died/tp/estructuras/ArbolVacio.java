@@ -5,6 +5,9 @@ import java.util.List;
 
 public class ArbolVacio<E extends Comparable<E>> extends Arbol<E> {
 	@Override
+	public E buscar(E valor) {
+		return null;
+	}
 	public String toString() {
 		return "null";
 	}

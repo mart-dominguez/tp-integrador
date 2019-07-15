@@ -6,6 +6,7 @@ public abstract class Arbol<E extends Comparable<E>> {
 
 
 	protected E valor;
+	public abstract E buscar(E val);
 
 	public abstract List<E> preOrden();
 
