@@ -10,13 +10,13 @@ import isi.died.tp.estructuras.*;
 public class Planta { 
 	private int id;
 	private String nombre;
-	private Almacen almacen;
+	private ArbolBinarioBusqueda<Stock> almacen;
 	public Planta(Integer i, String nomb) {
 		this.setId(i);
 		this.setNombre(nomb);
-		this.almacen = new Almacen();
+		this.almacen = null;
 	}
-	public Planta(Integer i, String nomb, Almacen cosas) {
+	public Planta(Integer i, String nomb, ArbolBinarioBusqueda<Stock> cosas) {
 		this.setId(i);
 		this.setNombre(nomb);
 		this.setAlmacen(cosas);
@@ -31,8 +31,8 @@ public class Planta {
 	}
 
 	public Boolean necesitaInsumo(Insumo i) {
-		Stock buscado = this.almacen.buscarInsumo(i);
-		if (buscado.getCantidad() < buscado.getPuntoPedido()) {
+		List<Stock> buscado = this.almacen.inOrden().stream().filter(s -> s.getCantidad() < s.getPuntoPedido()).collect(Collectors.toList());
+		if (!buscado.isEmpty()) {
 			return true;
 		}
 		return false;
@@ -58,14 +58,20 @@ public class Planta {
 	}
 
 
-	public Almacen getAlmacen() {
+	public ArbolBinarioBusqueda<Stock> getAlmacen() {
 		return almacen;
 	}
-	public void setAlmacen(Almacen stock) {
+	public void setAlmacen(ArbolBinarioBusqueda<Stock> stock) {
 		this.almacen = stock;
 	}
 	public void addStock(Stock o) {
-		this.almacen.agregar(o);
+		if(this.almacen == null) {
+			ArbolBinarioBusqueda<Stock> nuevo = new ArbolBinarioBusqueda<Stock>(o);
+			this.almacen =nuevo;
+		}
+		else {
+			this.almacen.agregar(o);
+		}
 	}
 	@Override
 	public String toString() {

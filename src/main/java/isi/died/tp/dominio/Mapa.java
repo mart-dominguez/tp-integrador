@@ -1,23 +1,16 @@
 package isi.died.tp.dominio;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Stack;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import isi.died.tp.estructuras.Grafo;
 import isi.died.tp.estructuras.Vertice;
 
 public class Mapa extends Grafo<Planta> {
-	private void conectar(Vertice<Planta> nodo1,Vertice<Planta> nodo2,Double dist,Double dur,Double pesomax){
-		this.aristas.add(new Ruta(nodo1,nodo2,dist,dur,pesomax));
-	}
 	// a
 	public Planta buscarPlanta(Planta inicial, Insumo i, Integer saltos) {
 		Planta result = null;
@@ -95,7 +88,8 @@ public class Mapa extends Grafo<Planta> {
 			if (actualPlanta.necesitaInsumo(i)) {
 				// si necesita el insumo la evaluo
 				// tomo todo su stock y busco el insumo i
-				Stock actualStock = actualPlanta.getAlmacen().buscarInsumo(i);
+				List<Stock> actualStocks = actualPlanta.getAlmacen().posOrden().stream().filter(s -> s.getInsumo().getId()== i.getId()).collect(Collectors.toList());
+				Stock actualStock = actualStocks.get(0);
 				if(actualStock.getPuntoPedido()- actualStock.getCantidad()> necesita) {
 					// si el la cantidad que necesita - la cantidad que tiene es mayor al encontrado
 					// anteriormente lo guardo siendo el con mayor diferencia;

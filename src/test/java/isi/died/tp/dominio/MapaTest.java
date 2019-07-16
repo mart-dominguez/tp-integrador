@@ -1,19 +1,18 @@
-package isi.died.tp.estructuras;
+package isi.died.tp.dominio;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import isi.died.tp.dominio.GrafoPlanta;
 import isi.died.tp.dominio.Insumo;
 import isi.died.tp.dominio.Planta;
 import isi.died.tp.dominio.Stock;
 
-public class GrafoPlantaTest {
+public class MapaTest {
 	public Insumo elQueBusco;
 	public Insumo elQueNoBusco;
-	public GrafoPlanta g1;
+	public Mapa g1;
 	public Planta pl1;
 	public Planta pl2;
 	public Planta pl3;
@@ -27,7 +26,7 @@ public class GrafoPlantaTest {
 		elQueNoBusco = new Insumo();
 		elQueBusco.setId(214);
 		elQueNoBusco.setId(6);
-		g1 = new GrafoPlanta();
+		g1 = new Mapa();
 		Stock sto1 = new Stock();
 		sto1.setInsumo(elQueNoBusco);
 		//El de camino menor salto
@@ -85,13 +84,15 @@ public class GrafoPlantaTest {
 		g1.addNodo(pl6);
 		g1.addNodo(pl7);
 		g1.conectar(pl1, pl2,8);
-		g1.conectar(pl1, pl3, 7);
-		g1.conectar(pl1, pl4, 1);
-		g1.conectar(pl2, pl5, 9);
-		g1.conectar(pl3, pl5, 10);
-		g1.conectar(pl3, pl6, 3);
-		g1.conectar(pl4, pl3, 2);
-		g1.conectar(pl6, pl7, 6);
+		g1.conectar(pl1, pl3,7);
+		g1.conectar(pl1, pl4,1);
+		g1.conectar(pl2, pl5,9);
+		g1.conectar(pl3, pl5,10);
+		g1.conectar(pl3, pl6,3);
+		g1.conectar(pl4, pl3,2);
+		g1.conectar(pl6, pl7,6);
+		System.out.println(pl1.getAlmacen().toString());
+		System.out.println(pl1.getAlmacen().buscarInsumo(elQueBusco));
 	}
 
 	@Test

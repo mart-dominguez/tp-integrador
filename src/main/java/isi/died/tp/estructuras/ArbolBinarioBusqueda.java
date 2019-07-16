@@ -76,29 +76,34 @@ public class ArbolBinarioBusqueda<E extends Comparable<E>> extends Arbol<E> {
 	@Override
 	public void agregar(E a) {
 		if (this.valor.compareTo(a) < 1) {
-			if (this.derecho.esVacio())
+			if (this.derecho.esVacio()) {
 				this.derecho = new ArbolBinarioBusqueda<E>(a);
-			else
+			} else {
 				this.derecho.agregar(a);
+			}
 		} else {
-			if (this.izquierdo.esVacio())
+			if (this.izquierdo.esVacio()) {
 				this.izquierdo = new ArbolBinarioBusqueda<E>(a);
-			else
+			} else {
 				this.izquierdo.agregar(a);
+			}
 		}
 	}
+	public E buscar(Arbol<E> t) {
+		return this.buscar(t.valor());
+	}
 	public E buscar(E val) {
-		if(this.valor.compareTo(val)==0) {
+		if (this.valor.compareTo(val) == 0) {
 			return this.valor();
-		}else{
-			if(this.valor.compareTo(val)<1) {
+		} else {
+			if (this.valor.compareTo(val) < 1) {
 				return this.derecho().buscar(val);
-			}
-			else{
+			} else {
 				return this.izquierdo().buscar(val);
 			}
 		}
 	}
+
 	@Override
 	public boolean equals(Arbol<E> unArbol) {
 		return this.valor.equals(unArbol.valor()) && this.izquierdo.equals(unArbol.izquierdo())
@@ -176,7 +181,7 @@ public class ArbolBinarioBusqueda<E extends Comparable<E>> extends Arbol<E> {
 		List<E> respuesta = new ArrayList<E>();
 		List<E> inOrden = this.inOrden();
 		for (E e : inOrden) {
-			if((e.compareTo(inicial)>=0)&&(e.compareTo(fin)<=0)) {
+			if ((e.compareTo(inicial) >= 0) && (e.compareTo(fin) <= 0)) {
 				respuesta.add(e);
 			}
 		}
