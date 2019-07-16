@@ -8,7 +8,6 @@ import java.util.Queue;
 import java.util.stream.Collectors;
 
 import isi.died.tp.estructuras.Grafo;
-import isi.died.tp.estructuras.Vertice;
 
 public class Mapa extends Grafo<Planta> {
 	// a
