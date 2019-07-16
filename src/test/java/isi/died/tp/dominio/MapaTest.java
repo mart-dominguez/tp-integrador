@@ -91,8 +91,7 @@ public class MapaTest {
 		g1.conectar(pl3, pl6,3);
 		g1.conectar(pl4, pl3,2);
 		g1.conectar(pl6, pl7,6);
-		System.out.println(pl1.getAlmacen().toString());
-		System.out.println(pl1.getAlmacen().buscarInsumo(elQueBusco));
+		System.out.println(pl1.getAlmacen().posOrden());
 	}
 
 	@Test

@@ -31,7 +31,7 @@ public class Planta {
 	}
 
 	public Boolean necesitaInsumo(Insumo i) {
-		List<Stock> buscado = this.almacen.inOrden().stream().filter(s -> s.getCantidad() < s.getPuntoPedido()).collect(Collectors.toList());
+		List<Insumo> buscado = this.almacen.inOrden().stream().filter(s -> s.getInsumo().getId() == i.getId() &&(s.getCantidad() < s.getPuntoPedido())).map(Stock::getInsumo).collect(Collectors.toList());
 		if (!buscado.isEmpty()) {
 			return true;
 		}
