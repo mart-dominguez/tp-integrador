@@ -6,23 +6,145 @@ import java.util.List;
 public class ArbolBinarioBusqueda<E extends Comparable<E>> extends Arbol<E> {
 	protected Arbol<E> izquierdo;
 	protected Arbol<E> derecho;
+	protected Integer indexBalance;
+
+	public Arbol<E> borrarElemento(E va) {
+		Arbol<E> me = this;
+		if(this.valor().equals(va)) {
+			if(this.derecho.esVacio() && this.izquierdo.esVacio()) {
+				return new ArbolVacio<E>();
+			}
+			else {
+				if(!this.derecho.esVacio() && !this.izquierdo.esVacio()) {
+					//nodo doble
+					Arbol<E> p = this.derecho;
+					if(p.izquierdo().esVacio()) {
+						((ArbolBinarioBusqueda<E>) p).izquierdo = this.izquierdo;
+						return p;
+					}
+					else {
+						Arbol<E> qmenosuno = null;
+						while(!p.izquierdo().esVacio()) {
+							qmenosuno = p;
+							p = p.izquierdo();
+						}
+						((ArbolBinarioBusqueda<E>) qmenosuno).izquierdo = p.derecho();
+						((ArbolBinarioBusqueda<E>) p).izquierdo = this.izquierdo;
+						((ArbolBinarioBusqueda<E>) p).derecho = this.derecho;
+						return p;
+					}
+				}
+				else {
+					if(this.derecho.esVacio()) {
+						return this.izquierdo;
+					}
+					else {
+						return this.derecho;
+					}
+				}
+			}
+		}
+		else {
+			if(this.valor.compareTo(va)<0) {
+				this.derecho = ((ArbolBinarioBusqueda<E>) me.derecho()).borrarElemento(va);
+			}
+			else {
+				this.izquierdo = ((ArbolBinarioBusqueda<E>) me.izquierdo()).borrarElemento(va);
+			}
+		}
+		return me;
+	}
+
+	// primero rotación simple izquierda y luego rotación simple derecha.
+	public Arbol<E> dosDerecha() {
+		Arbol<E> q = this.izquierdo;
+		Arbol<E> r = q.derecho();
+		this.izquierdo = r.derecho();
+		((ArbolBinarioBusqueda<E>) q).derecho = r.izquierdo();
+		((ArbolBinarioBusqueda<E>) r).derecho = this;
+		((ArbolBinarioBusqueda<E>) r).izquierdo = q;
+		return r;
+	}
+
+	public Arbol<E> dosIzquierda() {
+		Arbol<E> q = this.derecho;
+		Arbol<E> r = q.izquierdo();
+		this.derecho = r.izquierdo();
+		((ArbolBinarioBusqueda<E>) q).izquierdo = r.derecho();
+		((ArbolBinarioBusqueda<E>) r).izquierdo = this;
+		((ArbolBinarioBusqueda<E>) r).derecho = q;
+		return r;
+	}
+
+	public Arbol<E> rotIzquierda() {
+		ArbolBinarioBusqueda<E> b = (ArbolBinarioBusqueda<E>) this.izquierdo;
+		this.izquierdo = b.derecho;
+		b.derecho = this;
+		return b;
+	}
+
+	public Arbol<E> rotDerecha() {
+		ArbolBinarioBusqueda<E> b = (ArbolBinarioBusqueda<E>) this.derecho;
+		this.derecho = b.izquierdo;
+		b.izquierdo = this;
+		return b;
+	}
+
+	public ArbolBinarioBusqueda<E> equilibrar() {
+		Arbol<E> actual = this;
+		if (!this.esAVL()) {
+			if (this.derecho.profundidad() > this.izquierdo.profundidad()) {
+				if (this.derecho().derecho().profundidad() > this.derecho().izquierdo().profundidad()) {
+					// SIMPLE
+					actual = ((ArbolBinarioBusqueda<E>) actual).rotDerecha();
+				} else {
+					// complejo
+					actual = ((ArbolBinarioBusqueda<E>) actual).dosIzquierda();
+				}
+			} else {
+				if (this.izquierdo().izquierdo().profundidad() > this.izquierdo().derecho().profundidad()) {
+					// simple
+					actual = ((ArbolBinarioBusqueda<E>) actual).rotIzquierda();
+				} else {
+					// coomplejo
+					actual = ((ArbolBinarioBusqueda<E>) actual).dosDerecha();
+				}
+
+			}
+		}
+		return (ArbolBinarioBusqueda<E>) actual;
+	}
+
+	public boolean esAVL() {
+		if (this.indexBalance < 2) {
+			return true;
+		}
+		return false;
+	}
+
+	public void updateIndexBalance() {
+		this.indexBalance = Math.abs(this.derecho.profundidad() - this.izquierdo.profundidad());
+	}
 
 	public ArbolBinarioBusqueda() {
 		this.valor = null;
 		this.izquierdo = new ArbolVacio<E>();
 		this.derecho = new ArbolVacio<E>();
+		this.updateIndexBalance();
 	}
 
 	public ArbolBinarioBusqueda(E e) {
 		this.valor = e;
 		this.izquierdo = new ArbolVacio<E>();
 		this.derecho = new ArbolVacio<E>();
+		this.updateIndexBalance();
 	}
 
 	public ArbolBinarioBusqueda(E e, Arbol<E> i, Arbol<E> d) {
 		this.valor = e;
 		this.izquierdo = i;
 		this.derecho = d;
+		this.updateIndexBalance();
 	}
 
 	@Override
@@ -88,10 +210,21 @@ public class ArbolBinarioBusqueda<E extends Comparable<E>> extends Arbol<E> {
 				this.izquierdo.agregar(a);
 			}
 		}
+		this.updateIndexBalance();
 	}
+
+	public Integer getIndexBalance() {
+		return indexBalance;
+	}
+
+	public void setIndexBalance(Integer indexBalance) {
+		this.indexBalance = indexBalance;
+	}
+
 	public E buscar(Arbol<E> t) {
 		return this.buscar(t.valor());
 	}
+
 	public E buscar(E val) {
 		if (this.valor.compareTo(val) == 0) {
 			return this.valor();

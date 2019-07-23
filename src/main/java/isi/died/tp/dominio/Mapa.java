@@ -1,16 +1,91 @@
 package isi.died.tp.dominio;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import isi.died.tp.estructuras.ArbolBinarioBusqueda;
+import isi.died.tp.estructuras.Arista;
 import isi.died.tp.estructuras.Grafo;
+import isi.died.tp.estructuras.Vertice;
 
 public class Mapa extends Grafo<Planta> {
-	// a
+	private ArbolBinarioBusqueda<Insumo> insumos;
+	private HashSet<Pedido> pedidos;
+	private HashSet<Vehiculo> vehiculos;
+
+	public void borrarInsumo(Insumo i) {
+		this.insumos = (ArbolBinarioBusqueda<Insumo>) this.insumos.borrarElemento(i);
+	}
+
+	public void borrarRuta(Ruta r) {
+		if (this.aristas.contains(r)) {
+			this.aristas.remove(r);
+		}
+	}
+
+	public void borrarPlanta(Planta p) {
+		// busco el nodo y lo borro
+		for (Vertice<Planta> actual : this.vertices) {
+			if (actual.getValor().equals(p)) {
+				this.vertices.remove(actual);
+			}
+		}
+		// borro todas sus aristas
+		for (Arista<Planta> arista : aristas) {
+			if (arista.getInicio().getValor().equals(p) || arista.getFin().getValor().equals(p)) {
+				this.aristas.remove(arista);
+			}
+		}
+
+	}
+
+	public void nuevaRuta(Planta ori, Planta dest, Double dist, Double dur, Double peso) {
+		this.nuevaRuta(new Ruta(this.getNodo(ori), this.getNodo(dest), dist, dur, peso));
+	}
+
+	public void nuevaRuta(Ruta r) {
+		if (!this.aristas.contains(r)) {
+			this.aristas.add(r);
+		}
+	}
+
+	public Mapa() {
+		super();
+		this.insumos = null;
+		this.pedidos = new HashSet<Pedido>();
+		this.vehiculos = new HashSet<Vehiculo>();
+	}
+
+	public void agregarInsumo(Insumo i) {
+		if (this.insumos == null) {
+			this.insumos = new ArbolBinarioBusqueda<Insumo>(i);
+		} else {
+			if (!this.insumos.contiene(i)) {
+				this.insumos.agregar(i);
+				this.insumos = this.insumos.equilibrar();
+			}
+		}
+	}
+
+	public void agregarPedido(Pedido p) {
+		this.pedidos.add(p);
+	}
+
+	public void agregarVehiculo(Vehiculo v) {
+		if (!this.vehiculos.contains(v)) {
+			this.vehiculos.add(v);
+		}
+	}
+
 	public Planta buscarPlanta(Planta inicial, Insumo i, Integer saltos) {
 		Planta result = null;
 		List<Planta> marcados = new ArrayList<Planta>();
@@ -18,44 +93,31 @@ public class Mapa extends Grafo<Planta> {
 		Queue<Planta> pendientes2 = new LinkedList<Planta>();
 		marcados.add(inicial);
 		pendientes.add(inicial);
-		// agrego el inicial al pendiente y al marcado
 		while (saltos != 0) {
 			while (!pendientes.isEmpty()) {
-				// quito uno de pendientes
 				Planta actual = pendientes.poll();
-				// Si los abyacentes no estan marcados y no estan en los pendientes quiere decir
-				// que son de otro nivel
-				// Asi que los agrego a una linda de pendientes diferentes
 				List<Planta> aby = this.getAdyacentes(actual);
 				for (Planta planta : aby) {
 					if (!marcados.contains(planta) && !pendientes.contains(planta)) {
 						pendientes2.add(planta);
 					}
 				}
-				// Si el actual necesita el insumo lo retorno
 				if (actual.necesitaInsumo(i)) {
 					result = actual;
 				} else {
-					// marco al actual
 					if (!marcados.contains(actual)) {
 						marcados.add(actual);
 					}
 				}
 
 			}
-			// termine de analizar los pendientes
-			// ahora los abyacentes de los nodos son los prox pendientes
 			pendientes.addAll(pendientes2);
 			pendientes2.clear();
 			saltos--;
-			// resto el salto;
 		}
-		// retorno null si nunca encontre una planta que necesite el insumo i en menos
-		// de n saltos
 		return result;
 	}
 
-	// b
 	public Planta buscarPlanta(Planta inicial, Insumo i) {
 		Integer dist = Integer.MAX_VALUE;
 		Planta result = null;
@@ -63,7 +125,6 @@ public class Mapa extends Grafo<Planta> {
 		List<Planta> plantas = this.recorridoTopologico();
 		plantas.remove(inicial);
 		plantas = plantas.stream().filter(s -> s.necesitaInsumo(i)).collect(Collectors.toList());
-		System.out.print(plantas);
 		for (Planta planta : plantas) {
 			if (planta.necesitaInsumo(i)) {
 				if (distancias.get(planta) < dist) {
@@ -75,23 +136,17 @@ public class Mapa extends Grafo<Planta> {
 		return result;
 	}
 
-	// c
 	public Planta buscarPlanta(Insumo i) {
 		Planta resultado = null;
 		Integer necesita = Integer.MIN_VALUE;
-		// Tomo una lista con todas las plantas
-		Queue<Planta> topo = new  LinkedList<Planta>(this.recorridoTopologico());;
-		while(!topo.isEmpty()) {
+		Queue<Planta> topo = new LinkedList<Planta>(this.recorridoTopologico());
+		while (!topo.isEmpty()) {
 			Planta actualPlanta = topo.poll();
-			// para cada planta
 			if (actualPlanta.necesitaInsumo(i)) {
-				// si necesita el insumo la evaluo
-				// tomo todo su stock y busco el insumo i
-				List<Stock> actualStocks = actualPlanta.getAlmacen().posOrden().stream().filter(s -> s.getInsumo().getId()== i.getId()).collect(Collectors.toList());
+				List<Stock> actualStocks = actualPlanta.getAlmacen().stream()
+						.filter(s -> s.getInsumo().getId() == i.getId()).collect(Collectors.toList());
 				Stock actualStock = actualStocks.get(0);
-				if(actualStock.getPuntoPedido()- actualStock.getCantidad()> necesita) {
-					// si el la cantidad que necesita - la cantidad que tiene es mayor al encontrado
-					// anteriormente lo guardo siendo el con mayor diferencia;
+				if (actualStock.getPuntoPedido() - actualStock.getCantidad() > necesita) {
 					necesita = actualStock.getPuntoPedido() - actualStock.getCantidad();
 					resultado = actualPlanta;
 				}
@@ -99,8 +154,264 @@ public class Mapa extends Grafo<Planta> {
 		}
 		return resultado;
 	}
+
 	@Override
 	public String toString() {
 		return super.toString();
+	}
+
+	public List<Planta> necesitaInsumo(Insumo i) {
+		List<Planta> resultado = new ArrayList<Planta>();
+		for (Vertice<Planta> planta : this.vertices) {
+			Planta actual = planta.getValor();
+			if (actual.necesitaInsumo(i)) {
+				resultado.add(actual);
+			}
+		}
+		return resultado;
+	}
+
+	public Insumo buscarInsumoNombre(String nomb) {
+		Queue<Insumo> insumos = new LinkedList<Insumo>(this.insumos.posOrden());
+		Insumo actual;
+		do {
+			actual = insumos.poll();
+		} while (actual.nombre != nomb && !insumos.isEmpty());
+		if (actual.nombre == nomb) {
+			return actual;
+		}
+		return null;
+	}
+
+	private PriorityQueue<Insumo> ListaAux(Comparator<Insumo> p) {
+		PriorityQueue<Insumo> insumos = new PriorityQueue<Insumo>(p);
+		insumos.addAll(this.insumos.inOrden());
+		return insumos;
+	}
+
+	public PriorityQueue<Insumo> listarXnombreDec() {
+		Comparator<Insumo> compraradorInsumos = (i1, i2) -> {
+			return -i1.nombre.compareTo(i2.nombre);
+		};
+		return this.ListaAux(compraradorInsumos);
+	}
+
+	public PriorityQueue<Insumo> listarXnombreAce() {
+		Comparator<Insumo> compraradorInsumos = (i1, i2) -> {
+			return i1.nombre.compareTo(i2.nombre);
+		};
+		return this.ListaAux(compraradorInsumos);
+	}
+
+	public PriorityQueue<Insumo> listarXprecioAce() {
+		Comparator<Insumo> compraradorInsumos = (i1, i2) -> {
+			return i1.costo.compareTo(i2.costo);
+		};
+		return this.ListaAux(compraradorInsumos);
+	}
+
+	public PriorityQueue<Insumo> listarXprecioDec() {
+		Comparator<Insumo> compraradorInsumos = (i1, i2) -> {
+			return -i1.costo.compareTo(i2.costo);
+		};
+		return this.ListaAux(compraradorInsumos);
+	}
+
+	public PriorityQueue<Insumo> listarXcantidadStockAce() {
+		Comparator<Insumo> compraradorInsumos = (i1, i2) -> {
+			return i1.stock.compareTo(i2.stock);
+		};
+		return this.ListaAux(compraradorInsumos);
+	}
+
+	public PriorityQueue<Insumo> listarXcantidadStockDec() {
+		Comparator<Insumo> compraradorInsumos = (i1, i2) -> {
+			return -i1.stock.compareTo(i2.stock);
+		};
+		return this.ListaAux(compraradorInsumos);
+	}
+
+	public Insumo costoMinimo() {
+		return this.listarXprecioAce().poll();
+	}
+
+	public Insumo costoMax() {
+		return this.listarXprecioDec().poll();
+	}
+
+	public List<Planta> caminoMenorDistancia(Insumo i) {
+		List<List<Planta>> caminos = this.camino(i);
+		List<Planta> result = null;
+		Double dist = Double.MAX_VALUE;
+		for (List<Planta> list : caminos) {
+			if (dist > this.distCamino(list)) {
+				dist = this.distCamino(list);
+				result = list;
+			}
+		}
+		return result;
+	}
+
+	public List<List<Planta>> camino(Insumo i) {
+		List<List<Planta>> listas = new ArrayList();
+		List<Planta> marcados = new ArrayList();
+		Planta inicial = this.recorridoTopologico().get(0);
+		marcados.add(inicial);
+		List<Planta> necesitanInsumo = this.necesitaInsumo(i);
+		this.camino(inicial, marcados, necesitanInsumo, listas);
+		return listas;
+	}
+
+	private void camino(Planta ini, List<Planta> marcados, List<Planta> buscados, List<List<Planta>> resultado) {
+		List<Planta> aby = this.getAdyacentes(ini);
+		List<Planta> marcopia = null;
+		List<Planta> buscopia = null;
+		if (!buscados.isEmpty()) {
+			if (!aby.isEmpty()) {
+
+				for (Planta planta : aby) {
+					marcopia = marcados.stream().collect(Collectors.toList());
+					buscopia = buscados.stream().collect(Collectors.toList());
+					if (buscados.contains(planta)) {
+						marcopia.add(planta);
+						buscopia.remove(planta);
+						this.camino(planta, marcopia, buscopia, resultado);
+					} else {
+						marcopia.add(planta);
+						this.camino(planta, marcopia, buscopia, resultado);
+					}
+				}
+			}
+		} else {
+			resultado.add(marcados);
+		}
+	}
+
+	public Double distCamino(List<Planta> camino) {
+		Double resultado = 0.0;
+		Queue<Planta> camino1 = new LinkedList<Planta>(camino);
+		Planta ini = camino1.poll();
+		Planta ot;
+		Ruta r;
+		while (!camino1.isEmpty()) {
+			ot = camino1.poll();
+			r = (Ruta) this.buscarArista(ini, ot);
+			resultado += r.distancia;
+			ini = ot;
+		}
+		return resultado;
+	}
+
+	public Double durCamino(List<Planta> camino) {
+		Double resultado = 0.0;
+		Queue<Planta> camino1 = new LinkedList<Planta>(camino);
+		Planta ini = camino1.poll();
+		Planta ot;
+		Ruta r;
+		while (!camino1.isEmpty()) {
+			ot = camino1.poll();
+			r = (Ruta) this.buscarArista(ini, ot);
+			resultado += r.duracion;
+			ini = ot;
+		}
+		return resultado;
+	}
+
+	public Double pesoCamino(List<Planta> camino) {
+		Double resultado = Double.MIN_VALUE;
+		Queue<Planta> camino1 = new LinkedList<Planta>(camino);
+		Planta ini = camino1.poll();
+		Planta ot;
+		Ruta r;
+		while (!camino1.isEmpty()) {
+			ot = camino1.poll();
+			r = (Ruta) this.buscarArista(ini, ot);
+			if (resultado < r.pesoMax) {
+				resultado = r.pesoMax;
+			}
+			ini = ot;
+		}
+		return resultado;
+	}
+
+	public List<Planta> caminoMenorDuracion(Insumo i) {
+		List<List<Planta>> caminos = this.camino(i);
+		List<Planta> result = null;
+		Double dur = Double.MAX_VALUE;
+		for (List<Planta> list : caminos) {
+			if (dur > this.durCamino(list)) {
+				dur = this.durCamino(list);
+				result = list;
+			}
+		}
+		return result;
+	}
+
+	public List<Planta> pageRank() {
+		return this.recorridoTopologico();
+	}
+
+	public Double capacidadMax() {
+		Double resultado = Double.MAX_VALUE;
+		for (Arista<Planta> arista : aristas) {
+			if (resultado > ((Ruta) arista).pesoMax) {
+				resultado = ((Ruta) arista).pesoMax;
+			}
+		}
+		return resultado;
+	}
+
+	public List<List<Planta>> buscarCaminoEntre(Planta a, Planta b) {
+		List<List<Planta>> salida = new ArrayList<List<Planta>>();
+		List<Planta> marcados = new ArrayList<Planta>();
+		marcados.add(a);
+		this.buscarCaminosAux(a, b, salida, marcados);
+		return salida;
+
+	}
+
+	private void buscarCaminosAux(Planta a, Planta b, List<List<Planta>> salida, List<Planta> marcados) {
+		Queue<Planta> abyacentes = new LinkedList<Planta>(this.getAdyacentes(a));
+		List<Planta> marcopia = null; // Juego de palabras muy malo
+		while (!abyacentes.isEmpty()) {
+			Planta actual = abyacentes.poll();
+			marcopia = new ArrayList<Planta>(marcados);
+			if (actual.equals(b)) {
+				marcopia.add(b);
+				salida.add(marcopia);
+			} else {
+				if (!marcados.contains(actual)) {
+					marcopia.add(actual);
+					this.buscarCaminosAux(actual, b, salida, marcopia);
+				}
+			}
+		}
+	}
+
+	public Map<Planta, Map<Insumo, Integer>> necesidades() {
+		Map<Planta, Map<Insumo, Integer>> result = new HashMap<Planta, Map<Insumo, Integer>>();
+		List<Planta> plantas = this.vertices.stream().map(Vertice::getValor).collect(Collectors.toList());
+		for (Planta actual : plantas) {
+			Map<Insumo, Integer> datos = actual.nececidadStock();
+			result.put(actual, datos);
+		}
+		return result;
+	}
+
+	public List<Pedido> vehiculoOptimo(Vehiculo v) {
+		Planta distribuidora = this.recorridoTopologico().get(0);
+		Map<Planta, Map<Insumo, Integer>> necesidades = this.necesidades();
+		List<Pedido> posiblesEnvios = new ArrayList<Pedido>();
+		Set<Planta> plantas = necesidades.keySet();
+		Set<Insumo> insumos = null;
+		for (Planta plantaActual : plantas) {
+			Map<Insumo, Integer> plantaNecedidad = necesidades.get(plantaActual);
+			insumos = plantaNecedidad.keySet();
+			for (Insumo insumoActual : insumos) {
+				posiblesEnvios.add(new Pedido(insumoActual, plantaNecedidad.get(insumoActual), distribuidora, plantaActual));
+			}
+		}
+		posiblesEnvios = posiblesEnvios.stream().filter(s -> s.getPeso()<v.pesoMax).collect(Collectors.toList());
+		return v.vehiculoOptimo(posiblesEnvios);
 	}
 }

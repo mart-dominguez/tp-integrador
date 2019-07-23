@@ -13,6 +13,10 @@ public class ArbolBinarioBusquedaTest {
 	public ArbolBinarioBusqueda<Integer> noLleno;
 	public ArbolBinarioBusqueda<Integer> nollenoCompleto;
 	public ArbolBinarioBusqueda<Integer> nodoSolo;
+	public ArbolBinarioBusqueda<Integer> derSimple;
+	public ArbolBinarioBusqueda<Integer> izqSimple;
+	public ArbolBinarioBusqueda<Integer> complejoIzq;
+	public ArbolBinarioBusqueda<Integer> complejoDer;
 
 	@Before
 	public void setUp() {
@@ -20,7 +24,11 @@ public class ArbolBinarioBusquedaTest {
 		completoLleno = new ArbolBinarioBusqueda<Integer>(50); //Listo
 		noLleno = new ArbolBinarioBusqueda<Integer>(50);//listo
 		nollenoCompleto = new ArbolBinarioBusqueda<Integer>(50);//listo
-		nodoSolo = new ArbolBinarioBusqueda<Integer>(50); //Listo 
+		nodoSolo = new ArbolBinarioBusqueda<Integer>(50); //Listo
+		derSimple =new ArbolBinarioBusqueda<Integer>(50);
+		izqSimple= new ArbolBinarioBusqueda<Integer>(50);;
+		complejoIzq = new ArbolBinarioBusqueda<Integer>(25);;
+		complejoDer = new ArbolBinarioBusqueda<Integer>(25);;
 		//completo
 		completo.agregar(45);
 		//completoLleno
@@ -39,9 +47,56 @@ public class ArbolBinarioBusquedaTest {
 		noLleno.agregar(45);
 		noLleno.agregar(15);
 		noLleno.agregar(75);
-		System.out.println("------------------------------------");
+		//derSimple
+		derSimple.agregar(65);
+		derSimple.agregar(75);
+		derSimple.agregar(85);
+		derSimple.agregar(55);
+		//izqSimple
+		izqSimple.agregar(25);
+		izqSimple.agregar(35);
+		izqSimple.agregar(15);
+		izqSimple.agregar(5);
+		//complejoIzq
+		complejoIzq.agregar(75);
+		complejoIzq.agregar(50);
+		complejoIzq.agregar(35);
+		complejoIzq.agregar(85);
+		//complejoDer
+		complejoDer.agregar(15);
+		complejoDer.agregar(16);
+		complejoDer.agregar(18);
+		complejoDer.agregar(10);
 	}
-
+	@Test
+	public void BorrarTest() {
+		System.out.println("----------BORRADO-----------------");
+		Arbol<Integer> h = completoLleno.borrarElemento(50);
+		System.out.println(h);
+	}
+	@Test
+	public void equilibrar() {
+		System.out.println("----------Izq Simple-----------------");
+		System.out.println(izqSimple);
+		System.out.println(izqSimple.getIndexBalance());
+		izqSimple = izqSimple.equilibrar();
+		System.out.println(izqSimple);
+		System.out.println("----------der Simple-----------------");
+		System.out.println(derSimple);
+		System.out.println(derSimple.getIndexBalance());
+		derSimple = derSimple.equilibrar();
+		System.out.println(derSimple);
+		System.out.println("----------der izq-----------------");
+		System.out.println(complejoIzq);
+		System.out.println(complejoIzq.getIndexBalance());
+		complejoIzq = complejoIzq.equilibrar();
+		System.out.println(complejoIzq);
+		System.out.println("----------Izq der-----------------");
+		System.out.println(complejoDer);
+		System.out.println(complejoDer.getIndexBalance());
+		complejoDer = complejoDer.equilibrar();
+		System.out.println(complejoDer);
+	}
 	@Test
 	public void testContiene() {
 		assertTrue(completoLleno.contiene(15));
@@ -52,11 +107,6 @@ public class ArbolBinarioBusquedaTest {
 		assertTrue(completoLleno.contiene(75));
 		assertTrue(completoLleno.contiene(85));
 		
-	}
-
-	@Test
-	public void testEqualsArbolOfE() {
-		fail("Not yet implemented");
 	}
 
 	@Test
