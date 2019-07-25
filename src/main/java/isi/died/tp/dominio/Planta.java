@@ -11,6 +11,7 @@ public class Planta {
 	private int id;
 	private String nombre;
 	private ArbolBinarioBusqueda<Stock> almacen;
+	
 	public Planta(Integer i, String nomb) {
 		this.setId(i);
 		this.setNombre(nomb);

@@ -1,30 +1,19 @@
 package isi.died.tp.dominio;
 
 public class InsumoLiquido extends Insumo {
-	private double densidad;
-	private double volumen;
+	private Double densidad;
 
-	
-	public double getDensidad() {
+	public Double getDensidad() {
 		return densidad;
 	}
-	
-	public void setDensidad(double densidad) {
+
+	public void setDensidad(Double densidad) {
 		this.densidad = densidad;
 	}
-	
-	public double getVolumen() {
-		return volumen;
-	}
-	
-	public void setVolumen(double volumen) {
-		this.volumen = volumen;
-	}
-	
-	public double calcularPeso() {
-		this.peso = this.densidad * this.volumen;
-		return this.peso;
 
+	public Double getPeso() {
+		this.peso = this.densidad * (super.peso / 1000);
+		return this.peso;
 	}
 
 }
