@@ -27,4 +27,16 @@ public class Ruta extends Arista<Planta> {
 		this.pesoMax = peso;
 
 	}
+
+	public Double getDistancia() {
+		return distancia;
+	}
+
+	public Double getDuracion() {
+		return duracion;
+	}
+
+	public Double getPesoMax() {
+		return pesoMax;
+	}
 }

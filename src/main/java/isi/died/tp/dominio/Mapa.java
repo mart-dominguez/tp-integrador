@@ -33,19 +33,16 @@ public class Mapa extends Grafo<Planta> {
 	}
 
 	public void borrarPlanta(Planta p) {
-		// busco el nodo y lo borro
 		for (Vertice<Planta> actual : this.vertices) {
 			if (actual.getValor().equals(p)) {
 				this.vertices.remove(actual);
 			}
 		}
-		// borro todas sus aristas
+		List<Arista<Planta>> re = new ArrayList<Arista<Planta>>();
 		for (Arista<Planta> arista : aristas) {
-			if (arista.getInicio().getValor().equals(p) || arista.getFin().getValor().equals(p)) {
-				this.aristas.remove(arista);
-			}
+			if (arista.getInicio().getValor().equals(p) || arista.getFin().getValor().equals(p)){}else {re.add(arista);}
 		}
-
+		this.aristas = re;
 	}
 
 	public void nuevaRuta(Planta ori, Planta dest, Double dist, Double dur, Double peso) {
@@ -253,8 +250,8 @@ public class Mapa extends Grafo<Planta> {
 	}
 
 	public List<List<Planta>> camino(Insumo i) {
-		List<List<Planta>> listas = new ArrayList();
-		List<Planta> marcados = new ArrayList();
+		List<List<Planta>> listas = new ArrayList<List<Planta>>();
+		List<Planta> marcados = new ArrayList<Planta>();
 		Planta inicial = this.recorridoTopologico().get(0);
 		marcados.add(inicial);
 		List<Planta> necesitanInsumo = this.necesitaInsumo(i);

@@ -54,7 +54,7 @@ public class Arista<T> {
 		Integer mihash = this.hashCode();
 		Integer otro= obj.hashCode();
 		if( (obj instanceof Arista<?>) && (mihash.equals(otro))) {
-			if(((Arista) obj).fin.equals(this.fin) && ((Arista) obj).inicio.equals(this.inicio)) {
+			if(((Arista<?>) obj).fin.equals(this.fin) && ((Arista<?>) obj).inicio.equals(this.inicio)) {
 				return true;
 			}
 		}

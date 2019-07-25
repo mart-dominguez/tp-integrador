@@ -16,7 +16,6 @@ public class ArbolBinarioBusqueda<E extends Comparable<E>> extends Arbol<E> {
 			}
 			else {
 				if(!this.derecho.esVacio() && !this.izquierdo.esVacio()) {
-					//nodo doble
 					Arbol<E> p = this.derecho;
 					if(p.izquierdo().esVacio()) {
 						((ArbolBinarioBusqueda<E>) p).izquierdo = this.izquierdo;
@@ -54,8 +53,6 @@ public class ArbolBinarioBusqueda<E extends Comparable<E>> extends Arbol<E> {
 		}
 		return me;
 	}
-
-	// primero rotación simple izquierda y luego rotación simple derecha.
 	public Arbol<E> dosDerecha() {
 		Arbol<E> q = this.izquierdo;
 		Arbol<E> r = q.derecho();
@@ -95,18 +92,14 @@ public class ArbolBinarioBusqueda<E extends Comparable<E>> extends Arbol<E> {
 		if (!this.esAVL()) {
 			if (this.derecho.profundidad() > this.izquierdo.profundidad()) {
 				if (this.derecho().derecho().profundidad() > this.derecho().izquierdo().profundidad()) {
-					// SIMPLE
 					actual = ((ArbolBinarioBusqueda<E>) actual).rotDerecha();
 				} else {
-					// complejo
 					actual = ((ArbolBinarioBusqueda<E>) actual).dosIzquierda();
 				}
 			} else {
 				if (this.izquierdo().izquierdo().profundidad() > this.izquierdo().derecho().profundidad()) {
-					// simple
 					actual = ((ArbolBinarioBusqueda<E>) actual).rotIzquierda();
 				} else {
-					// coomplejo
 					actual = ((ArbolBinarioBusqueda<E>) actual).dosDerecha();
 				}
 

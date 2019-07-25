@@ -18,6 +18,14 @@ public class Grafo<T> {
 	protected List<Arista<T>> aristas;
 	protected List<Vertice<T>> vertices;
 
+	public List<Arista<T>> getAristas() {
+		return aristas;
+	}
+
+	public List<Vertice<T>> getVertices() {
+		return vertices;
+	}
+
 	public Grafo() {
 		this.aristas = new ArrayList<Arista<T>>();
 		this.vertices = new ArrayList<Vertice<T>>();
@@ -69,9 +77,6 @@ public class Grafo<T> {
 	}
 
 	public void imprimirAristas() {
-//		for (Arista<T> arista : aristas) {
-//			System.out.println(arista.toString());
-//		}
 		System.out.println(this.aristas.toString());
 	}
 
@@ -210,27 +215,19 @@ public class Grafo<T> {
 	}
 
 	private Map<Vertice<T>, Integer> caminosMinimoDikstra(Vertice<T> origen) {
-
-		// inicializo todas las distancias a INFINITO
 		Map<Vertice<T>, Integer> distancias = new HashMap<Vertice<T>, Integer>();
 		for (Vertice<T> unVertice : this.vertices) {
 			distancias.put(unVertice, Integer.MAX_VALUE);
 		}
 		distancias.put(origen, 0);
-
-		// guardo visitados y pendientes de visitar
 		Set<Vertice<T>> visitados = new HashSet<Vertice<T>>();
 		TreeMap<Integer, Vertice<T>> aVisitar = new TreeMap<Integer, Vertice<T>>();
-
 		aVisitar.put(0, origen);
-
 		while (!aVisitar.isEmpty()) {
 			Entry<Integer, Vertice<T>> nodo = aVisitar.pollFirstEntry();
 			visitados.add(nodo.getValue());
-
 			int nuevaDistancia = Integer.MIN_VALUE;
 			List<Vertice<T>> adyacentes = this.getAdyacentes(nodo.getValue());
-
 			for (Vertice<T> unAdy : adyacentes) {
 				if (!visitados.contains(unAdy)) {
 					Arista<T> enlace = this.buscarArista(nodo.getValue(), unAdy);
@@ -283,13 +280,8 @@ public class Grafo<T> {
 		imprimirMatriz(matrizDistancias);
 
 		for (int k = 0; k < cantVertices; k++) {
-			// Pick all vertices as source one by one
 			for (int i = 0; i < cantVertices; i++) {
-				// Pick all vertices as destination for the
-				// above picked source
 				for (int j = 0; j < cantVertices; j++) {
-					// If vertex k is on the shortest path from
-					// i to j, then update the value of dist[i][j]
 					if (matrizDistancias[i][k] + matrizDistancias[k][j] < matrizDistancias[i][j])
 						matrizDistancias[i][j] = matrizDistancias[i][k] + matrizDistancias[k][j];
 				}

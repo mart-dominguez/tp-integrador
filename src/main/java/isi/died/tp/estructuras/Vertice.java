@@ -29,19 +29,12 @@ public class Vertice<T> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Vertice other = (Vertice) obj;
-		if (valor == null) {
-			if (other.valor != null)
-				return false;
-		} else if (!valor.equals(other.valor))
-			return false;
-		return true;
+		if(obj instanceof Vertice) {
+			if(this.valor.equals(((Vertice<?>)obj).valor)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
