@@ -1,5 +1,6 @@
 package isi.died.tp.dominio;
 
+<<<<<<< HEAD
 public class Insumo implements Comparable<Insumo>{
 	private Integer id;
 	private String nombre;
@@ -19,6 +20,71 @@ public class Insumo implements Comparable<Insumo>{
 		this.peso = 0.0;
 		this.esRefrigerado = false;
 		this.costo = 0.0;
+=======
+public class Insumo implements Comparable<Insumo> {
+	protected Integer id;
+	protected String nombre;
+	protected String descripcion;
+	protected UnidadMedida unidadDeMedida;
+	protected Integer stock;
+	protected Double peso;
+	protected boolean esRefrigerado;
+	public Double costo;
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Insumo() {
+		this.id = this.hashCode();
+		this.descripcion = "";
+		this.stock = 0;
+		this.peso = 0.0d;
+		this.costo = 0.0d;
+	}
+
+	public Insumo(String nombr, String desc, UnidadMedida un, Integer stok, Double pes, boolean refri, double cs) {
+		this.id = this.hashCode();
+		this.nombre = nombr;
+		this.descripcion = desc;
+		this.esRefrigerado = refri;
+		this.costo = cs;
+		this.unidadDeMedida = un;
+		this.stock = stok;
+		this.peso = pes;
+	}
+	
+	public Double costoX(Integer c) {
+		return this.costo*c;
+	}
+
+	public void disminuir(Integer i) {
+		if (i >= 0) {
+			this.stock -= i;
+		}
+	}
+
+	public void aumentar(Integer i) {
+		if (i >= 0) {
+			this.stock += i;
+		}
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+>>>>>>> 695526a5e907261ed0456e0b6f530f87e3c2562a
 	}
 
 	public String getDescripcion() {
@@ -44,7 +110,11 @@ public class Insumo implements Comparable<Insumo>{
 	public void setStock(Integer stock) {
 		this.stock = stock;
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 695526a5e907261ed0456e0b6f530f87e3c2562a
 	public Double getPeso() {
 		return peso;
 	}
@@ -86,19 +156,20 @@ public class Insumo implements Comparable<Insumo>{
 	}
 
 	public int compareTo(Insumo i) {
-		return this.id.compareTo(((Insumo)i).id);
+		return this.id.compareTo(((Insumo) i).id);
 	}
+
 	@Override
 	public boolean equals(Object obj) {
-		if(this.compareTo((Insumo)obj)== 0) {
+		if (this.compareTo((Insumo) obj) == 0) {
 			return true;
 		}
 		return false;
 	}
+
 	@Override
 	public String toString() {
-		Integer n = this.id;
-		return n.toString();
+		return this.nombre;
 	}
 
 }

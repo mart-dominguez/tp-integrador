@@ -8,13 +8,15 @@ public class ArbolVacio<E extends Comparable<E>> extends Arbol<E> {
 	public E buscar(E valor) {
 		return null;
 	}
+
 	public String toString() {
 		return "null";
 	}
-	public ArbolVacio(){
-		this.valor=null;
+
+	public ArbolVacio() {
+		this.valor = null;
 	}
-	
+
 	@Override
 	public List<E> preOrden() {
 		return new ArrayList<E>();
@@ -62,9 +64,10 @@ public class ArbolVacio<E extends Comparable<E>> extends Arbol<E> {
 
 	@Override
 	public void agregar(E a) {
-		
+
 	}
-        @Override
+
+	@Override
 	public int profundidad() {
 		return -1;
 	}
@@ -83,7 +86,5 @@ public class ArbolVacio<E extends Comparable<E>> extends Arbol<E> {
 	public boolean esLleno() {
 		return false;
 	}
-
-
 
 }
