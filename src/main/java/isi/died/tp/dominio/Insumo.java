@@ -1,26 +1,5 @@
 package isi.died.tp.dominio;
 
-<<<<<<< HEAD
-public class Insumo implements Comparable<Insumo>{
-	private Integer id;
-	private String nombre;
-	private String descripcion;
-	private UnidadMedida unidadDeMedida;
-	private Integer stock;
-	protected Double peso;
-	private boolean esRefrigerado;
-	public Double costo;
-	
-	public Insumo() {
-		this.id = 00;
-		this.nombre = "";
-		this.descripcion = "";
-		this.unidadDeMedida = UnidadMedida.KILO;
-		this.stock = 0;
-		this.peso = 0.0;
-		this.esRefrigerado = false;
-		this.costo = 0.0;
-=======
 public class Insumo implements Comparable<Insumo> {
 	protected Integer id;
 	protected String nombre;
@@ -30,23 +9,14 @@ public class Insumo implements Comparable<Insumo> {
 	protected Double peso;
 	protected boolean esRefrigerado;
 	public Double costo;
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
+	
 	public Insumo() {
 		this.id = this.hashCode();
+		this.nombre = "";
 		this.descripcion = "";
 		this.stock = 0;
+		this.unidadDeMedida = UnidadMedida.KILO;
+		this.esRefrigerado = false;
 		this.peso = 0.0d;
 		this.costo = 0.0d;
 	}
@@ -78,14 +48,9 @@ public class Insumo implements Comparable<Insumo> {
 		}
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
->>>>>>> 695526a5e907261ed0456e0b6f530f87e3c2562a
-	}
+//	public void setId(int id) {
+//		this.id = id;
+//	}
 
 	public String getDescripcion() {
 		return descripcion;
@@ -110,11 +75,7 @@ public class Insumo implements Comparable<Insumo> {
 	public void setStock(Integer stock) {
 		this.stock = stock;
 	}
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 695526a5e907261ed0456e0b6f530f87e3c2562a
 	public Double getPeso() {
 		return peso;
 	}

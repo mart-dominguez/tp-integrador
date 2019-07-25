@@ -9,8 +9,6 @@ public class Vehiculo {
 	public String nombre;
 	public String marca;
 	public Integer id;
-<<<<<<< HEAD
-	public String marca;
 	public String modelo;
 	public String dominio;
 	public Integer anio;
@@ -20,12 +18,9 @@ public class Vehiculo {
 	public Vehiculo() {
 		this.pedidos = new ArrayList<Pedido>();
 	}
-	public Vehiculo(Integer id) {
-		this();
-		this.id = id;
-	}
-	public Vehiculo(Integer id, String marca, String modelo, String dominio, Integer anio, Double costokm, boolean transportaLiquido) {
-		this(id);
+
+	public Vehiculo(String marca, String modelo, String dominio, Integer anio, Double costokm, boolean transportaLiquido) {
+		this.hashCode();
 		this.marca = marca;
 		this.modelo = modelo;
 		this.dominio = dominio;
@@ -33,11 +28,6 @@ public class Vehiculo {
 		this.costoKm = costokm;
 		this.transportaLiquido = transportaLiquido;
 	}
-	
-	public void seleccionarInsumos(ArrayList<Insumo> insumos) {
-		//TODO
-		
-=======
 
 	public Vehiculo(String ma, String nom, Double pesoM) {
 		this(pesoM);
@@ -107,6 +97,5 @@ public class Vehiculo {
 				}
 			}
 		}
->>>>>>> 695526a5e907261ed0456e0b6f530f87e3c2562a
 	}
 }

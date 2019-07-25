@@ -12,21 +12,16 @@ import java.util.stream.Collectors;
 public class Planta implements Comparable<Planta> {
 	private Integer id;
 	private String nombre;
-<<<<<<< HEAD
-	private ArbolBinarioBusqueda<Stock> almacen;
-	
-	public Planta(Integer i, String nomb) {
-		this.setId(i);
-=======
 	private List<Stock> almacen;
-	public void borrarStock(Stock e) {
-		this.almacen.remove(e);
-	}
+	
 	public Planta(String nomb) {
 		this.id = this.hashCode();
->>>>>>> 695526a5e907261ed0456e0b6f530f87e3c2562a
 		this.setNombre(nomb);
 		this.almacen = new ArrayList<Stock>();
+	}
+	
+	public void borrarStock(Stock e) {
+		this.almacen.remove(e);
 	}
 
 	public Planta(String nomb, List<Stock> cosas) {
