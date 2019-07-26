@@ -13,11 +13,9 @@ public class InsumoLiquidoTest {
 	@Before
 	public void preTest() {
 		i1 = new InsumoLiquido(); //oxigeno licuado
-		i1.setVolumen(1);
 		i1.setDensidad(1141);
 		i2 = new InsumoLiquido(); //alcohol
 		i2.setDensidad(789);
-		i2.setVolumen(1);
 	}
 
 	@Test

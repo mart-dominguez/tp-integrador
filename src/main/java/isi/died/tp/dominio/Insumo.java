@@ -111,10 +111,10 @@ public class Insumo implements Comparable<Insumo> {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
+//
+//	public void setId(Integer id) {
+//		this.id = id;
+//	}
 
 	public int compareTo(Insumo i) {
 		return this.id.compareTo(((Insumo) i).id);

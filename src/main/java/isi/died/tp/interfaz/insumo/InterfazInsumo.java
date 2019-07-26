@@ -92,7 +92,6 @@ public class InterfazInsumo extends JFrame {
 		//Tabla
 		ModeloBusquedaInsumo mbi = new ModeloBusquedaInsumo(dp.getInsumos()); //
 		tabla = new JTable(mbi);
-//		TableColumn c = tabla.getColumn(identifier)
 		tabla.getColumn("ID").setPreferredWidth(25);
 		tabla.getColumn("Nombre").setPreferredWidth(100);
 		tabla.getColumn("Costo").setPreferredWidth(70);
@@ -102,11 +101,8 @@ public class InterfazInsumo extends JFrame {
 		tabla.getColumn("Refrigerado").setPreferredWidth(50);
 		tabla.getColumn("Descripción").setPreferredWidth(235);
 		
-//		tabla.setBounds(10, 50, 640, 350);
-//		tabla.setPreferredScrollableViewportSize(new Dimension(640, 350));
 		tabla.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		tabla.setFillsViewportHeight(true);
-//		tabla.setDefaultRenderer(Object.class, new RenderCeldasInsumos());
 		tabla.setLayout(null);
 		
 		scrollPane = new JScrollPane();

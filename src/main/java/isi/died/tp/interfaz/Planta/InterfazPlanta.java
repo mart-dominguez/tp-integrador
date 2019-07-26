@@ -2,18 +2,22 @@ package isi.died.tp.interfaz.Planta;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import isi.died.tp.dominio.Insumo;
 import isi.died.tp.dominio.Planta;
+import isi.died.tp.interfaz.insumo.EditarInsumo;
 import isi.died.tp.interfaz.insumo.ModeloBusquedaInsumo;
 
 public class InterfazPlanta extends JFrame{
@@ -98,6 +102,75 @@ public class InterfazPlanta extends JFrame{
 		scrollPane.setViewportView(tabla);
 		scrollPane.getViewport().setView(tabla);
 		pCuerpo.add(scrollPane);
+		
+		
+		bCrear = new JButton("Crear");
+		bCrear.setBackground(c2);
+		bCrear.setFont(new Font("Tahoma", 0, 14));
+		bCrear.setForeground(c0);
+		bCrear.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+//				Insumo insumo = new Insumo();
+//				EditarInsumo nuevoInsumo = new EditarInsumo(insumo);
+				dispose();
+			}
+		});
+		bCrear.setBounds(275, 10, 85, 35);
+		pCuerpo.add(bCrear);
+		
+		bEditar = new JButton("Editar");
+		bEditar.setBackground(c2);
+		bEditar.setFont(new Font("Tahoma", 0, 14));
+		bEditar.setForeground(c0);
+		bEditar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(tabla.getSelectedRow() < 0) {
+					JOptionPane.showMessageDialog(null, "Seleccione una planta en la tabla para que pueda ser modificada.");
+				} else {
+					
+//					EditarInsumo nuevoInsumo = new EditarInsumo(insumos.get(tabla.getSelectedRow()));
+					dispose();
+				}
+			}
+		});
+		bEditar.setBounds(365, 10, 85, 35);
+		pCuerpo.add(bEditar);
+		
+		bEliminar = new JButton("Eliminar");
+		bEliminar.setBackground(c2);
+		bEliminar.setFont(new Font("Tahoma", 0, 14));
+		bEliminar.setForeground(c0);
+		bEliminar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(tabla.getSelectedRow() < 0) {
+					JOptionPane.showMessageDialog(null, "Seleccione el insumo que desea eliminar.");
+				} else {
+					int mensaje = new JOptionPane().showConfirmDialog(null, "¿Estás seguro de que desea eliminar el producto?", "Mensaje", JOptionPane.YES_NO_OPTION);
+					if(mensaje == JOptionPane.YES_OPTION) {
+						//TODO Eliminar un producto
+					}
+				}
+			}
+		});
+		bEliminar.setBounds(455, 10, 85, 35);
+		pCuerpo.add(bEliminar);
+
+		
+		bBuscar = new JButton("Buscar");
+		bBuscar.setBackground(c2);
+		bBuscar.setFont(new Font("Tahoma", 0, 14));
+		bBuscar.setForeground(c0);
+		bBuscar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//
+			}
+		});
+		bBuscar.setBounds(545, 10, 100, 35);
+		pCuerpo.add(bBuscar);
 		
 		
 		

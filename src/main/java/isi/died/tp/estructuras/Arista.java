@@ -4,7 +4,7 @@ public class Arista<T> {
 	protected Vertice<T> inicio;
 	protected Vertice<T> fin;
 	private Number valor;
-
+	
 	public Arista() {
 		valor = 1.0;
 	}

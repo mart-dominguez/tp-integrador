@@ -12,7 +12,7 @@ public class DatosPrueba {
 	public DatosPrueba() {
 		insumos = new ArrayList<Insumo>();
 		Insumo insumo1 = new Insumo();
-		insumo1.setId(1);
+//		insumo1.setId(1);
 		insumo1.setNombre("insumo1");
 		insumo1.setCosto(25.67);
 		insumo1.setStock(25);
@@ -21,7 +21,7 @@ public class DatosPrueba {
 		insumo1.setDescripcion("Descripcion del producto uno");
 		
 		Insumo insumo2 = new Insumo();
-		insumo2.setId(2);
+//		insumo2.setId(2);
 		insumo2.setNombre("insumo2");
 		insumo2.setCosto(27.3);
 		insumo2.setStock(21);
@@ -31,7 +31,7 @@ public class DatosPrueba {
 		insumo2.setDescripcion("Descripcion del producto dos");
 		
 		Insumo insumo3 = new Insumo();
-		insumo3.setId(3);
+//		insumo3.setId(3);
 		insumo3.setNombre("insumo3");
 		insumo3.setCosto(18.55);
 		insumo3.setStock(32);

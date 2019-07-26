@@ -26,10 +26,10 @@ public class EditarInsumo extends JFrame{
 	private JLabel lNombreEmpresa;
 	private JLabel lTitulo;
 	private JLabel lInsumos;
-	private JLabel lId, lNombre, lCosto, lStock, lPeso, lUnidadMedida, lRefrigerado, lDescripcion;
+	private JLabel lId, lNombre, lCosto, lStock, lPeso, lDensidad, lRefrigerado, lDescripcion;
 	private JComboBox<UnidadMedida> cbUnidadMedida;
 	private JCheckBox checkRefrigerado;
-	private JTextField tfId, tfNombre, tfCosto, tfStock, tfPeso;
+	private JTextField tfId, tfNombre, tfCosto, tfStock, tfPeso, tfDensidad;
 	private JScrollPane scrollDescripcion;
 	private JTextArea taDescripcion;
 	private JButton bGuardar, bCancelar;
@@ -91,6 +91,7 @@ public class EditarInsumo extends JFrame{
 		pCuerpo.add(lId);
 		
 		tfId = new JTextField(insumo.getId().toString());
+		tfId.setEditable(false);
 		tfId.setBounds(120, 50, 200, 24);
 		tfId.setBackground(c0);
 		tfId.setFont(new Font("Tahoma", 0, 14));
@@ -168,6 +169,35 @@ public class EditarInsumo extends JFrame{
 		cbUnidadMedida.setSelectedItem(insumo.getUnidadDeMedida());
 		pCuerpo.add(cbUnidadMedida);
 		
+		//Densidad
+		lDensidad = new JLabel("Densidad:");
+		lDensidad.setFont(new Font("Tahoma", 1, 16));
+		lDensidad.setForeground(c0);
+		lDensidad.setBounds(340, 250, 150, 30);
+		lDensidad.setVisible(false);
+		pCuerpo.add(lDensidad);
+		
+		tfDensidad = new JTextField("0.0");
+		tfDensidad.setBounds(440, 250, 200, 24);
+		tfDensidad.setBackground(c0);
+		tfDensidad.setFont(new Font("Tahoma", 0, 14));
+		tfDensidad.setForeground(c3);
+		tfDensidad.setHorizontalAlignment(JTextField.RIGHT);
+		tfDensidad.setVisible(false);
+		pCuerpo.add(tfDensidad);
+		cbUnidadMedida.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (cbUnidadMedida.getSelectedItem() == UnidadMedida.LITRO) {
+					lDensidad.setVisible(true);
+					tfDensidad.setVisible(true);
+				} else {
+					lDensidad.setVisible(false);
+					tfDensidad.setVisible(false);
+				}
+			}
+		});
+				
 		//Refrigerado
 		lRefrigerado = new JLabel("Refrigerado: ");
 		lRefrigerado.setFont(new Font("Tahoma", 1, 16));
@@ -234,7 +264,7 @@ public class EditarInsumo extends JFrame{
 	public static void main(String[] args) {
 		Insumo insumo = new Insumo();
 		insumo.setNombre("insumoNombre");
-		insumo.setId(01);
+//		insumo.setId(01);
 		insumo.setCosto(29.8);
 		insumo.setStock(95);
 		insumo.setPeso(12.55);
