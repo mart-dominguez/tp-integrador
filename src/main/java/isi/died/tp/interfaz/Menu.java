@@ -12,6 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import isi.died.tp.dominio.Insumo;
+import isi.died.tp.dominio.Planta;
+import isi.died.tp.interfaz.Planta.InterfazPlanta;
+import isi.died.tp.interfaz.camion.InterfazVehiculo;
 import isi.died.tp.interfaz.insumo.InterfazInsumo;
 
 public class Menu extends JFrame {
@@ -61,7 +64,7 @@ public class Menu extends JFrame {
 
 		pCuerpo = new JPanel();
 		pCuerpo.setLayout(null);
-		pCuerpo.setBounds(10, 130, 660, 190);
+		pCuerpo.setBounds(10, 130, 660, 210);
 		pCuerpo.setBackground(c1);
 		add(pCuerpo);
 
@@ -73,11 +76,11 @@ public class Menu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
+				new InterfazPlanta();
+				dispose();
 			}
 		});
-		bPlanta.setBounds(20, 10, 300, 80);
+		bPlanta.setBounds(30, 20, 300, 80);
 		pCuerpo.add(bPlanta);
 
 		bRutas = new JButton("Rutas");
@@ -92,7 +95,7 @@ public class Menu extends JFrame {
 
 			}
 		});
-		bRutas.setBounds(330, 10, 300, 80);
+		bRutas.setBounds(340, 20, 300, 80);
 		pCuerpo.add(bRutas);
 
 		bInsumos = new JButton("Insumos");
@@ -107,7 +110,7 @@ public class Menu extends JFrame {
 				dispose();
 			}
 		});
-		bInsumos.setBounds(20, 100, 300, 80);
+		bInsumos.setBounds(30, 110, 300, 80);
 		pCuerpo.add(bInsumos);
 
 		bCamiones = new JButton("Camiones");
@@ -117,10 +120,10 @@ public class Menu extends JFrame {
 		bCamiones.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				new InterfazVehiculo();
 			}
 		});
-		bCamiones.setBounds(330, 100, 300, 80);
+		bCamiones.setBounds(340, 110, 300, 80);
 		pCuerpo.add(bCamiones);
 		
 		

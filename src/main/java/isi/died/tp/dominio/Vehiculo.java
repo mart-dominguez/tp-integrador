@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Vehiculo {
 	public List<Pedido> pedidos;
-	public double pesoMax;
+	public Double pesoMax;
 	public String nombre;
 	public String marca;
 	public Integer id;
@@ -16,7 +16,15 @@ public class Vehiculo {
 	public boolean transportaLiquido;
 	
 	public Vehiculo() {
+		this.id = hashCode();
 		this.pedidos = new ArrayList<Pedido>();
+		this.marca = "";
+		this.modelo = "";
+		this.dominio = "";
+		this.anio = 0;
+		this.costoKm = 0.0;
+		this.pesoMax = 0.0;
+		this.transportaLiquido = false;
 	}
 
 	public Vehiculo(String marca, String modelo, String dominio, Integer anio, Double costokm, boolean transportaLiquido) {
@@ -41,6 +49,86 @@ public class Vehiculo {
 		this.pesoMax = pesoM;
 		this.nombre = "";
 		this.marca = "";
+	}
+	
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
+	public Double getPesoMax() {
+		return pesoMax;
+	}
+
+	public void setPesoMax(Double pesoMax) {
+		this.pesoMax = pesoMax;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getMarca() {
+		return marca;
+	}
+
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+
+	public String getDominio() {
+		return dominio;
+	}
+
+	public void setDominio(String dominio) {
+		this.dominio = dominio;
+	}
+
+	public Integer getAnio() {
+		return anio;
+	}
+
+	public void setAnio(Integer anio) {
+		this.anio = anio;
+	}
+
+	public Double getCostoKm() {
+		return costoKm;
+	}
+
+	public void setCostoKm(Double costoKm) {
+		this.costoKm = costoKm;
+	}
+
+	public boolean isTransportaLiquido() {
+		return transportaLiquido;
+	}
+
+	public void setTransportaLiquido(boolean transportaLiquido) {
+		this.transportaLiquido = transportaLiquido;
 	}
 
 	public boolean disponible() {

@@ -5,12 +5,12 @@ import javax.swing.table.DefaultTableModel;
 
 import isi.died.tp.dominio.Insumo;
 
-public class ModeloBusquedaInsumo extends DefaultTableModel {
+public class ModeloTablaInsumo extends DefaultTableModel {
 	final String[] columnNames = { "ID", "Nombre", "Costo", "Stock", "Peso", "Unidad", "Refrigerado", "Descripción" };
 	final Object[][] data;
 	private int cantInsumos;
 
-	public ModeloBusquedaInsumo(ArrayList<Insumo> insumos) {
+	public ModeloTablaInsumo(ArrayList<Insumo> insumos) {
 		int cantColumnas = columnNames.length;
 		cantInsumos = insumos.size();
 		data = new Object[cantInsumos][cantColumnas];

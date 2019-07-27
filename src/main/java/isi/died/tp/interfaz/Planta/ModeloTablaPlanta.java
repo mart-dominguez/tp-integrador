@@ -6,12 +6,12 @@ import javax.swing.table.DefaultTableModel;
 
 import isi.died.tp.dominio.Planta;
 
-public class ModeloBusquedaPlanta extends DefaultTableModel {
+public class ModeloTablaPlanta extends DefaultTableModel {
 	final String[] columnNames = { "ID", "Nombre"};
 	final Object[][] data;
 	private int cantPlantas;
 
-	public ModeloBusquedaPlanta(List<Planta> plantas) {
+	public ModeloTablaPlanta(List<Planta> plantas) {
 		int cantColumnas = columnNames.length;
 		cantPlantas = plantas.size();
 		data = new Object[cantPlantas][cantColumnas];

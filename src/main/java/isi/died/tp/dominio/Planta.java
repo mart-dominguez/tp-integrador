@@ -14,14 +14,16 @@ public class Planta implements Comparable<Planta> {
 	private String nombre;
 	private List<Stock> almacen;
 	
+	public Planta() {
+		this.id = this.hashCode();
+		this.nombre = nombre;
+		this.almacen = new ArrayList<Stock>();
+	}
+	
 	public Planta(String nomb) {
 		this.id = this.hashCode();
 		this.setNombre(nomb);
 		this.almacen = new ArrayList<Stock>();
-	}
-	
-	public void borrarStock(Stock e) {
-		this.almacen.remove(e);
 	}
 
 	public Planta(String nomb, List<Stock> cosas) {
@@ -30,6 +32,10 @@ public class Planta implements Comparable<Planta> {
 		this.setAlmacen(cosas);
 	}
 
+	public void borrarStock(Stock e) {
+		this.almacen.remove(e);
+	}
+	
 	public Double costoTotal() {
 		return this.almacen.stream()
 				.mapToDouble((s) -> s.getCantidad() * s.getInsumo().getCosto())
@@ -54,7 +60,7 @@ public class Planta implements Comparable<Planta> {
 		return false;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 

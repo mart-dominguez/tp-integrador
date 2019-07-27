@@ -185,6 +185,7 @@ public class EditarInsumo extends JFrame{
 		tfDensidad.setHorizontalAlignment(JTextField.RIGHT);
 		tfDensidad.setVisible(false);
 		pCuerpo.add(tfDensidad);
+		
 		cbUnidadMedida.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -237,7 +238,8 @@ public class EditarInsumo extends JFrame{
 		bCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//
+				new InterfazInsumo();
+				dispose();
 			}
 		});
 		bCancelar.setBounds(465, 360, 85, 35);
@@ -251,7 +253,7 @@ public class EditarInsumo extends JFrame{
 		bGuardar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//
+				//TODO Guardar Insumo creado
 			}
 		});
 		bGuardar.setBounds(560, 360, 85, 35);
@@ -264,7 +266,6 @@ public class EditarInsumo extends JFrame{
 	public static void main(String[] args) {
 		Insumo insumo = new Insumo();
 		insumo.setNombre("insumoNombre");
-//		insumo.setId(01);
 		insumo.setCosto(29.8);
 		insumo.setStock(95);
 		insumo.setPeso(12.55);
