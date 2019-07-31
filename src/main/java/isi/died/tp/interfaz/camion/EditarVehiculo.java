@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import isi.died.tp.datos.Datos;
 import isi.died.tp.dominio.Vehiculo;
 import isi.died.tp.interfaz.insumo.InterfazInsumo;
 
@@ -31,7 +32,7 @@ public class EditarVehiculo extends JFrame {
 	private Color c3;
 	private Vehiculo vehiculo;
 
-	public EditarVehiculo(Vehiculo vehiculo) {
+	public EditarVehiculo(Datos datos, Vehiculo vehiculo) {
 
 		this.vehiculo = vehiculo;
 
@@ -202,7 +203,7 @@ public class EditarVehiculo extends JFrame {
 		bCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new InterfazVehiculo();
+				new InterfazVehiculo(datos, datos.vehiculos);
 				dispose();
 			}
 		});
@@ -228,14 +229,14 @@ public class EditarVehiculo extends JFrame {
 
 
 	public static void main(String[] args) {
-		Vehiculo camion = new Vehiculo();
-		camion.setMarca("Marca");
-		camion.setModelo("Modeloo");
-		camion.setDominio("AA555AA");
-		camion.setAnio(2018);
-		camion.setCostoKm(521.0);
-		camion.setTransportaLiquido(true);
-		camion.setPesoMax(4985.0);
-		new EditarVehiculo(camion);
+//		Vehiculo camion = new Vehiculo();
+//		camion.setMarca("Marca");
+//		camion.setModelo("Modeloo");
+//		camion.setDominio("AA555AA");
+//		camion.setAnio(2018);
+//		camion.setCostoKm(521.0);
+//		camion.setTransportaLiquido(true);
+//		camion.setPesoMax(4985.0);
+//		new EditarVehiculo(camion);
 	}
 }

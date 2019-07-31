@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import isi.died.tp.datos.Datos;
 import isi.died.tp.dominio.Insumo;
 import isi.died.tp.dominio.Planta;
 import isi.died.tp.dominio.UnidadMedida;
@@ -40,7 +41,7 @@ public class EditarPlanta extends JFrame{
 	private Color c2;
 	private Color c3;
 
-	public EditarPlanta(Planta planta) {
+	public EditarPlanta(Datos datos, Planta planta) {
 		
 		c0 = new Color(232, 232, 232);
 		c1 = new Color(85, 136, 163);
@@ -123,7 +124,7 @@ public class EditarPlanta extends JFrame{
 		bCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new InterfazPlanta();
+				new InterfazPlanta(datos, datos.plantas);
 				dispose();
 			}
 		});
@@ -148,7 +149,7 @@ public class EditarPlanta extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-		Planta planta = new Planta("Nombre planta1");
-		EditarPlanta editarPlanta = new EditarPlanta(planta);
+//		Planta planta = new Planta("Nombre planta1");
+//		EditarPlanta editarPlanta = new EditarPlanta(planta);
 	}
 }

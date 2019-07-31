@@ -21,15 +21,15 @@ public class Insumo implements Comparable<Insumo> {
 		this.costo = 0.0d;
 	}
 
-	public Insumo(String nombr, String desc, UnidadMedida un, Integer stok, Double pes, boolean refri, double cs) {
+	public Insumo(String nombr, Double peso, UnidadMedida un, Double cs, Integer stock, boolean refri,  String desc) {
 		this.id = this.hashCode();
 		this.nombre = nombr;
 		this.descripcion = desc;
 		this.esRefrigerado = refri;
 		this.costo = cs;
 		this.unidadDeMedida = un;
-		this.stock = stok;
-		this.peso = pes;
+		this.stock = stock;
+		this.peso = peso;
 	}
 	
 	public Double costoX(Integer c) {

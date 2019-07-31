@@ -27,10 +27,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableColumn;
 
+import isi.died.tp.datos.Datos;
 import isi.died.tp.dominio.Insumo;
 import isi.died.tp.dominio.Planta;
 import isi.died.tp.dominio.UnidadMedida;
-import isi.died.tp.interfaz.DatosPrueba;
 import isi.died.tp.interfaz.Menu;
 import isi.died.tp.interfaz.TipoBusquedaInsumo;
 
@@ -61,12 +61,9 @@ public class InterfazInsumo extends JFrame {
 	private ArrayList<Insumo> insumos;
 	
 
-	public InterfazInsumo() {
+	public InterfazInsumo(Datos datos, ArrayList<Insumo> is) {
 		
-		DatosPrueba dp = new DatosPrueba();// TODO prueba
-		insumos = dp.getInsumos();
-		
-//		insumos = new ArrayList<Insumo>();
+		this.insumos = is;
 		
 		c0 = new Color(232, 232, 232);
 		c1 = new Color(85, 136, 163);
@@ -109,8 +106,8 @@ public class InterfazInsumo extends JFrame {
 		pCuerpo.add(lInsumos);
 		
 		//Tabla
-		ModeloTablaInsumo mbi = new ModeloTablaInsumo(dp.getInsumos()); //
-		tabla = new JTable(mbi);
+		ModeloTablaInsumo mti = new ModeloTablaInsumo(insumos);
+		tabla = new JTable(mti);
 		tabla.getColumn("ID").setPreferredWidth(25);
 		tabla.getColumn("Nombre").setPreferredWidth(100);
 		tabla.getColumn("Costo").setPreferredWidth(70);
@@ -141,7 +138,7 @@ public class InterfazInsumo extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Insumo insumo = new Insumo();
-				new EditarInsumo(insumo);
+				new EditarInsumo(datos, insumo);
 				dispose();
 			}
 		});
@@ -158,7 +155,7 @@ public class InterfazInsumo extends JFrame {
 				if(tabla.getSelectedRow() < 0) {
 					JOptionPane.showMessageDialog(null, "Seleccione un insumo en la tabla para que pueda ser modificado.");
 				} else {
-					new EditarInsumo(insumos.get(tabla.getSelectedRow()));
+					new EditarInsumo(datos, insumos.get(tabla.getSelectedRow()));
 					dispose();
 				}
 			}
@@ -209,7 +206,7 @@ public class InterfazInsumo extends JFrame {
 		bAtras.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Menu();
+				new Menu(datos);
 				dispose();
 			}
 		});
@@ -222,9 +219,7 @@ public class InterfazInsumo extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		InterfazInsumo interfazInsumo = new InterfazInsumo();
-//		interfazInsumo.setBounds(0, 0, 700, 600);
-//		interfazInsumo.setVisible(true);
+//		InterfazInsumo interfazInsumo = new InterfazInsumo();
 //		interfazInsumo.setResizable(false);
 //		interfazInsumo.setLocationRelativeTo(null);
 	}

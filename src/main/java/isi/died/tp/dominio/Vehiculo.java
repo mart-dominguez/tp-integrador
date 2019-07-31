@@ -6,7 +6,7 @@ import java.util.List;
 public class Vehiculo {
 	public List<Pedido> pedidos;
 	public Double pesoMax;
-	public String nombre;
+//	public String nombre;
 	public String marca;
 	public Integer id;
 	public String modelo;
@@ -27,30 +27,31 @@ public class Vehiculo {
 		this.transportaLiquido = false;
 	}
 
-	public Vehiculo(String marca, String modelo, String dominio, Integer anio, Double costokm, boolean transportaLiquido) {
-		this.hashCode();
+	public Vehiculo(String marca, String modelo, String dominio, Integer anio, Double costokm, Double pesoMax, boolean transportaLiquido) {
+		this.id = hashCode();
 		this.marca = marca;
 		this.modelo = modelo;
 		this.dominio = dominio;
 		this.anio = anio;
 		this.costoKm = costokm;
 		this.transportaLiquido = transportaLiquido;
+		this.pesoMax = pesoMax;
 	}
 
-	public Vehiculo(String ma, String nom, Double pesoM) {
-		this(pesoM);
-		this.nombre = nom;
-		this.marca = ma;
-	}
-
-	public Vehiculo(Double pesoM) {
-		this.pedidos = new ArrayList<Pedido>();
-		this.id = this.hashCode();
-		this.pesoMax = pesoM;
-		this.nombre = "";
-		this.marca = "";
-	}
-	
+//	public Vehiculo(String ma, String nom, Double pesoM) {
+//		this(pesoM);
+//		this.nombre = nom;
+//		this.marca = ma;
+//	}
+//
+//	public Vehiculo(Double pesoM) {
+//		this.pedidos = new ArrayList<Pedido>();
+//		this.id = this.hashCode();
+//		this.pesoMax = pesoM;
+//		this.nombre = "";
+//		this.marca = "";
+//	}
+//	
 	public List<Pedido> getPedidos() {
 		return pedidos;
 	}
@@ -67,13 +68,13 @@ public class Vehiculo {
 		this.pesoMax = pesoMax;
 	}
 
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+//	public String getNombre() {
+//		return nombre;
+//	}
+//
+//	public void setNombre(String nombre) {
+//		this.nombre = nombre;
+//	}
 
 	public String getMarca() {
 		return marca;

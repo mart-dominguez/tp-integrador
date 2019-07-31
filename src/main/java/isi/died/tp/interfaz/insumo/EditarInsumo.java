@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import isi.died.tp.datos.Datos;
 import isi.died.tp.dominio.Insumo;
 import isi.died.tp.dominio.UnidadMedida;
 
@@ -39,7 +40,7 @@ public class EditarInsumo extends JFrame{
 	private Color c3;
 	private Insumo insumo;
 
-	public EditarInsumo(Insumo insumo) {
+	public EditarInsumo(Datos datos, Insumo insumo) {
 		
 		this.insumo = insumo;
 		
@@ -238,7 +239,7 @@ public class EditarInsumo extends JFrame{
 		bCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new InterfazInsumo();
+				new InterfazInsumo(datos, datos.insumos);
 				dispose();
 			}
 		});
@@ -264,14 +265,14 @@ public class EditarInsumo extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-		Insumo insumo = new Insumo();
-		insumo.setNombre("insumoNombre");
-		insumo.setCosto(29.8);
-		insumo.setStock(95);
-		insumo.setPeso(12.55);
-		insumo.setUnidadDeMedida(UnidadMedida.M2);
-		insumo.setEsRefrigerado(true);
-		insumo.setDescripcion("Descripcion del insumo ....");
-		EditarInsumo editarInsumo = new EditarInsumo(insumo);
+//		Insumo insumo = new Insumo();
+//		insumo.setNombre("insumoNombre");
+//		insumo.setCosto(29.8);
+//		insumo.setStock(95);
+//		insumo.setPeso(12.55);
+//		insumo.setUnidadDeMedida(UnidadMedida.M2);
+//		insumo.setEsRefrigerado(true);
+//		insumo.setDescripcion("Descripcion del insumo ....");
+//		EditarInsumo editarInsumo = new EditarInsumo(insumo);
 	}
 }

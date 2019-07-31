@@ -16,7 +16,7 @@ public class Planta implements Comparable<Planta> {
 	
 	public Planta() {
 		this.id = this.hashCode();
-		this.nombre = nombre;
+		this.nombre = "";
 		this.almacen = new ArrayList<Stock>();
 	}
 	

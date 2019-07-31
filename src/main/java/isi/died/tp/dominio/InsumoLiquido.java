@@ -8,8 +8,8 @@ public class InsumoLiquido extends Insumo {
 		this.densidad = 0.0d;
 	};
 
-	public InsumoLiquido(String nom, String desc, UnidadMedida un, Integer stok, boolean refri, double cs, double den) {
-		super(nom, desc, un, stok, 0.0d, refri, cs);
+	public InsumoLiquido(String nombr, Double peso, UnidadMedida un, Double cs, Integer stock, boolean refri,  String desc, double den) {
+		super(nombr, peso, un, cs, stock, refri, desc);
 		this.densidad = den;
 		this.peso = this.calcularPeso();
 	}

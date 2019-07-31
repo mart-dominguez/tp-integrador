@@ -9,19 +9,19 @@ import isi.died.tp.dominio.Vehiculo;
 public class ModeloTablaVehiculo extends DefaultTableModel{
 	final String[] columnNames = { "ID", "Marca", "Modelo", "Dominio", "Año", "Costo/Km", "Líquido", "Capacidad" };
 	final Object[][] data;
-	private int cantInsumos;
+	private int cantVehiculos;
 
 	public ModeloTablaVehiculo(ArrayList<Vehiculo> vehiculos) {
 		int cantColumnas = columnNames.length;
-		cantInsumos = vehiculos.size();
-		data = new Object[cantInsumos][cantColumnas];
+		cantVehiculos = vehiculos.size();
+		data = new Object[cantVehiculos][cantColumnas];
 		int i = 0;
 		for (Vehiculo vehiculo : vehiculos) {
 			data[i][0] = vehiculo.getId();
 			data[i][1] = vehiculo.getMarca();
 			data[i][2] = vehiculo.getModelo();
 			data[i][3] = vehiculo.getDominio();
-			data[i][4] = vehiculo.getAnio();
+			data[i][4] = vehiculo.getAnio().toString();
 			data[i][5] = "$ " + vehiculo.getCostoKm();
 			data[i][6] = vehiculo.isTransportaLiquido();
 			data[i][7] = vehiculo.getPesoMax() + " Kg";
@@ -34,7 +34,7 @@ public class ModeloTablaVehiculo extends DefaultTableModel{
 	}
 
 	public int getRowCount() {
-		return cantInsumos;
+		return cantVehiculos;
 	}
 
 	public String getColumnName(int col) {

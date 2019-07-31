@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import isi.died.tp.datos.Datos;
 import isi.died.tp.dominio.Insumo;
 import isi.died.tp.dominio.Planta;
 import isi.died.tp.interfaz.Planta.InterfazPlanta;
@@ -32,7 +33,7 @@ public class Menu extends JFrame {
 	private Color c3;
 	
 
-	public Menu() {
+	public Menu(Datos datos) {
 				
 		c0 = new Color(232, 232, 232);
 		c1 = new Color(85, 136, 163);
@@ -76,7 +77,7 @@ public class Menu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new InterfazPlanta();
+				new InterfazPlanta(datos, datos.plantas);
 				dispose();
 			}
 		});
@@ -106,7 +107,7 @@ public class Menu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				InterfazInsumo interfazInsumo = new InterfazInsumo();
+				InterfazInsumo interfazInsumo = new InterfazInsumo(datos, datos.insumos);
 				dispose();
 			}
 		});
@@ -120,7 +121,7 @@ public class Menu extends JFrame {
 		bCamiones.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new InterfazVehiculo();
+				new InterfazVehiculo(datos, datos.vehiculos);
 			}
 		});
 		bCamiones.setBounds(340, 110, 300, 80);
@@ -131,10 +132,7 @@ public class Menu extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		Menu menu = new Menu();
-//		menu.setBounds(0, 0, 700, 600);
-//		menu.setVisible(true);
-		menu.setResizable(false);
-//		menu.setLocationRelativeTo(null);
+//		Menu menu = new Menu(datos);
+//		menu.setResizable(false);
 	}
 }

@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import isi.died.tp.datos.Datos;
 import isi.died.tp.dominio.Insumo;
 import isi.died.tp.dominio.Planta;
 import isi.died.tp.interfaz.Menu;
@@ -22,7 +23,7 @@ import isi.died.tp.interfaz.insumo.EditarInsumo;
 import isi.died.tp.interfaz.insumo.InterfazInsumo;
 
 public class InterfazPlanta extends JFrame{
-	
+		
 	private JPanel pNombre;
 	private JPanel pCuerpo;
 	private JLabel lNombreEmpresa;
@@ -39,9 +40,12 @@ public class InterfazPlanta extends JFrame{
 	private Color c1;
 	private Color c2;
 	private Color c3;
-	private ArrayList<Insumo> insumos;
+	private ArrayList<Planta> plantas;
 	
-	public InterfazPlanta() {
+	public InterfazPlanta(Datos datos, ArrayList<Planta> ps) {
+		
+		this.plantas = ps;
+		
 		c0 = new Color(232, 232, 232);
 		c1 = new Color(85, 136, 163);
 		c2 = new Color(20, 83, 116);
@@ -82,15 +86,12 @@ public class InterfazPlanta extends JFrame{
 		lPlantas.setBounds(20, 10, 150, 30);
 		pCuerpo.add(lPlantas);
 		
-		////
-		List<Planta> plantas = new ArrayList<Planta>();
-		////
-		
+				
 		//Tabla
 		ModeloTablaPlanta mbp = new ModeloTablaPlanta(plantas); //
 		tabla = new JTable(mbp);
-		tabla.getColumn("ID").setPreferredWidth(45);
-		tabla.getColumn("Nombre").setPreferredWidth(585);
+		tabla.getColumn("ID").setPreferredWidth(100);
+		tabla.getColumn("Nombre").setPreferredWidth(530);
 		
 		tabla.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		tabla.setFillsViewportHeight(true);
@@ -112,8 +113,8 @@ public class InterfazPlanta extends JFrame{
 		bCrear.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				Planta planta = new Planta();
-//				EditarPlanta nuevaPlanta = new EditarPlanta(planta);
+				Planta planta = new Planta();
+				EditarPlanta nuevaPlanta = new EditarPlanta(datos, planta);
 				dispose();
 			}
 		});
@@ -130,7 +131,7 @@ public class InterfazPlanta extends JFrame{
 				if(tabla.getSelectedRow() < 0) {
 					JOptionPane.showMessageDialog(null, "Seleccione una planta en la tabla para que pueda ser modificada.");
 				} else {
-//					EditarInsumo nuevoInsumo = new EditarInsumo(insumos.get(tabla.getSelectedRow()));
+					new EditarPlanta(datos, plantas.get(tabla.getSelectedRow()));
 					dispose();
 				}
 			}
@@ -179,7 +180,7 @@ public class InterfazPlanta extends JFrame{
 		bAtras.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Menu();
+				new Menu(datos);
 				dispose();
 			}
 		});
@@ -192,9 +193,9 @@ public class InterfazPlanta extends JFrame{
 		
 		this.setVisible(true);
 	}
-	
+		
 	public static void main(String[] args) {
-		InterfazPlanta interfazPlanta = new InterfazPlanta();
+//		InterfazPlanta interfazPlanta = new InterfazPlanta();
 		
 	}
 }

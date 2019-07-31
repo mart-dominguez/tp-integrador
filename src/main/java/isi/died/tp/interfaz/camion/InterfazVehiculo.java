@@ -19,9 +19,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import isi.died.tp.datos.Datos;
 import isi.died.tp.dominio.Insumo;
 import isi.died.tp.dominio.Vehiculo;
-import isi.died.tp.interfaz.DatosPrueba;
 import isi.died.tp.interfaz.Menu;
 
 
@@ -53,12 +53,9 @@ public class InterfazVehiculo extends JFrame{
 	private ArrayList<Vehiculo> vehiculos;
 	
 
-	public InterfazVehiculo() {
-		
-//		DatosPrueba dp = new DatosPrueba();// TODO prueba
-//		insumos = dp.getInsumos();
-		
-//		insumos = new ArrayList<Insumo>();
+	public InterfazVehiculo(Datos datos, ArrayList<Vehiculo> vs) {
+
+		this.vehiculos = vs;
 		
 		c0 = new Color(232, 232, 232);
 		c1 = new Color(85, 136, 163);
@@ -102,12 +99,12 @@ public class InterfazVehiculo extends JFrame{
 		
 		
 		//
-		vehiculos = new ArrayList<Vehiculo>();
+//		vehiculos = new ArrayList<Vehiculo>();
 		//
 		
 		//Tabla
-		ModeloTablaVehiculo mbi = new ModeloTablaVehiculo(vehiculos); //
-		tabla = new JTable(mbi);
+		ModeloTablaVehiculo mtv = new ModeloTablaVehiculo(vehiculos);
+		tabla = new JTable(mtv);
 		tabla.getColumn("ID").setPreferredWidth(80);
 		tabla.getColumn("Marca").setPreferredWidth(95);
 		tabla.getColumn("Modelo").setPreferredWidth(95);
@@ -138,7 +135,7 @@ public class InterfazVehiculo extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Vehiculo vehiculo = new Vehiculo();
-				new EditarVehiculo(vehiculo);
+				new EditarVehiculo(datos, vehiculo);
 				dispose();
 			}
 		});
@@ -155,7 +152,7 @@ public class InterfazVehiculo extends JFrame{
 				if(tabla.getSelectedRow() < 0) {
 					JOptionPane.showMessageDialog(null, "Seleccione un vehículo en la tabla para que pueda ser modificado.");
 				} else {
-					new EditarVehiculo(vehiculos.get(tabla.getSelectedRow()));
+					new EditarVehiculo(datos, vehiculos.get(tabla.getSelectedRow()));
 					dispose();
 				}
 			}
@@ -206,21 +203,20 @@ public class InterfazVehiculo extends JFrame{
 		bAtras.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Menu();
+				new Menu(datos);
 				dispose();
 			}
 		});
 		bAtras.setBounds(545, 370, 100, 35);
 		pCuerpo.add(bAtras);
 		
-		
-		
+
 		this.setVisible(true);
 	}
 	
 	public static void main(String[] args) {
 		
-		InterfazVehiculo interfazCamion = new InterfazVehiculo();
+//		InterfazVehiculo interfazCamion = new InterfazVehiculo();
 //		interfazInsumo.setBounds(0, 0, 700, 600);
 //		interfazInsumo.setVisible(true);
 //		interfazInsumo.setResizable(false);

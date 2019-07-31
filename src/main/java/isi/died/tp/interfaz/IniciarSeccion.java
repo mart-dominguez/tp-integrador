@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import isi.died.tp.datos.Datos;
+
 public class IniciarSeccion extends JFrame{
 	
 	private JPanel pNombre;
@@ -24,9 +26,12 @@ public class IniciarSeccion extends JFrame{
 	private JLabel lPass;
 	private JPasswordField pfPass;
 	private JButton bAcceder;
+	public static Datos datos;
 	
 	
 	public IniciarSeccion() {
+		
+		this.datos = new Datos();
 		
 		Color c0 = new Color(232, 232, 232);
 		Color c1 = new Color(85, 136, 163);
@@ -98,7 +103,7 @@ public class IniciarSeccion extends JFrame{
 				char clave[] = pfPass.getPassword();
 				String sClave = new String(clave);
 				if (tfUsuario.getText().equals("admin") && sClave.equals("admin")) {
-					Menu menu = new Menu();
+					Menu menu = new Menu(datos);
 					dispose();
 				} else {
 					JOptionPane.showMessageDialog(null, "Usuario o Contraseña incorrecta, intente con admin en ambos casos");
@@ -112,10 +117,10 @@ public class IniciarSeccion extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-		IniciarSeccion iniciarSeccion = new IniciarSeccion();
+		new IniciarSeccion();
 //		iniciarSeccion.setBounds(0, 0, 500, 600);
 //		iniciarSeccion.setVisible(true);
-		iniciarSeccion.setResizable(false);
+//		iniciarSeccion.setResizable(false);
 //		iniciarSeccion.setLocationRelativeTo(null);
 	}
 }
