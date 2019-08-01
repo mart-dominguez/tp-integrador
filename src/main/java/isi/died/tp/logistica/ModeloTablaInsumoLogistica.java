@@ -1,35 +1,34 @@
-package isi.died.tp.interfaz.Planta;
+package isi.died.tp.logistica;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
 
-import isi.died.tp.dominio.Planta;
+import isi.died.tp.dominio.Insumo;
 
-public class ModeloTablaPlanta extends DefaultTableModel {
-	final String[] columnNames = { "ID", "Nombre"};
+public class ModeloTablaInsumoLogistica extends DefaultTableModel {
+	final String[] columnNames = { "ID", "Nombre" };
 	final Object[][] data;
-	private int cantPlantas;
+	private int cantInsumos;
 
-	public ModeloTablaPlanta(List<Planta> plantas) {
+	public ModeloTablaInsumoLogistica(ArrayList<Insumo> insumos) {
 		int cantColumnas = columnNames.length;
-		cantPlantas = plantas.size();
-		data = new Object[cantPlantas][cantColumnas];
+		cantInsumos = insumos.size();
+		data = new Object[cantInsumos][cantColumnas];
 		int i = 0;
-		for (Planta planta : plantas) {
-			data[i][0] = planta.getId();
-			data[i][1] = planta.getNombre();
+		for (Insumo insumo : insumos) {
+			data[i][0] = insumo.getId();
+			data[i][1] = insumo.getNombre();
 			i++;
 		}
 	}
-
 
 	public int getColumnCount() {
 		return columnNames.length;
 	}
 
 	public int getRowCount() {
-		return cantPlantas;
+		return cantInsumos;
 	}
 
 	public String getColumnName(int col) {
@@ -47,4 +46,5 @@ public class ModeloTablaPlanta extends DefaultTableModel {
 	public Class getColumnClass(int c) {
 		return getValueAt(0, c).getClass();
 	}
+
 }

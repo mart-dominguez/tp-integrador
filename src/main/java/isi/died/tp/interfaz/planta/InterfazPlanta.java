@@ -1,11 +1,10 @@
-package isi.died.tp.interfaz.Planta;
+package isi.died.tp.interfaz.planta;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,11 +15,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import isi.died.tp.datos.Datos;
-import isi.died.tp.dominio.Insumo;
 import isi.died.tp.dominio.Planta;
 import isi.died.tp.interfaz.Menu;
-import isi.died.tp.interfaz.insumo.EditarInsumo;
-import isi.died.tp.interfaz.insumo.InterfazInsumo;
 
 public class InterfazPlanta extends JFrame{
 		
@@ -34,7 +30,6 @@ public class InterfazPlanta extends JFrame{
 	private JButton bCrear;
 	private JButton bEditar;
 	private JButton bEliminar;
-	private JButton bBuscar;
 	private JButton bAtras;
 	private Color c0;
 	private Color c1;
@@ -42,9 +37,9 @@ public class InterfazPlanta extends JFrame{
 	private Color c3;
 	private ArrayList<Planta> plantas;
 	
-	public InterfazPlanta(Datos datos, ArrayList<Planta> ps) {
+	public InterfazPlanta(Datos datos) {
 		
-		this.plantas = ps;
+		this.plantas = datos.mapa.getPlantas();
 		
 		c0 = new Color(232, 232, 232);
 		c1 = new Color(85, 136, 163);
@@ -88,10 +83,11 @@ public class InterfazPlanta extends JFrame{
 		
 				
 		//Tabla
-		ModeloTablaPlanta mbp = new ModeloTablaPlanta(plantas); //
+		ModeloTablaPlanta mbp = new ModeloTablaPlanta(plantas);
 		tabla = new JTable(mbp);
 		tabla.getColumn("ID").setPreferredWidth(100);
-		tabla.getColumn("Nombre").setPreferredWidth(530);
+		tabla.getColumn("Nombre").setPreferredWidth(420);
+		tabla.getColumn("Costo total").setPreferredWidth(110);
 		
 		tabla.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		tabla.setFillsViewportHeight(true);
@@ -114,11 +110,11 @@ public class InterfazPlanta extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Planta planta = new Planta();
-				EditarPlanta nuevaPlanta = new EditarPlanta(datos, planta);
+				new EditarPlanta(datos, planta, false);
 				dispose();
 			}
 		});
-		bCrear.setBounds(275, 10, 85, 35);
+		bCrear.setBounds(380, 10, 85, 35);
 		pCuerpo.add(bCrear);
 		
 		bEditar = new JButton("Editar");
@@ -131,12 +127,12 @@ public class InterfazPlanta extends JFrame{
 				if(tabla.getSelectedRow() < 0) {
 					JOptionPane.showMessageDialog(null, "Seleccione una planta en la tabla para que pueda ser modificada.");
 				} else {
-					new EditarPlanta(datos, plantas.get(tabla.getSelectedRow()));
+					new EditarPlanta(datos, plantas.get(tabla.getSelectedRow()), true);
 					dispose();
 				}
 			}
 		});
-		bEditar.setBounds(365, 10, 85, 35);
+		bEditar.setBounds(470, 10, 85, 35);
 		pCuerpo.add(bEditar);
 		
 		bEliminar = new JButton("Eliminar");
@@ -149,29 +145,18 @@ public class InterfazPlanta extends JFrame{
 				if(tabla.getSelectedRow() < 0) {
 					JOptionPane.showMessageDialog(null, "Seleccione la planta que desea eliminar.");
 				} else {
-					int mensaje = new JOptionPane().showConfirmDialog(null, "¿Estás seguro de que desea eliminar la Planta?", "Mensaje", JOptionPane.YES_NO_OPTION);
+					int mensaje = new JOptionPane().showConfirmDialog(null, "¿Estás seguro de que desea eliminar la planta?", "Mensaje", JOptionPane.YES_NO_OPTION);
 					if(mensaje == JOptionPane.YES_OPTION) {
-						//TODO Eliminar un producto
+						//TODO problema en la funcion borrar planta, corregir
+						datos.mapa.borrarPlanta(plantas.get(tabla.getSelectedRow()));
+						new InterfazPlanta(datos);
+						dispose();
 					}
 				}
 			}
 		});
-		bEliminar.setBounds(455, 10, 85, 35);
+		bEliminar.setBounds(560, 10, 85, 35);
 		pCuerpo.add(bEliminar);
-
-		
-		bBuscar = new JButton("Buscar");
-		bBuscar.setBackground(c2);
-		bBuscar.setFont(new Font("Tahoma", 0, 14));
-		bBuscar.setForeground(c0);
-		bBuscar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//
-			}
-		});
-		bBuscar.setBounds(545, 10, 100, 35);
-		pCuerpo.add(bBuscar);
 		
 		bAtras = new JButton("Atrás");
 		bAtras.setBackground(c2);
@@ -188,14 +173,7 @@ public class InterfazPlanta extends JFrame{
 		pCuerpo.add(bAtras);
 		
 		
-		
-		
-		
 		this.setVisible(true);
 	}
-		
-	public static void main(String[] args) {
-//		InterfazPlanta interfazPlanta = new InterfazPlanta();
-		
-	}
+
 }

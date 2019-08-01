@@ -38,14 +38,7 @@ public class InterfazVehiculo extends JFrame{
 	private JButton bCrear;
 	private JButton bEditar;
 	private JButton bEliminar;
-	private JButton bBuscar;
 	private JButton bAtras;
-//	private JComboBox<TipoBusquedaInsumo> cbTipoBusqueda;
-	private ButtonGroup grupoBotones;
-	private JRadioButton rbAsc, rbDesc;
-	private JLabel lNombre, lCostoMin, lCostoMax, lStockMin, lStockMax;
-	private JTextField tfNombre, tfCostoMin, tfCostoMax, tfStockMin, tfStockMax;
-	private JButton bBuscarPorTipo, bAtrasBusqueda;
 	private Color c0;
 	private Color c1;
 	private Color c2;
@@ -98,10 +91,6 @@ public class InterfazVehiculo extends JFrame{
 		pCuerpo.add(lCamiones);
 		
 		
-		//
-//		vehiculos = new ArrayList<Vehiculo>();
-		//
-		
 		//Tabla
 		ModeloTablaVehiculo mtv = new ModeloTablaVehiculo(vehiculos);
 		tabla = new JTable(mtv);
@@ -135,11 +124,11 @@ public class InterfazVehiculo extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Vehiculo vehiculo = new Vehiculo();
-				new EditarVehiculo(datos, vehiculo);
+				new EditarVehiculo(datos, vehiculo, false);
 				dispose();
 			}
 		});
-		bCrear.setBounds(275, 10, 85, 35);
+		bCrear.setBounds(380, 10, 85, 35);
 		pCuerpo.add(bCrear);
 		
 		bEditar = new JButton("Editar");
@@ -152,12 +141,12 @@ public class InterfazVehiculo extends JFrame{
 				if(tabla.getSelectedRow() < 0) {
 					JOptionPane.showMessageDialog(null, "Seleccione un vehículo en la tabla para que pueda ser modificado.");
 				} else {
-					new EditarVehiculo(datos, vehiculos.get(tabla.getSelectedRow()));
+					new EditarVehiculo(datos, vehiculos.get(tabla.getSelectedRow()), true);
 					dispose();
 				}
 			}
 		});
-		bEditar.setBounds(365, 10, 85, 35);
+		bEditar.setBounds(470, 10, 85, 35);
 		pCuerpo.add(bEditar);
 		
 		bEliminar = new JButton("Eliminar");
@@ -172,30 +161,17 @@ public class InterfazVehiculo extends JFrame{
 				} else {
 					int mensaje = new JOptionPane().showConfirmDialog(null, "¿Estás seguro de que desea eliminar el vehículo?", "Mensaje", JOptionPane.YES_NO_OPTION);
 					if(mensaje == JOptionPane.YES_OPTION) {
-						//TODO Eliminar un producto
+						datos.mapa.eliminarVehiculo(vehiculos.get(tabla.getSelectedRow()));
+						new InterfazVehiculo(datos, new ArrayList<Vehiculo>(datos.mapa.getVehiculosAL()));
+						dispose();
 					}
 				}
 			}
 		});
-		bEliminar.setBounds(455, 10, 85, 35);
+		bEliminar.setBounds(560, 10, 85, 35);
 		pCuerpo.add(bEliminar);
 
-		
-		bBuscar = new JButton("Buscar");
-		bBuscar.setBackground(c2);
-		bBuscar.setFont(new Font("Tahoma", 0, 14));
-		bBuscar.setForeground(c0);
-		bBuscar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-//				new BuscarInsumo();
-//				buscarCamion();
-				pCuerpo.setVisible(false);
-			}
-		});
-		bBuscar.setBounds(545, 10, 100, 35);
-		pCuerpo.add(bBuscar);
-		
+		//Botón Atras
 		bAtras = new JButton("Atrás");
 		bAtras.setBackground(c2);
 		bAtras.setFont(new Font("Tahoma", 0, 14));
@@ -214,264 +190,4 @@ public class InterfazVehiculo extends JFrame{
 		this.setVisible(true);
 	}
 	
-	public static void main(String[] args) {
-		
-//		InterfazVehiculo interfazCamion = new InterfazVehiculo();
-//		interfazInsumo.setBounds(0, 0, 700, 600);
-//		interfazInsumo.setVisible(true);
-//		interfazInsumo.setResizable(false);
-//		interfazInsumo.setLocationRelativeTo(null);
-	}
-//	
-//	public void buscarCamion() {
-//		
-//		pCuerpoBusqueda = new JPanel();
-//		pCuerpoBusqueda.setLayout(null);
-//		pCuerpoBusqueda.setBounds(10, 130, 660, 415);
-//		pCuerpoBusqueda.setBackground(c1);
-//		this.add(pCuerpoBusqueda);
-//		this.repaint();
-//		
-//		lBuscar = new JLabel("Buscar Insumo por:");
-//		lBuscar.setFont(new Font("Tahoma", 1, 24));
-//		lBuscar.setForeground(c0);
-//		lBuscar.setBounds(30, 20, 250, 30);
-//		pCuerpoBusqueda.add(lBuscar);
-//		
-////		cbTipoBusqueda = new JComboBox<TipoBusquedaInsumo>();
-////		cbTipoBusqueda.setModel(new DefaultComboBoxModel(TipoBusquedaInsumo.values()));
-////		cbTipoBusqueda.setBounds(300, 25, 120, 25);
-////		cbTipoBusqueda.setBackground(c0);
-////		cbTipoBusqueda.setFont(new Font("Tahoma", 0, 16));
-////		cbTipoBusqueda.setForeground(c3);
-////		pCuerpoBusqueda.add(cbTipoBusqueda);
-//		
-//		rbAsc = new JRadioButton("Ascendente");
-//		rbAsc.setBounds(450, 20, 120, 25);
-//		rbAsc.setBackground(c1);
-//		rbAsc.setFont(new Font("Tahoma", 1, 14));
-//		rbAsc.setForeground(c0);
-//		pCuerpoBusqueda.add(rbAsc);
-//		
-//		rbDesc = new JRadioButton("Descendente");
-//		rbDesc.setBounds(450, 45, 130, 25);
-//		rbDesc.setBackground(c1);
-//		rbDesc.setFont(new Font("Tahoma", 1, 14));
-//		rbDesc.setForeground(c0);
-//		pCuerpoBusqueda.add(rbDesc);
-//		
-//		grupoBotones = new ButtonGroup();
-//		grupoBotones.add(rbAsc);
-//		grupoBotones.add(rbDesc);
-//		
-//		//Nombre
-//		lNombre = new JLabel("Nombre: ");
-//		lNombre.setVisible(true);
-//		lNombre.setFont(new Font("Tahoma", 1, 16));
-//		lNombre.setForeground(c0);
-//		lNombre.setBounds(60, 90, 150, 30);
-//		pCuerpoBusqueda.add(lNombre);
-//		
-//		tfNombre = new JTextField();
-//		tfNombre.setVisible(true);
-//		tfNombre.setBounds(150, 92, 200, 24);
-//		tfNombre.setBackground(c0);
-//		tfNombre.setFont(new Font("Tahoma", 0, 14));
-//		tfNombre.setForeground(c3);
-//		tfNombre.setHorizontalAlignment(JTextField.RIGHT);
-//		pCuerpoBusqueda.add(tfNombre);
-//		
-//		//Costo
-//		lCostoMin = new JLabel("Costo mínimo: ");
-//		lCostoMin.setVisible(false);
-//		lCostoMin.setFont(new Font("Tahoma", 1, 16));
-//		lCostoMin.setForeground(c0);
-//		lCostoMin.setBounds(60, 90, 150, 30);
-//		pCuerpoBusqueda.add(lCostoMin);
-//		
-//		tfCostoMin = new JTextField();
-//		tfCostoMin.setVisible(false);
-//		tfCostoMin.setBounds(200, 92, 200, 24);
-//		tfCostoMin.setBackground(c0);
-//		tfCostoMin.setFont(new Font("Tahoma", 0, 14));
-//		tfCostoMin.setForeground(c3);
-//		tfCostoMin.setHorizontalAlignment(JTextField.RIGHT);
-//		pCuerpoBusqueda.add(tfCostoMin);
-//		
-//		lCostoMax = new JLabel("Costo máximo: ");
-//		lCostoMax.setVisible(false);
-//		lCostoMax.setFont(new Font("Tahoma", 1, 16));
-//		lCostoMax.setForeground(c0);
-//		lCostoMax.setBounds(60, 140, 150, 30);
-//		pCuerpoBusqueda.add(lCostoMax);
-//		
-//		tfCostoMax = new JTextField();
-//		tfCostoMax.setVisible(false);
-//		tfCostoMax.setBounds(200, 142, 200, 24);
-//		tfCostoMax.setBackground(c0);
-//		tfCostoMax.setFont(new Font("Tahoma", 0, 14));
-//		tfCostoMax.setForeground(c3);
-//		tfCostoMax.setHorizontalAlignment(JTextField.RIGHT);
-//		pCuerpoBusqueda.add(tfCostoMax);
-//		
-//		//Stock
-//		lStockMin = new JLabel("Stock mínimo: ");
-//		lStockMin.setVisible(false);
-//		lStockMin.setFont(new Font("Tahoma", 1, 16));
-//		lStockMin.setForeground(c0);
-//		lStockMin.setBounds(60, 90, 150, 30);
-//		pCuerpoBusqueda.add(lStockMin);
-//		
-//		tfStockMin = new JTextField();
-//		tfStockMin.setVisible(false);
-//		tfStockMin.setBounds(200, 92, 200, 24);
-//		tfStockMin.setBackground(c0);
-//		tfStockMin.setFont(new Font("Tahoma", 0, 14));
-//		tfStockMin.setForeground(c3);
-//		tfStockMin.setHorizontalAlignment(JTextField.RIGHT);
-//		pCuerpoBusqueda.add(tfStockMin);
-//		
-//		lStockMax = new JLabel("Stock máximo: ");
-//		lStockMax.setVisible(false);
-//		lStockMax.setFont(new Font("Tahoma", 1, 16));
-//		lStockMax.setForeground(c0);
-//		lStockMax.setBounds(60, 140, 150, 30);
-//		pCuerpoBusqueda.add(lStockMax);
-//		
-//		tfStockMax = new JTextField();
-//		tfStockMax.setVisible(false);
-//		tfStockMax.setBounds(200, 142, 200, 24);
-//		tfStockMax.setBackground(c0);
-//		tfStockMax.setFont(new Font("Tahoma", 0, 14));
-//		tfStockMax.setForeground(c3);
-//		tfStockMax.setHorizontalAlignment(JTextField.RIGHT);
-//		pCuerpoBusqueda.add(tfStockMax);
-//		
-//		cbTipoBusqueda.addActionListener(new ActionListener() {		
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//				if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.NOMBRE) {
-//					
-//					lNombre.setVisible(true);
-//					tfNombre.setVisible(true);
-//					lCostoMax.setVisible(false);
-//					lCostoMin.setVisible(false);
-//					tfCostoMax.setVisible(false);
-//					tfCostoMin.setVisible(false);
-//					lStockMax.setVisible(false);
-//					lStockMin.setVisible(false);
-//					tfStockMax.setVisible(false);
-//					tfStockMin.setVisible(false);
-//					repaint();
-//					
-//				} else if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.COSTO){
-//						
-//					lNombre.setVisible(false);
-//					tfNombre.setVisible(false);
-//					lCostoMax.setVisible(true);
-//					lCostoMin.setVisible(true);
-//					tfCostoMax.setVisible(true);
-//					tfCostoMin.setVisible(true);
-//					lStockMax.setVisible(false);
-//					lStockMin.setVisible(false);
-//					tfStockMax.setVisible(false);
-//					tfStockMin.setVisible(false);
-//					
-//					repaint();
-//					
-//					
-//				} else if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.STOCK) {
-//					
-//					lNombre.setVisible(false);
-//					tfNombre.setVisible(false);
-//					lCostoMax.setVisible(false);
-//					lCostoMin.setVisible(false);
-//					tfCostoMax.setVisible(false);
-//					tfCostoMin.setVisible(false);
-//					lStockMax.setVisible(true);
-//					lStockMin.setVisible(true);
-//					tfStockMax.setVisible(true);
-//					tfStockMin.setVisible(true);
-//					repaint();
-//				}
-//			}
-//		});
-//		
-//		//Botón Buscar
-//		bBuscarPorTipo = new JButton("Buscar");
-//		bBuscarPorTipo.setBackground(c2);
-//		bBuscarPorTipo.setFont(new Font("Tahoma", 1, 22));
-//		bBuscarPorTipo.setForeground(c0);
-//		bBuscarPorTipo.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				
-//				if(!(rbAsc.isSelected() || rbDesc.isSelected())) {
-//					JOptionPane.showMessageDialog(null, "Seleccione si desea realizar la búsqueda ascendente o descendente.");
-//				} else {
-//					
-//					if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.NOMBRE) {
-//						
-//						if (rbAsc.isSelected()) {
-//							//TODO Busqueda por Nombre Ascendente
-//							
-//						} else if (rbDesc.isSelected()) {
-//							//TODO Busqueda por Nombre Descendente
-//							
-//						}
-//						
-//						pCuerpoBusqueda.setVisible(false);
-//						pCuerpo.setVisible(true);
-//					} else if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.COSTO){
-//							
-//						if (rbAsc.isSelected()) {
-//							//TODO Busqueda por Costo Ascendente
-//							
-//						} else if (rbDesc.isSelected()) {
-//							//TODO Busqueda por Costo Descendente
-//							
-//						}
-//						
-//						pCuerpoBusqueda.setVisible(false);
-//						pCuerpo.setVisible(true);
-//						
-//					} else if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.STOCK) {
-//						
-//						if (rbAsc.isSelected()) {
-//							//TODO Busqueda por Stock Ascendente
-//							
-//						} else if (rbDesc.isSelected()) {
-//							//TODO Busqueda por Stock Descendente
-//							
-//						}
-//						
-//						pCuerpoBusqueda.setVisible(false);
-//						pCuerpo.setVisible(true);
-//					}
-//				
-//				}
-//
-//			}
-//		});
-//		bBuscarPorTipo.setBounds(250, 180, 155, 55);
-//		pCuerpoBusqueda.add(bBuscarPorTipo);
-//		
-//		//Botón Atras de Busqueda
-//		bAtrasBusqueda = new JButton("Atrás");
-//		bAtrasBusqueda.setBackground(c2);
-//		bAtrasBusqueda.setFont(new Font("Tahoma", 0, 14));
-//		bAtrasBusqueda.setForeground(c0);
-//		bAtrasBusqueda.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				pCuerpoBusqueda.setVisible(false);
-//				pCuerpo.setVisible(true);
-//			}
-//		});
-//		bAtrasBusqueda.setBounds(545, 370, 100, 35);
-//		pCuerpoBusqueda.add(bAtrasBusqueda);
-//		
-//	}
 }

@@ -38,20 +38,20 @@ public class Vehiculo {
 		this.pesoMax = pesoMax;
 	}
 
-//	public Vehiculo(String ma, String nom, Double pesoM) {
-//		this(pesoM);
-//		this.nombre = nom;
-//		this.marca = ma;
-//	}
-//
-//	public Vehiculo(Double pesoM) {
-//		this.pedidos = new ArrayList<Pedido>();
-//		this.id = this.hashCode();
-//		this.pesoMax = pesoM;
+	public Vehiculo(String ma, String modelo, Double pesoM) {
+		this(pesoM);
+		this.marca = ma;
+		this.modelo = modelo;
+	}
+
+	public Vehiculo(Double pesoM) {
+		this.pedidos = new ArrayList<Pedido>();
+		this.id = this.hashCode();
+		this.pesoMax = pesoM;
 //		this.nombre = "";
-//		this.marca = "";
-//	}
-//	
+		this.marca = "";
+	}
+	
 	public List<Pedido> getPedidos() {
 		return pedidos;
 	}

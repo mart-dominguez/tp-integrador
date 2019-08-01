@@ -10,15 +10,16 @@ public class Pedido implements Comparable<Pedido>{
 	private Planta destino;
 	private Double precio;
 	
-	public Pedido(Insumo i,Integer cant,Planta or,Planta des) {
+	public Pedido(Insumo insumo, Integer cant, Planta origen, Planta destino) {
 		this.id = this.hashCode();
-		this.insumo = i;
+		this.insumo = insumo;
 		this.cantidad= cant;
-		this.peso= cant*i.peso;
-		this.origen = or;
-		this.destino = des;
-		this.precio = i.costoX(cant);
+		this.peso= cant*insumo.peso;
+		this.origen = origen;
+		this.destino = destino;
+		this.precio = insumo.costoX(cant);
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Pedido) {

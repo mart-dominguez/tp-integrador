@@ -68,25 +68,25 @@ public class IniciarSeccion extends JFrame{
 		add(pCuerpo);
 		
 		lUsuario = new JLabel("Usuario:");
-		lUsuario.setBounds(35, 20, 150, 35);
+		lUsuario.setBounds(125, 20, 150, 35);
 		lUsuario.setFont(new Font("Tahoma", 1, 14));
 		lUsuario.setForeground(c0);
 		pCuerpo.add(lUsuario);
 		
 		tfUsuario = new JTextField();
-		tfUsuario.setBounds(35, 55, 200, 25);
+		tfUsuario.setBounds(125, 55, 200, 25);
 		tfUsuario.setFont(new Font("Tahoma", 0, 14));
 		tfUsuario.setForeground(c3);
 		pCuerpo.add(tfUsuario);
 		
 		lPass = new JLabel("Contraseña:");
-		lPass.setBounds(35, 90, 150, 35);
+		lPass.setBounds(125, 90, 150, 35);
 		lPass.setFont(new Font("Tahoma", 1, 14));
 		lPass.setForeground(c0);
 		pCuerpo.add(lPass);
 		
 		pfPass = new JPasswordField();
-		pfPass.setBounds(35, 125, 200, 25);
+		pfPass.setBounds(125, 125, 200, 25);
 		pfPass.setBackground(c0);
 		pfPass.setFont(new Font("Tahoma", 0, 14));
 		pfPass.setForeground(c3);
@@ -110,7 +110,7 @@ public class IniciarSeccion extends JFrame{
 				}
 			}
 		});
-		bAcceder.setBounds(35, 180, 200, 35);
+		bAcceder.setBounds(125, 180, 200, 35);
 		pCuerpo.add(bAcceder);
 		
 		this.setVisible(true);

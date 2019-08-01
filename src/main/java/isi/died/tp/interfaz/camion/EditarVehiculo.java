@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -32,7 +34,7 @@ public class EditarVehiculo extends JFrame {
 	private Color c3;
 	private Vehiculo vehiculo;
 
-	public EditarVehiculo(Datos datos, Vehiculo vehiculo) {
+	public EditarVehiculo(Datos datos, Vehiculo vehiculo, boolean b) {
 
 		this.vehiculo = vehiculo;
 
@@ -203,7 +205,7 @@ public class EditarVehiculo extends JFrame {
 		bCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new InterfazVehiculo(datos, datos.vehiculos);
+				new InterfazVehiculo(datos, new ArrayList<Vehiculo>(datos.mapa.getVehiculosAL()));
 				dispose();
 			}
 		});
@@ -218,7 +220,20 @@ public class EditarVehiculo extends JFrame {
 		bGuardar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Guardar Vehiculo creado
+				if(new JOptionPane().showConfirmDialog(null, "¿Desea cambiar los datos del insumo?", "Mensaje", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					vehiculo.setMarca(tfMarca.getText());
+					vehiculo.setModelo(tfModelo.getText());
+					vehiculo.setDominio(tfDominio.getText());
+					vehiculo.setAnio(Integer.valueOf(tfAnio.getText()));
+					vehiculo.setCostoKm(Double.valueOf(tfCostoKm.getText()));
+					vehiculo.setPesoMax(Double.valueOf(tfCapacidad.getText()));
+					vehiculo.setTransportaLiquido(cbLiquido.isSelected());
+					if (!b) {
+						datos.mapa.agregarVehiculo(vehiculo);
+					}
+					new InterfazVehiculo(datos, new ArrayList<Vehiculo>(datos.mapa.getVehiculosAL()));
+					dispose();
+				}
 			}
 		});
 		bGuardar.setBounds(560, 360, 85, 35);
@@ -226,7 +241,6 @@ public class EditarVehiculo extends JFrame {
 
 		this.setVisible(true);
 	}
-
 
 	public static void main(String[] args) {
 //		Vehiculo camion = new Vehiculo();

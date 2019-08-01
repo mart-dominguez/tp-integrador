@@ -14,19 +14,19 @@ import javax.swing.JPanel;
 import isi.died.tp.datos.Datos;
 import isi.died.tp.dominio.Insumo;
 import isi.died.tp.dominio.Planta;
-import isi.died.tp.interfaz.Planta.InterfazPlanta;
+import isi.died.tp.dominio.Vehiculo;
 import isi.died.tp.interfaz.camion.InterfazVehiculo;
+import isi.died.tp.interfaz.general.InterfazGeneral;
 import isi.died.tp.interfaz.insumo.InterfazInsumo;
+import isi.died.tp.interfaz.planta.InterfazPlanta;
+import isi.died.tp.logistica.InterfazLogistica;
 
 public class Menu extends JFrame {
 	private JPanel pNombre;
 	private JPanel pCuerpo;
 	private JLabel lNombreEmpresa;
 	private JLabel lTitulo;
-	private JButton bPlanta;
-	private JButton bCamiones;
-	private JButton bInsumos;
-	private JButton bRutas;
+	private JButton bLogistica, bGeneral, bPlanta, bCamiones, bInsumos, bRutas;
 	private Color c0;
 	private Color c1;
 	private Color c2;
@@ -65,39 +65,42 @@ public class Menu extends JFrame {
 
 		pCuerpo = new JPanel();
 		pCuerpo.setLayout(null);
-		pCuerpo.setBounds(10, 130, 660, 210);
+		pCuerpo.setBounds(10, 130, 660, 300);
 		pCuerpo.setBackground(c1);
 		add(pCuerpo);
-
-		bPlanta = new JButton("Plantas");
-		bPlanta.setBackground(c2);
-		bPlanta.setFont(new Font("Tahoma", 0, 35));
-		bPlanta.setForeground(c0);
-		bPlanta.addActionListener(new ActionListener() {
+		
+		
+		bLogistica = new JButton("Logística");
+		bLogistica.setBackground(c2);
+		bLogistica.setFont(new Font("Tahoma", 0, 35));
+		bLogistica.setForeground(c0);
+		bLogistica.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new InterfazPlanta(datos, datos.plantas);
+				new InterfazLogistica(datos);
 				dispose();
 			}
 		});
-		bPlanta.setBounds(30, 20, 300, 80);
-		pCuerpo.add(bPlanta);
-
-		bRutas = new JButton("Rutas");
-		bRutas.setBackground(c2);
-		bRutas.setFont(new Font("Tahoma", 0, 35));
-		bRutas.setForeground(c0);
-		bRutas.addActionListener(new ActionListener() {
+		bLogistica.setBounds(30, 20, 300, 80);
+		pCuerpo.add(bLogistica);
+		
+		bGeneral = new JButton("Gest. General");
+		bGeneral.setBackground(c2);
+		bGeneral.setFont(new Font("Tahoma", 0, 35));
+		bGeneral.setForeground(c0);
+		bGeneral.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
+				new InterfazGeneral(datos);
+				dispose();
 			}
 		});
-		bRutas.setBounds(340, 20, 300, 80);
-		pCuerpo.add(bRutas);
+		bGeneral.setBounds(340, 20, 300, 80);
+		pCuerpo.add(bGeneral);
+
+
 
 		bInsumos = new JButton("Insumos");
 		bInsumos.setBackground(c2);
@@ -107,7 +110,8 @@ public class Menu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				InterfazInsumo interfazInsumo = new InterfazInsumo(datos, datos.insumos);
+//				ArrayList insumos = (ArrayList) datos.mapa.getInsumos().inOrden();
+				InterfazInsumo interfazInsumo = new InterfazInsumo(datos, new ArrayList<Insumo>(datos.mapa.getInsumos().inOrden()));
 				dispose();
 			}
 		});
@@ -121,12 +125,43 @@ public class Menu extends JFrame {
 		bCamiones.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new InterfazVehiculo(datos, datos.vehiculos);
+				ArrayList<Vehiculo> vehiculos = datos.mapa.getVehiculosAL();
+				new InterfazVehiculo(datos, vehiculos);
+				dispose();
 			}
 		});
 		bCamiones.setBounds(340, 110, 300, 80);
 		pCuerpo.add(bCamiones);
 		
+		bPlanta = new JButton("Plantas");
+		bPlanta.setBackground(c2);
+		bPlanta.setFont(new Font("Tahoma", 0, 35));
+		bPlanta.setForeground(c0);
+		bPlanta.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new InterfazPlanta(datos);
+				dispose();
+			}
+		});
+		bPlanta.setBounds(30, 200, 300, 80);
+		pCuerpo.add(bPlanta);
+		
+		bRutas = new JButton("Rutas");
+		bRutas.setBackground(c2);
+		bRutas.setFont(new Font("Tahoma", 0, 35));
+		bRutas.setForeground(c0);
+		bRutas.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		bRutas.setBounds(340, 200, 300, 80);
+		pCuerpo.add(bRutas);
 		
 		this.setVisible(true);
 	}

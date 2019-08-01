@@ -22,6 +22,34 @@ public class Mapa extends Grafo<Planta> {
 	private HashSet<Pedido> pedidos;
 	private HashSet<Vehiculo> vehiculos;
 
+	public Mapa() {
+		super();
+		this.insumos = null;
+		this.pedidos = new HashSet<Pedido>();
+		this.vehiculos = new HashSet<Vehiculo>();
+	}
+	
+	public ArrayList<Planta> getPlantas(){
+		List<Vertice<Planta>> vertices = getVertices();
+		ArrayList<Planta> al = new ArrayList<Planta>();
+		for (Vertice<Planta> vertice : vertices) {
+			al.add((Planta) vertice.getValor());
+		}
+		return al;
+	}
+	
+	public ArbolBinarioBusqueda<Insumo> getInsumos() {
+		return insumos;
+	}
+
+	public ArrayList<Vehiculo> getVehiculosAL(){
+		return new ArrayList<>(vehiculos);
+	}
+	
+	public void eliminarVehiculo(Vehiculo v) {
+		this.vehiculos.remove(v);
+	}
+	
 	public void borrarInsumo(Insumo i) {
 		this.insumos = (ArbolBinarioBusqueda<Insumo>) this.insumos.borrarElemento(i);
 	}
@@ -55,12 +83,6 @@ public class Mapa extends Grafo<Planta> {
 		}
 	}
 
-	public Mapa() {
-		super();
-		this.insumos = null;
-		this.pedidos = new HashSet<Pedido>();
-		this.vehiculos = new HashSet<Vehiculo>();
-	}
 
 	public void agregarInsumo(Insumo i) {
 		if (this.insumos == null) {

@@ -25,7 +25,7 @@ public class RutaG {
 	}
 	public void paintComponent(Graphics g) {
     	g.setColor(Color.BLACK);
-    	g.drawString("**El lugar de las Plantas es elegido aleatoriamente, arrastelos para cambiarlo**", 10, 20);
+//    	g.drawString("**El lugar de las Plantas es elegido aleatoriamente, arrastelos para cambiarlo**", 10, 20);
     	int x = destino.getX()-origen.getX();
     	int y = destino.getY()-origen.getY();
     	g.setColor(cr);

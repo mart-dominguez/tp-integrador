@@ -1,15 +1,17 @@
-package isi.died.tp.interfaz.Planta;
+package isi.died.tp.interfaz.planta;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -19,6 +21,8 @@ import isi.died.tp.datos.Datos;
 import isi.died.tp.dominio.Insumo;
 import isi.died.tp.dominio.Planta;
 import isi.died.tp.dominio.UnidadMedida;
+import isi.died.tp.dominio.Vehiculo;
+import isi.died.tp.interfaz.camion.InterfazVehiculo;
 import isi.died.tp.interfaz.insumo.EditarInsumo;
 import isi.died.tp.interfaz.insumo.InterfazInsumo;
 
@@ -41,7 +45,7 @@ public class EditarPlanta extends JFrame{
 	private Color c2;
 	private Color c3;
 
-	public EditarPlanta(Datos datos, Planta planta) {
+	public EditarPlanta(Datos datos, Planta planta, boolean b) {
 		
 		c0 = new Color(232, 232, 232);
 		c1 = new Color(85, 136, 163);
@@ -124,7 +128,7 @@ public class EditarPlanta extends JFrame{
 		bCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new InterfazPlanta(datos, datos.plantas);
+				new InterfazPlanta(datos);
 				dispose();
 			}
 		});
@@ -139,7 +143,15 @@ public class EditarPlanta extends JFrame{
 		bGuardar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO Guardar Planta
+				//Guardo Planta
+				if(new JOptionPane().showConfirmDialog(null, "¿Desea cambiar los datos del insumo?", "Mensaje", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					planta.setNombre(tfNombre.getText());
+					if (!b) {
+						datos.mapa.addNodo(planta);
+					}
+					new InterfazPlanta(datos);
+					dispose();
+				}
 			}
 		});
 		bGuardar.setBounds(560, 360, 85, 35);
@@ -149,7 +161,5 @@ public class EditarPlanta extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-//		Planta planta = new Planta("Nombre planta1");
-//		EditarPlanta editarPlanta = new EditarPlanta(planta);
 	}
 }

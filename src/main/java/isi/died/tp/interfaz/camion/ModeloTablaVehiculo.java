@@ -28,7 +28,7 @@ public class ModeloTablaVehiculo extends DefaultTableModel{
 			i++;
 		}
 	}
-
+	
 	public int getColumnCount() {
 		return columnNames.length;
 	}

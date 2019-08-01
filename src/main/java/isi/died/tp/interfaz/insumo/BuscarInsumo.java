@@ -4,34 +4,35 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import isi.died.tp.datos.Datos;
 import isi.died.tp.dominio.Insumo;
-import isi.died.tp.dominio.UnidadMedida;
+import isi.died.tp.interfaz.TipoBusquedaInsumo;
 
-public class BuscarInsumo extends JFrame{
+public class BuscarInsumo extends JFrame{	//TODO borrar si no se utiliza
 	private JPanel pNombre;
 	private JPanel pCuerpo;
 	private JLabel lNombreEmpresa;
-	private JLabel lTitulo;
-	private JLabel lInsumos;
-	private JLabel lId, lNombre, lCosto, lStock, lPeso, lUnidadMedida, lRefrigerado, lDescripcion;
-	private JComboBox<UnidadMedida> cbUnidadMedida;
-	private JCheckBox checkRefrigerado;
-	private JTextField tfId, tfNombre, tfCosto, tfStock, tfPeso;
-	private JScrollPane scrollDescripcion;
-	private JTextArea taDescripcion;
-	private JButton bGuardar, bCancelar;
+	private JLabel lTitulo, lBuscar;;
+	private JComboBox<TipoBusquedaInsumo> cbTipoBusqueda;
+	private ButtonGroup grupoBotones;
+	private JRadioButton rbAsc, rbDesc;
+	private JLabel lNombre, lCostoMin, lCostoMax, lStockMin, lStockMax;
+	private JTextField tfNombre, tfCostoMin, tfCostoMax, tfStockMin, tfStockMax;
+	private JButton bBuscarPorTipo, bAtrasBusqueda;
+	private JButton bCancelar;
 	private Color c0;
 	private Color c1;
 	private Color c2;
@@ -40,7 +41,7 @@ public class BuscarInsumo extends JFrame{
 	
 	
 	
-	public BuscarInsumo(){
+	public BuscarInsumo(Datos datos){
 		//TODO Modificar todo, solo es una copia como plantilla
 		
 		c0 = new Color(232, 232, 232);
@@ -56,177 +57,259 @@ public class BuscarInsumo extends JFrame{
 		this.setBackground(c0);
 		this.setTitle("Buscar Insumo - Gestion de Logística");
 
-//		pNombre = new JPanel();
-//		pNombre.setBounds(10, 20, 660, 100);
-//		pNombre.setBackground(c1);
-//		this.add(pNombre);
-//
-//		lNombreEmpresa = new JLabel("   Nombre Empresa   ");
-//		lNombreEmpresa.setFont(new Font("Tahoma", 3, 45));
-//		lNombreEmpresa.setForeground(c0);
-//		pNombre.add(lNombreEmpresa);
-//
-//		lTitulo = new JLabel("--- Gestión Logística ---");
-//		lTitulo.setFont(new Font("Tahoma", 0, 24));
-//		lTitulo.setForeground(c0);
-//		pNombre.add(lTitulo);
+		pNombre = new JPanel();
+		pNombre.setBounds(10, 20, 660, 100);
+		pNombre.setBackground(c1);
+		this.add(pNombre);
+
+		lNombreEmpresa = new JLabel("   Nombre Empresa   ");
+		lNombreEmpresa.setFont(new Font("Tahoma", 3, 45));
+		lNombreEmpresa.setForeground(c0);
+		pNombre.add(lNombreEmpresa);
+
+		lTitulo = new JLabel("--- Gestión Logística ---");
+		lTitulo.setFont(new Font("Tahoma", 0, 24));
+		lTitulo.setForeground(c0);
+		pNombre.add(lTitulo);
 
 		pCuerpo = new JPanel();
 		pCuerpo.setLayout(null);
-		pCuerpo.setBounds(10, 10, 465, 440);
+		pCuerpo.setBounds(10, 130, 660, 415);
 		pCuerpo.setBackground(c1);
 		this.add(pCuerpo);
-
-		lInsumos = new JLabel("Buscar Insumo por:");
-		lInsumos.setFont(new Font("Tahoma", 1, 16));
-		lInsumos.setForeground(c0);
-		lInsumos.setBounds(20, 10, 200, 30);
-		pCuerpo.add(lInsumos);
+		this.repaint();
 		
-//		//Id
-//		lId = new JLabel("ID: ");
-//		lId.setFont(new Font("Tahoma", 1, 16));
-//		lId.setForeground(c0);
-//		lId.setBounds(30, 50, 150, 30);
-//		pCuerpo.add(lId);
-//		
-//		tfId = new JTextField("");
-//		tfId.setBounds(120, 50, 200, 24);
-//		tfId.setBackground(c0);
-//		tfId.setFont(new Font("Tahoma", 0, 14));
-//		tfId.setForeground(c3);
-//		tfId.setHorizontalAlignment(JTextField.RIGHT);
-//		pCuerpo.add(tfId);
-//		
-//		//Nombre
-//		lNombre = new JLabel("Nombre: ");
-//		lNombre.setFont(new Font("Tahoma", 1, 16));
-//		lNombre.setForeground(c0);
-//		lNombre.setBounds(30, 90, 150, 30);
-//		pCuerpo.add(lNombre);
-//		
-//		tfNombre = new JTextField("");
-//		tfNombre.setBounds(120, 90, 200, 24);
-//		tfNombre.setBackground(c0);
-//		tfNombre.setFont(new Font("Tahoma", 0, 14));
-//		tfNombre.setForeground(c3);
-//		tfNombre.setHorizontalAlignment(JTextField.RIGHT);
-//		pCuerpo.add(tfNombre);
-//		
-//		//Costo
-//		lCosto = new JLabel("Costo: ");
-//		lCosto.setFont(new Font("Tahoma", 1, 16));
-//		lCosto.setForeground(c0);
-//		lCosto.setBounds(30, 130, 150, 30);
-//		pCuerpo.add(lCosto);
-//		
-//		tfCosto = new JTextField("");
-//		tfCosto.setBounds(120, 130, 200, 24);
-//		tfCosto.setBackground(c0);
-//		tfCosto.setFont(new Font("Tahoma", 0, 14));
-//		tfCosto.setForeground(c3);
-//		tfCosto.setHorizontalAlignment(JTextField.RIGHT);
-//		pCuerpo.add(tfCosto);
-//		
-//		//Stock
-//		lStock = new JLabel("Stock: ");
-//		lStock.setFont(new Font("Tahoma", 1, 16));
-//		lStock.setForeground(c0);
-//		lStock.setBounds(30, 170, 150, 30);
-//		pCuerpo.add(lStock);
-//		
-//		tfStock = new JTextField("");
-//		tfStock.setBounds(120, 170, 200, 24);
-//		tfStock.setBackground(c0);
-//		tfStock.setFont(new Font("Tahoma", 0, 14));
-//		tfStock.setForeground(c3);
-//		tfStock.setHorizontalAlignment(JTextField.RIGHT);
-//		pCuerpo.add(tfStock);
-//		
-//		//Peso
-//		lPeso = new JLabel("Peso: ");
-//		lPeso.setFont(new Font("Tahoma", 1, 16));
-//		lPeso.setForeground(c0);
-//		lPeso.setBounds(30, 210, 150, 30);
-//		pCuerpo.add(lPeso);
-//		
-//		tfPeso = new JTextField("");
-//		tfPeso.setBounds(120, 210, 200, 24);
-//		tfPeso.setBackground(c0);
-//		tfPeso.setFont(new Font("Tahoma", 0, 14));
-//		tfPeso.setForeground(c3);
-//		tfPeso.setHorizontalAlignment(JTextField.RIGHT);
-//		pCuerpo.add(tfPeso);
-//		
-//		//Unidad de Medida
-//		cbUnidadMedida = new JComboBox<UnidadMedida>();
-//		cbUnidadMedida.setModel(new DefaultComboBoxModel(UnidadMedida.values()));
-//		cbUnidadMedida.setBounds(340, 210, 80, 24);
-//		cbUnidadMedida.setBackground(c0);
-//		cbUnidadMedida.setFont(new Font("Tahoma", 0, 14));
-//		cbUnidadMedida.setForeground(c3);
-//		pCuerpo.add(cbUnidadMedida);
-//		
-//		//Refrigerado
-//		lRefrigerado = new JLabel("Refrigerado: ");
-//		lRefrigerado.setFont(new Font("Tahoma", 1, 16));
-//		lRefrigerado.setForeground(c0);
-//		lRefrigerado.setBounds(30, 250, 150, 30);
-//		pCuerpo.add(lRefrigerado);
-//		
-//		checkRefrigerado = new JCheckBox("", true);
-//		checkRefrigerado.setBackground(null);
-//		checkRefrigerado.setBounds(145, 250, 30, 30);
-//		checkRefrigerado.setSelected(true);
-//		pCuerpo.add(checkRefrigerado);
-//		
-//		//Descripción
-//		lDescripcion = new JLabel("Descripción: ");
-//		lDescripcion.setFont(new Font("Tahoma", 1, 16));
-//		lDescripcion.setForeground(c0);
-//		lDescripcion.setBounds(30, 290, 150, 30);
-//		pCuerpo.add(lDescripcion);
-//		
-//		taDescripcion = new JTextArea("");
-//		scrollDescripcion = new JScrollPane(taDescripcion);
-//		scrollDescripcion.setBounds(150, 295, 270, 100);
-//		taDescripcion.setBackground(c0);
-//		taDescripcion.setFont(new Font("Tahoma", 0, 14));
-//		taDescripcion.setForeground(c3);
-//		taDescripcion.setLineWrap(true);
-//		taDescripcion.setWrapStyleWord(true);
-//		pCuerpo.add(scrollDescripcion);
-//		
-//		
-//		//Cancelar
-//		bCancelar = new JButton("Cancelar");
-//		bCancelar.setBackground(c2);
-//		bCancelar.setFont(new Font("Tahoma", 0, 14));
-//		bCancelar.setForeground(c0);
-//		bCancelar.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				//
-//			}
-//		});
-//		bCancelar.setBounds(465, 360, 85, 35);
-//		pCuerpo.add(bCancelar);
-//		
-//		//Guardar
-//		bGuardar = new JButton("Guardar");
-//		bGuardar.setBackground(c2);
-//		bGuardar.setFont(new Font("Tahoma", 0, 14));
-//		bGuardar.setForeground(c0);
-//		bGuardar.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				//
-//			}
-//		});
-//		bGuardar.setBounds(560, 360, 85, 35);
-//		pCuerpo.add(bGuardar);
-
+		lBuscar = new JLabel("Buscar Insumo por:");
+		lBuscar.setFont(new Font("Tahoma", 1, 24));
+		lBuscar.setForeground(c0);
+		lBuscar.setBounds(30, 20, 250, 30);
+		pCuerpo.add(lBuscar);
 		
+		cbTipoBusqueda = new JComboBox<TipoBusquedaInsumo>();
+		cbTipoBusqueda.setModel(new DefaultComboBoxModel(TipoBusquedaInsumo.values()));
+		cbTipoBusqueda.setBounds(300, 25, 120, 25);
+		cbTipoBusqueda.setBackground(c0);
+		cbTipoBusqueda.setFont(new Font("Tahoma", 0, 16));
+		cbTipoBusqueda.setForeground(c3);
+		pCuerpo.add(cbTipoBusqueda);
+		
+		rbAsc = new JRadioButton("Ascendente");
+		rbAsc.setBounds(450, 20, 120, 25);
+		rbAsc.setBackground(c1);
+		rbAsc.setFont(new Font("Tahoma", 1, 14));
+		rbAsc.setForeground(c0);
+		pCuerpo.add(rbAsc);
+		
+		rbDesc = new JRadioButton("Descendente");
+		rbDesc.setBounds(450, 45, 130, 25);
+		rbDesc.setBackground(c1);
+		rbDesc.setFont(new Font("Tahoma", 1, 14));
+		rbDesc.setForeground(c0);
+		pCuerpo.add(rbDesc);
+		
+		grupoBotones = new ButtonGroup();
+		grupoBotones.add(rbAsc);
+		grupoBotones.add(rbDesc);
+		
+		//Nombre
+		lNombre = new JLabel("Nombre: ");
+		lNombre.setVisible(true);
+		lNombre.setFont(new Font("Tahoma", 1, 16));
+		lNombre.setForeground(c0);
+		lNombre.setBounds(60, 90, 150, 30);
+		pCuerpo.add(lNombre);
+		
+		tfNombre = new JTextField();
+		tfNombre.setVisible(true);
+		tfNombre.setBounds(150, 92, 200, 24);
+		tfNombre.setBackground(c0);
+		tfNombre.setFont(new Font("Tahoma", 0, 14));
+		tfNombre.setForeground(c3);
+		tfNombre.setHorizontalAlignment(JTextField.RIGHT);
+		pCuerpo.add(tfNombre);
+		
+		//Costo
+		lCostoMin = new JLabel("Costo mínimo: ");
+		lCostoMin.setVisible(false);
+		lCostoMin.setFont(new Font("Tahoma", 1, 16));
+		lCostoMin.setForeground(c0);
+		lCostoMin.setBounds(60, 90, 150, 30);
+		pCuerpo.add(lCostoMin);
+		
+		tfCostoMin = new JTextField();
+		tfCostoMin.setVisible(false);
+		tfCostoMin.setBounds(200, 92, 200, 24);
+		tfCostoMin.setBackground(c0);
+		tfCostoMin.setFont(new Font("Tahoma", 0, 14));
+		tfCostoMin.setForeground(c3);
+		tfCostoMin.setHorizontalAlignment(JTextField.RIGHT);
+		pCuerpo.add(tfCostoMin);
+		
+		lCostoMax = new JLabel("Costo máximo: ");
+		lCostoMax.setVisible(false);
+		lCostoMax.setFont(new Font("Tahoma", 1, 16));
+		lCostoMax.setForeground(c0);
+		lCostoMax.setBounds(60, 140, 150, 30);
+		pCuerpo.add(lCostoMax);
+		
+		tfCostoMax = new JTextField();
+		tfCostoMax.setVisible(false);
+		tfCostoMax.setBounds(200, 142, 200, 24);
+		tfCostoMax.setBackground(c0);
+		tfCostoMax.setFont(new Font("Tahoma", 0, 14));
+		tfCostoMax.setForeground(c3);
+		tfCostoMax.setHorizontalAlignment(JTextField.RIGHT);
+		pCuerpo.add(tfCostoMax);
+		
+		//Stock
+		lStockMin = new JLabel("Stock mínimo: ");
+		lStockMin.setVisible(false);
+		lStockMin.setFont(new Font("Tahoma", 1, 16));
+		lStockMin.setForeground(c0);
+		lStockMin.setBounds(60, 90, 150, 30);
+		pCuerpo.add(lStockMin);
+		
+		tfStockMin = new JTextField();
+		tfStockMin.setVisible(false);
+		tfStockMin.setBounds(200, 92, 200, 24);
+		tfStockMin.setBackground(c0);
+		tfStockMin.setFont(new Font("Tahoma", 0, 14));
+		tfStockMin.setForeground(c3);
+		tfStockMin.setHorizontalAlignment(JTextField.RIGHT);
+		pCuerpo.add(tfStockMin);
+		
+		lStockMax = new JLabel("Stock máximo: ");
+		lStockMax.setVisible(false);
+		lStockMax.setFont(new Font("Tahoma", 1, 16));
+		lStockMax.setForeground(c0);
+		lStockMax.setBounds(60, 140, 150, 30);
+		pCuerpo.add(lStockMax);
+		
+		tfStockMax = new JTextField();
+		tfStockMax.setVisible(false);
+		tfStockMax.setBounds(200, 142, 200, 24);
+		tfStockMax.setBackground(c0);
+		tfStockMax.setFont(new Font("Tahoma", 0, 14));
+		tfStockMax.setForeground(c3);
+		tfStockMax.setHorizontalAlignment(JTextField.RIGHT);
+		pCuerpo.add(tfStockMax);
+		
+		cbTipoBusqueda.addActionListener(new ActionListener() {		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.NOMBRE) {
+					
+					lNombre.setVisible(true);
+					tfNombre.setVisible(true);
+					lCostoMax.setVisible(false);
+					lCostoMin.setVisible(false);
+					tfCostoMax.setVisible(false);
+					tfCostoMin.setVisible(false);
+					lStockMax.setVisible(false);
+					lStockMin.setVisible(false);
+					tfStockMax.setVisible(false);
+					tfStockMin.setVisible(false);
+					repaint();
+					
+				} else if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.COSTO){
+						
+					lNombre.setVisible(false);
+					tfNombre.setVisible(false);
+					lCostoMax.setVisible(true);
+					lCostoMin.setVisible(true);
+					tfCostoMax.setVisible(true);
+					tfCostoMin.setVisible(true);
+					lStockMax.setVisible(false);
+					lStockMin.setVisible(false);
+					tfStockMax.setVisible(false);
+					tfStockMin.setVisible(false);
+					
+					repaint();
+					
+					
+				} else if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.STOCK) {
+					
+					lNombre.setVisible(false);
+					tfNombre.setVisible(false);
+					lCostoMax.setVisible(false);
+					lCostoMin.setVisible(false);
+					tfCostoMax.setVisible(false);
+					tfCostoMin.setVisible(false);
+					lStockMax.setVisible(true);
+					lStockMin.setVisible(true);
+					tfStockMax.setVisible(true);
+					tfStockMin.setVisible(true);
+					repaint();
+				}
+			}
+		});
+		
+		//Botón Buscar
+		bBuscarPorTipo = new JButton("Buscar");
+		bBuscarPorTipo.setBackground(c2);
+		bBuscarPorTipo.setFont(new Font("Tahoma", 1, 22));
+		bBuscarPorTipo.setForeground(c0);
+		bBuscarPorTipo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if(!(rbAsc.isSelected() || rbDesc.isSelected())) {
+					JOptionPane.showMessageDialog(null, "Seleccione si desea realizar la búsqueda ascendente o descendente.");
+				} else {
+					
+					if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.NOMBRE) {
+						
+						if (rbAsc.isSelected()) {
+							//TODO Busqueda por Nombre Ascendente
+							
+						} else if (rbDesc.isSelected()) {
+							//TODO Busqueda por Nombre Descendente
+							
+						}
+					} else if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.COSTO){
+							
+						if (rbAsc.isSelected()) {
+							//TODO Busqueda por Costo Ascendente
+							
+						} else if (rbDesc.isSelected()) {
+							//TODO Busqueda por Costo Descendente
+							
+						}
+
+					} else if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.STOCK) {
+						
+						if (rbAsc.isSelected()) {
+							//TODO Busqueda por Stock Ascendente
+							
+						} else if (rbDesc.isSelected()) {
+							//TODO Busqueda por Stock Descendente
+							
+						}
+
+					}
+				
+				}
+
+			}
+		});
+		bBuscarPorTipo.setBounds(250, 180, 155, 55);
+		pCuerpo.add(bBuscarPorTipo);
+		
+		//Botón Atras de Busqueda
+		bAtrasBusqueda = new JButton("Atrás");
+		bAtrasBusqueda.setBackground(c2);
+		bAtrasBusqueda.setFont(new Font("Tahoma", 0, 14));
+		bAtrasBusqueda.setForeground(c0);
+		bAtrasBusqueda.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				InterfazInsumo interfazInsumo = new InterfazInsumo(datos, new ArrayList<Insumo>(datos.mapa.getInsumos().inOrden()));
+				dispose();
+			}
+		});
+		bAtrasBusqueda.setBounds(545, 370, 100, 35);
+		pCuerpo.add(bAtrasBusqueda);
 		
 		
 		
@@ -234,7 +317,7 @@ public class BuscarInsumo extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-		BuscarInsumo buscarinsumo = new BuscarInsumo();
+//		BuscarInsumo buscarinsumo = new BuscarInsumo();
 		
 	}
 }

@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -59,6 +60,7 @@ public class InterfazInsumo extends JFrame {
 	private Color c2;
 	private Color c3;
 	private ArrayList<Insumo> insumos;
+	private Datos datos;
 	
 
 	public InterfazInsumo(Datos datos, ArrayList<Insumo> is) {
@@ -138,7 +140,7 @@ public class InterfazInsumo extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Insumo insumo = new Insumo();
-				new EditarInsumo(datos, insumo);
+				new EditarInsumo(datos, insumo, false);
 				dispose();
 			}
 		});
@@ -155,7 +157,7 @@ public class InterfazInsumo extends JFrame {
 				if(tabla.getSelectedRow() < 0) {
 					JOptionPane.showMessageDialog(null, "Seleccione un insumo en la tabla para que pueda ser modificado.");
 				} else {
-					new EditarInsumo(datos, insumos.get(tabla.getSelectedRow()));
+					new EditarInsumo(datos, insumos.get(tabla.getSelectedRow()), true);
 					dispose();
 				}
 			}
@@ -191,7 +193,7 @@ public class InterfazInsumo extends JFrame {
 		bBuscar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				new BuscarInsumo();
+//				new BuscarInsumo(datos);
 				buscarInsumo();
 				pCuerpo.setVisible(false);
 			}
@@ -351,8 +353,7 @@ public class InterfazInsumo extends JFrame {
 		cbTipoBusqueda.addActionListener(new ActionListener() {		
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+
 				if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.NOMBRE) {
 					
 					lNombre.setVisible(true);
@@ -417,22 +418,30 @@ public class InterfazInsumo extends JFrame {
 						
 						if (rbAsc.isSelected()) {
 							//TODO Busqueda por Nombre Ascendente
+//							insumos = new ArrayList<Insumo>(datos.mapa.listarXnombreAce());
+							PriorityQueue<Insumo> ipq = datos.mapa.listarXnombreAce();
+							insumos = new ArrayList<Insumo>(ipq);
+							
+//							for (Insumo insumo : insumos) {
+//								
+//							}
 							
 						} else if (rbDesc.isSelected()) {
 							//TODO Busqueda por Nombre Descendente
-							
+							insumos = new ArrayList<Insumo>(datos.mapa.listarXnombreDec());
+							System.out.println("nd");
 						}
-						
+						System.out.println("ft");
 						pCuerpoBusqueda.setVisible(false);
 						pCuerpo.setVisible(true);
 					} else if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.COSTO){
 							
 						if (rbAsc.isSelected()) {
 							//TODO Busqueda por Costo Ascendente
-							
+							insumos = new ArrayList<Insumo>(datos.mapa.listarXprecioAce());
 						} else if (rbDesc.isSelected()) {
 							//TODO Busqueda por Costo Descendente
-							
+							insumos = new ArrayList<Insumo>(datos.mapa.listarXprecioDec());
 						}
 						
 						pCuerpoBusqueda.setVisible(false);
@@ -442,18 +451,16 @@ public class InterfazInsumo extends JFrame {
 						
 						if (rbAsc.isSelected()) {
 							//TODO Busqueda por Stock Ascendente
-							
+							insumos = new ArrayList<Insumo>(datos.mapa.listarXcantidadStockAce());
 						} else if (rbDesc.isSelected()) {
 							//TODO Busqueda por Stock Descendente
-							
+							insumos = new ArrayList<Insumo>(datos.mapa.listarXcantidadStockDec());
 						}
-						
-						pCuerpoBusqueda.setVisible(false);
-						pCuerpo.setVisible(true);
 					}
-				
+					pCuerpoBusqueda.setVisible(false);
+					pCuerpo.setVisible(true);
 				}
-
+				repaint();
 			}
 		});
 		bBuscarPorTipo.setBounds(250, 180, 155, 55);

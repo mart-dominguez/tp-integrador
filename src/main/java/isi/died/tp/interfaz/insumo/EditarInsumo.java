@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -12,6 +13,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -19,7 +21,10 @@ import javax.swing.JTextField;
 
 import isi.died.tp.datos.Datos;
 import isi.died.tp.dominio.Insumo;
+import isi.died.tp.dominio.InsumoLiquido;
 import isi.died.tp.dominio.UnidadMedida;
+import isi.died.tp.dominio.Vehiculo;
+import isi.died.tp.interfaz.camion.InterfazVehiculo;
 
 public class EditarInsumo extends JFrame{
 	private JPanel pNombre;
@@ -40,7 +45,7 @@ public class EditarInsumo extends JFrame{
 	private Color c3;
 	private Insumo insumo;
 
-	public EditarInsumo(Datos datos, Insumo insumo) {
+	public EditarInsumo(Datos datos, Insumo insumo, boolean b) {
 		
 		this.insumo = insumo;
 		
@@ -239,7 +244,7 @@ public class EditarInsumo extends JFrame{
 		bCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new InterfazInsumo(datos, datos.insumos);
+				new InterfazInsumo(datos, new ArrayList<Insumo>(datos.mapa.getInsumos().inOrden()));
 				dispose();
 			}
 		});
@@ -254,7 +259,21 @@ public class EditarInsumo extends JFrame{
 		bGuardar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO Guardar Insumo creado
+				//TODO Modificar para insumo liquido
+				if(new JOptionPane().showConfirmDialog(null, "¿Desea cambiar los datos del vehículo?", "Mensaje", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					insumo.setNombre(tfNombre.getText());
+					insumo.setPeso(Double.valueOf(tfPeso.getText()));
+					insumo.setUnidadDeMedida(UnidadMedida.valueOf(cbUnidadMedida.getSelectedItem().toString()));
+					insumo.setCosto(Double.valueOf(tfCosto.getText()));
+					insumo.setStock(Integer.valueOf(tfStock.getText()));
+					insumo.setEsRefrigerado(checkRefrigerado.isSelected());
+					insumo.setDescripcion(taDescripcion.getText());
+					if (!b) {
+						datos.mapa.agregarInsumo(insumo);
+					}
+					new InterfazInsumo(datos, new ArrayList<Insumo>(datos.mapa.getInsumos().inOrden()));
+					dispose();
+				}
 			}
 		});
 		bGuardar.setBounds(560, 360, 85, 35);

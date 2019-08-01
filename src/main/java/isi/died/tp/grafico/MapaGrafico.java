@@ -33,7 +33,6 @@ public class MapaGrafico extends JPanel implements MouseListener, MouseMotionLis
 	public PlantaG select;
 	public int x, y;
 	
-	
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g.create();
@@ -43,12 +42,12 @@ public class MapaGrafico extends JPanel implements MouseListener, MouseMotionLis
 		for (PlantaG plantaG : plantasG) {
 			plantaG.paintComponent(g2d);
 		}
-
 	}
 
 	public MapaGrafico(Mapa m) {
 		this.plantasG = new ArrayList<PlantaG>();
 		this.rutasG = new ArrayList<RutaG>();
+		this.setBounds(10, 40, 540, 455);
 		this.armar(m);
 
 		this.addMouseListener(this);
@@ -175,8 +174,8 @@ public class MapaGrafico extends JPanel implements MouseListener, MouseMotionLis
 		List<Arista<Planta>> rutas = m.getAristas();
 		List<Planta> plantas = m.getVertices().stream().map(Vertice::getValor).collect(Collectors.toList());
 		for (Planta planta : plantas) {
-			y = (int) (Math.random() * (500) + 30);
-			x = (int) (Math.random() * (800) + 30);
+			y = (int) (Math.random() * (340) + 20);		//500		//640x385
+			x = (int) (Math.random() * (550) + 20);		//800
 			this.plantasG.add(new PlantaG(x, y, planta));
 		}
 		for (Arista<Planta> ruta : rutas) {
