@@ -19,6 +19,7 @@ import isi.died.tp.interfaz.camion.InterfazVehiculo;
 import isi.died.tp.interfaz.general.InterfazGeneral;
 import isi.died.tp.interfaz.insumo.InterfazInsumo;
 import isi.died.tp.interfaz.planta.InterfazPlanta;
+import isi.died.tp.interfaz.ruta.InterfazRuta;
 import isi.died.tp.logistica.InterfazLogistica;
 
 public class Menu extends JFrame {
@@ -141,7 +142,7 @@ public class Menu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new InterfazPlanta(datos);
+				new InterfazPlanta(datos, datos.mapa.getPlantas());
 				dispose();
 			}
 		});
@@ -156,8 +157,8 @@ public class Menu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
+				new InterfazRuta(datos, datos.mapa.getRutas());
+				dispose();
 			}
 		});
 		bRutas.setBounds(340, 200, 300, 80);

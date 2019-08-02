@@ -38,6 +38,15 @@ public class Mapa extends Grafo<Planta> {
 		return al;
 	}
 	
+	public ArrayList<Ruta> getRutas(){
+		List<Arista<Planta>> aristas = getAristas();
+		ArrayList<Ruta> al = new ArrayList<Ruta>();
+		for (Arista<Planta> arista : aristas) {
+			al.add((Ruta) arista);
+		}
+		return al;
+	}
+	
 	public ArbolBinarioBusqueda<Insumo> getInsumos() {
 		return insumos;
 	}

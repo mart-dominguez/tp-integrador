@@ -128,7 +128,7 @@ public class EditarPlanta extends JFrame{
 		bCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new InterfazPlanta(datos);
+				new InterfazPlanta(datos, datos.mapa.getPlantas());
 				dispose();
 			}
 		});
@@ -149,7 +149,7 @@ public class EditarPlanta extends JFrame{
 					if (!b) {
 						datos.mapa.addNodo(planta);
 					}
-					new InterfazPlanta(datos);
+					new InterfazPlanta(datos, datos.mapa.getPlantas());
 					dispose();
 				}
 			}

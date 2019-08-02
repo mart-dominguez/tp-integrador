@@ -1,4 +1,4 @@
-package isi.died.tp.interfaz.planta;
+package isi.died.tp.interfaz.ruta;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -16,15 +16,16 @@ import javax.swing.JTable;
 
 import isi.died.tp.datos.Datos;
 import isi.died.tp.dominio.Planta;
+import isi.died.tp.dominio.Ruta;
 import isi.died.tp.interfaz.Menu;
 
-public class InterfazPlanta extends JFrame{
-		
+public class InterfazRuta extends JFrame{
+	
 	private JPanel pNombre;
 	private JPanel pCuerpo;
 	private JLabel lNombreEmpresa;
 	private JLabel lTitulo;
-	private JLabel lPlantas;
+	private JLabel lRutas;
 	private JTable tabla;
 	private JScrollPane scrollPane;
 	private JButton bCrear;
@@ -35,12 +36,9 @@ public class InterfazPlanta extends JFrame{
 	private Color c1;
 	private Color c2;
 	private Color c3;
-//	private ArrayList<Planta> plantas;
-	
-	public InterfazPlanta(Datos datos, ArrayList<Planta> plantas) {
 		
-//		this.plantas = datos.mapa.getPlantas();
-		
+	public InterfazRuta(Datos datos, ArrayList<Ruta> rutas) {
+				
 		c0 = new Color(232, 232, 232);
 		c1 = new Color(85, 136, 163);
 		c2 = new Color(20, 83, 116);
@@ -53,17 +51,17 @@ public class InterfazPlanta extends JFrame{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setBackground(c0);
 		this.setTitle("Plantas - Gestion de Logística");
-
+	
 		pNombre = new JPanel();
 		pNombre.setBounds(10, 20, 660, 100);
 		pNombre.setBackground(c1);
 		this.add(pNombre);
-
+	
 		lNombreEmpresa = new JLabel("   Nombre Empresa   ");
 		lNombreEmpresa.setFont(new Font("Tahoma", 3, 45));
 		lNombreEmpresa.setForeground(c0);
 		pNombre.add(lNombreEmpresa);
-
+	
 		lTitulo = new JLabel("--- Gestión Logística ---");
 		lTitulo.setFont(new Font("Tahoma", 0, 24));
 		lTitulo.setForeground(c0);
@@ -75,19 +73,21 @@ public class InterfazPlanta extends JFrame{
 		pCuerpo.setBackground(c1);
 		this.add(pCuerpo);
 		
-		lPlantas = new JLabel("Plantas: ");
-		lPlantas.setFont(new Font("Tahoma", 1, 24));
-		lPlantas.setForeground(c0);
-		lPlantas.setBounds(20, 10, 150, 30);
-		pCuerpo.add(lPlantas);
+		lRutas = new JLabel("Rutas: ");
+		lRutas.setFont(new Font("Tahoma", 1, 24));
+		lRutas.setForeground(c0);
+		lRutas.setBounds(20, 10, 150, 30);
+		pCuerpo.add(lRutas);
 		
 				
 		//Tabla
-		ModeloTablaPlanta mbp = new ModeloTablaPlanta(plantas);
-		tabla = new JTable(mbp);
-		tabla.getColumn("ID").setPreferredWidth(100);
-		tabla.getColumn("Nombre").setPreferredWidth(420);
-		tabla.getColumn("Costo total").setPreferredWidth(110);
+		ModeloTablaRuta mtr = new ModeloTablaRuta(datos.mapa.getRutas());
+		tabla = new JTable(mtr);
+		tabla.getColumn("Planta I").setPreferredWidth(135);
+		tabla.getColumn("Planta F").setPreferredWidth(135);
+		tabla.getColumn("Distancia").setPreferredWidth(120);
+		tabla.getColumn("Duración").setPreferredWidth(120);
+		tabla.getColumn("Peso Máx.").setPreferredWidth(120);
 		
 		tabla.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		tabla.setFillsViewportHeight(true);
@@ -109,9 +109,9 @@ public class InterfazPlanta extends JFrame{
 		bCrear.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Planta planta = new Planta();
-				new EditarPlanta(datos, planta, false);
-				dispose();
+//				Planta planta = new Planta();
+//				new EditarPlanta(datos, planta, false);
+//				dispose();
 			}
 		});
 		bCrear.setBounds(380, 10, 85, 35);
@@ -127,8 +127,8 @@ public class InterfazPlanta extends JFrame{
 				if(tabla.getSelectedRow() < 0) {
 					JOptionPane.showMessageDialog(null, "Seleccione una planta en la tabla para que pueda ser modificada.");
 				} else {
-					new EditarPlanta(datos, plantas.get(tabla.getSelectedRow()), true);
-					dispose();
+//					new EditarPlanta(datos, rutas.get(tabla.getSelectedRow()), true);
+//					dispose();
 				}
 			}
 		});
@@ -148,9 +148,9 @@ public class InterfazPlanta extends JFrame{
 					int mensaje = new JOptionPane().showConfirmDialog(null, "¿Estás seguro de que desea eliminar la planta?", "Mensaje", JOptionPane.YES_NO_OPTION);
 					if(mensaje == JOptionPane.YES_OPTION) {
 						//TODO problema en la funcion borrar planta, corregir
-						datos.mapa.borrarPlanta(plantas.get(tabla.getSelectedRow()));
-						new InterfazPlanta(datos, datos.mapa.getPlantas());
-						dispose();
+//						datos.mapa.borrarPlanta(plantas.get(tabla.getSelectedRow()));
+//						new InterfazPlanta(datos);
+//						dispose();
 					}
 				}
 			}
@@ -174,6 +174,7 @@ public class InterfazPlanta extends JFrame{
 		
 		
 		this.setVisible(true);
+		
 	}
 
 }
