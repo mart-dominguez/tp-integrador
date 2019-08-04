@@ -7,28 +7,26 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
 
 import isi.died.tp.datos.Datos;
-import isi.died.tp.dominio.Insumo;
+import isi.died.tp.dominio.Pedido;
 import isi.died.tp.dominio.Planta;
+import isi.died.tp.dominio.Vehiculo;
 import isi.died.tp.interfaz.Menu;
 import isi.died.tp.interfaz.camion.ModeloTablaVehiculo;
 import isi.died.tp.interfaz.planta.ModeloTablaPlanta;
-import net.miginfocom.layout.LC;
 
 public class InterfazGeneral extends JFrame{
 	private JPanel pNombre;
 	private JPanel pCuerpo;
 	private JLabel lNombreEmpresa;
-	private JLabel lTitulo, lMensajeP, lMensajeGS, lVerInsumo;
+	private JLabel lTitulo, lMensajeP, lVerInsumo;
 	private JLabel lPlantas, lFlujoM, lInsumos, lCamiones, lSolucion;
 	private JTable tablaPlanta, tablaInsumos, tablaCamiones, tablaSoluccion;
 	private JScrollPane scrollPanePlanta, scrollPaneInsumos, scrollPaneCamiones, scrollPaneSolucion;
@@ -38,7 +36,8 @@ public class InterfazGeneral extends JFrame{
 	private Color c1;
 	private Color c2;
 	private Color c3;
-	private ArrayList<Insumo> insumos;
+	private ArrayList<Vehiculo> vehiculos;
+	private ArrayList<Pedido> pedidos;
 
 	public InterfazGeneral(Datos datos) {
 			
@@ -147,23 +146,27 @@ public class InterfazGeneral extends JFrame{
 				if(tablaPlanta.getSelectedRow() < 0) {
 					JOptionPane.showMessageDialog(null, "Seleccione un planta en la tabla de Plantas para poder visualizar insumos faltantes.");
 				} else {
-					ModeloTablaInsumoGeneral mtig = new ModeloTablaInsumoGeneral(plantas.get(tablaPlanta.getSelectedRow()).nececidadStock());
-					tablaInsumos = new JTable(mtig);
-					tablaInsumos.setBackground(c0);
-					tablaInsumos.getColumn("ID").setPreferredWidth(100);
-					tablaInsumos.getColumn("Nombre").setPreferredWidth(170);
-					tablaInsumos.getColumn("Cant. faltante").setPreferredWidth(100);
-					tablaInsumos.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-					tablaInsumos.setFillsViewportHeight(true);
-					tablaInsumos.setLayout(null);
-					scrollPaneInsumos.setBounds(470, 95, 370, 160);
-					scrollPaneInsumos.setBackground(c0);
-					scrollPaneInsumos.setVisible(true);
-					scrollPaneInsumos.setViewportView(tablaInsumos);
-					scrollPaneInsumos.getViewport().setView(tablaInsumos);
-					pCuerpo.add(scrollPaneInsumos);
-					scrollPaneInsumos.repaint();
-					repaint();
+					try {
+						ModeloTablaInsumoGeneral mtig = new ModeloTablaInsumoGeneral(plantas.get(tablaPlanta.getSelectedRow()).nececidadStock());
+						tablaInsumos = new JTable(mtig);
+						tablaInsumos.setBackground(c0);
+						tablaInsumos.getColumn("ID").setPreferredWidth(100);
+						tablaInsumos.getColumn("Nombre").setPreferredWidth(170);
+						tablaInsumos.getColumn("Cant. faltante").setPreferredWidth(100);
+						tablaInsumos.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+						tablaInsumos.setFillsViewportHeight(true);
+						tablaInsumos.setLayout(null);
+						scrollPaneInsumos.setBounds(470, 95, 370, 160);
+						scrollPaneInsumos.setBackground(c0);
+						scrollPaneInsumos.setVisible(true);
+						scrollPaneInsumos.setViewportView(tablaInsumos);
+						scrollPaneInsumos.getViewport().setView(tablaInsumos);
+						pCuerpo.add(scrollPaneInsumos);
+						scrollPaneInsumos.repaint();
+						repaint();						
+					} catch (Exception e2) {
+						JOptionPane.showMessageDialog(null, "Error al cargar la tabla de camiones, cominiquese con servicio técnico");
+					}
 				}
 			}
 		});
@@ -176,10 +179,10 @@ public class InterfazGeneral extends JFrame{
 		lCamiones.setBounds(20, 265, 150, 30);
 		pCuerpo.add(lCamiones);
 		
-		ModeloTablaVehiculo mtv = new ModeloTablaVehiculo(datos.mapa.getVehiculosAL());
+		//Tabla Camiones
+		vehiculos = datos.mapa.getVehiculosAL();
+		ModeloTablaVehiculo mtv = new ModeloTablaVehiculo(vehiculos);
 		tablaCamiones = new JTable(mtv);
-
-		
 		tablaCamiones.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		tablaCamiones.setFillsViewportHeight(true);
 		tablaCamiones.setLayout(null);
@@ -215,38 +218,39 @@ public class InterfazGeneral extends JFrame{
 				if(tablaPlanta.getSelectedRow() < 0 && tablaCamiones.getSelectedRow() < 0) {
 					JOptionPane.showMessageDialog(null, "Seleccione un planta y un camión para generar la solución.");
 				} else {
-					//TODO Cambiar esta tabla (modelo de tabla)
-					ModeloTablaInsumoGeneral mtig = new ModeloTablaInsumoGeneral(plantas.get(tablaPlanta.getSelectedRow()).nececidadStock());
-					tablaSoluccion = new JTable(mtig);
-					tablaSoluccion.setBackground(c0);
-					tablaSoluccion.getColumn("ID").setPreferredWidth(100);
-					tablaSoluccion.getColumn("Nombre").setPreferredWidth(170);
-					tablaSoluccion.getColumn("Cant. faltante").setPreferredWidth(100);
-					tablaSoluccion.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-					tablaSoluccion.setFillsViewportHeight(true);
-					tablaSoluccion.setLayout(null);
-					scrollPaneSolucion.setBounds(470, 295, 370, 160);
-					scrollPaneSolucion.setBackground(c0);
-					scrollPaneSolucion.setVisible(true);
-					scrollPaneSolucion.setViewportView(tablaSoluccion);
-					scrollPaneSolucion.getViewport().setView(tablaSoluccion);
-					pCuerpo.add(scrollPaneSolucion);
-					scrollPaneSolucion.repaint();
-					repaint();
+					//TODO Mostrar lista de pedidos, error
+					try {
+						pedidos = new ArrayList<Pedido>(datos.mapa.vehiculoOptimo(vehiculos.get(tablaCamiones.getSelectedRow())));
+						ModeloTablaPedido mtp = new ModeloTablaPedido(pedidos);						
+						tablaSoluccion = new JTable(mtp);
+						tablaSoluccion.setBackground(c0);
+						tablaSoluccion.getColumn("ID").setPreferredWidth(30);
+						tablaSoluccion.getColumn("Insumo").setPreferredWidth(85);
+						tablaSoluccion.getColumn("Cantidad").setPreferredWidth(30);
+						tablaSoluccion.getColumn("Peso (Kg)").setPreferredWidth(40);
+						tablaSoluccion.getColumn("Origen").setPreferredWidth(40);
+						tablaSoluccion.getColumn("Destino").setPreferredWidth(40);
+						tablaSoluccion.getColumn("Precio").setPreferredWidth(40);
+						tablaSoluccion.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+						tablaSoluccion.setFillsViewportHeight(true);
+						tablaSoluccion.setLayout(null);
+						scrollPaneSolucion.setBounds(470, 295, 370, 160);
+						scrollPaneSolucion.setBackground(c0);
+						scrollPaneSolucion.setVisible(true);
+						scrollPaneSolucion.setViewportView(tablaSoluccion);
+						scrollPaneSolucion.getViewport().setView(tablaSoluccion);
+						pCuerpo.add(scrollPaneSolucion);
+						scrollPaneSolucion.repaint();
+						repaint();
+					} catch (Exception e2) {
+						JOptionPane.showMessageDialog(null, "Error al cargar la tabla de pedidos, comuniquese con servicio técnico");
+					}
 				}
 			}
 		});
 		bSolucion.setBounds(245, 460, 160, 45);
 		pCuerpo.add(bSolucion);
 		
-		
-		
-//		lMensajeGS = new JLabel("Muestra insumos ");
-//		lMensajeGS.setFont(new Font("Tahoma", 0, 14));
-//		lMensajeGS.setForeground(c0);
-//		lMensajeGS.setHorizontalAlignment(SwingConstants.RIGHT);
-//		lMensajeGS.setBounds(25, 375, 300, 40);
-//		pCuerpo.add(lMensajeGS);
 				
 		//Boton Atrás
 		bAtras = new JButton("Atrás");

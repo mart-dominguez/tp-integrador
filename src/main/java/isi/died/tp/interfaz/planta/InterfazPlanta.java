@@ -16,6 +16,7 @@ import javax.swing.JTable;
 
 import isi.died.tp.datos.Datos;
 import isi.died.tp.dominio.Planta;
+import isi.died.tp.dominio.Ruta;
 import isi.died.tp.interfaz.Menu;
 
 public class InterfazPlanta extends JFrame{
@@ -145,10 +146,21 @@ public class InterfazPlanta extends JFrame{
 				if(tabla.getSelectedRow() < 0) {
 					JOptionPane.showMessageDialog(null, "Seleccione la planta que desea eliminar.");
 				} else {
-					int mensaje = new JOptionPane().showConfirmDialog(null, "¿Estás seguro de que desea eliminar la planta?", "Mensaje", JOptionPane.YES_NO_OPTION);
+					int mensaje = new JOptionPane().showConfirmDialog(null, "¿Estás seguro de que desea eliminar la planta? También se eliminaran las rutas asociadas", "Mensaje", JOptionPane.YES_NO_OPTION);
 					if(mensaje == JOptionPane.YES_OPTION) {
-						//TODO problema en la funcion borrar planta, corregir
-						datos.mapa.borrarPlanta(plantas.get(tabla.getSelectedRow()));
+						//TODO problema en la funcion borrar planta, creo que se soluciono volver a ver
+						try {
+							datos.mapa.borrarPlanta(plantas.get(tabla.getSelectedRow()));
+							for (Ruta ruta : datos.mapa.getRutas()) {
+								if (ruta.getInicio().equals(plantas.get(tabla.getSelectedRow())) || ruta.getFin().equals(plantas.get(tabla.getSelectedRow()))) {
+									datos.mapa.borrarRuta(ruta);;
+								}
+							}							
+						} catch (Exception e2) {
+							new JOptionPane("Error al borrar una planta.");
+						}
+						
+						
 						new InterfazPlanta(datos, datos.mapa.getPlantas());
 						dispose();
 					}

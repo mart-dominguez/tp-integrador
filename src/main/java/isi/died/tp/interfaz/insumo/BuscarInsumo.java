@@ -21,7 +21,7 @@ import isi.died.tp.datos.Datos;
 import isi.died.tp.dominio.Insumo;
 import isi.died.tp.interfaz.TipoBusquedaInsumo;
 
-public class BuscarInsumo extends JFrame{	//TODO borrar si no se utiliza
+public class BuscarInsumo extends JFrame{
 	private JPanel pNombre;
 	private JPanel pCuerpo;
 	private JLabel lNombreEmpresa;
@@ -32,30 +32,28 @@ public class BuscarInsumo extends JFrame{	//TODO borrar si no se utiliza
 	private JLabel lNombre, lCostoMin, lCostoMax, lStockMin, lStockMax;
 	private JTextField tfNombre, tfCostoMin, tfCostoMax, tfStockMin, tfStockMax;
 	private JButton bBuscarPorTipo, bAtrasBusqueda;
-	private JButton bCancelar;
 	private Color c0;
 	private Color c1;
 	private Color c2;
 	private Color c3;
-	private Insumo insumo;
+	private ArrayList<Insumo> insumos;
 	
 	
 	
 	public BuscarInsumo(Datos datos){
-		//TODO Modificar todo, solo es una copia como plantilla
 		
 		c0 = new Color(232, 232, 232);
 		c1 = new Color(85, 136, 163);
 		c2 = new Color(20, 83, 116);
 		c3 = new Color(0, 51, 78);
 
-		this.setBounds(0, 0, 500, 500);
+		this.setBounds(0, 0, 700, 600);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setLayout(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setBackground(c0);
-		this.setTitle("Buscar Insumo - Gestion de Logística");
+		this.setTitle("Insumo - Gestion de Logística");
 
 		pNombre = new JPanel();
 		pNombre.setBounds(10, 20, 660, 100);
@@ -253,44 +251,64 @@ public class BuscarInsumo extends JFrame{	//TODO borrar si no se utiliza
 		bBuscarPorTipo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				if(!(rbAsc.isSelected() || rbDesc.isSelected())) {
 					JOptionPane.showMessageDialog(null, "Seleccione si desea realizar la búsqueda ascendente o descendente.");
 				} else {
-					
+					ArrayList<Insumo> lista = new ArrayList<Insumo>();
+					ArrayList<Insumo> listaAux;
 					if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.NOMBRE) {
-						
 						if (rbAsc.isSelected()) {
-							//TODO Busqueda por Nombre Ascendente
-							
-						} else if (rbDesc.isSelected()) {
-							//TODO Busqueda por Nombre Descendente
-							
+							//TODO Error Busqueda por Nombre Ascendente
+							listaAux = new ArrayList<Insumo>(datos.mapa.listarXnombreAce());
+						} else {
+							//TODO Error Busqueda por Nombre Descendente
+							listaAux = new ArrayList<Insumo>(datos.mapa.listarXnombreDec());
+						}
+						for (Insumo insumo : listaAux) {
+							if (insumo.getNombre().contains(tfNombre.getText())) {
+								lista.add(insumo);
+							}
 						}
 					} else if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.COSTO){
-							
+						Double costoMin = (tfCostoMin.getText().isEmpty()) ? Double.MIN_VALUE : Double.valueOf(tfCostoMin.getText());;
+						Double costoMax = (tfCostoMax.getText().isEmpty()) ? Double.MAX_VALUE : Double.valueOf(tfCostoMax.getText());
 						if (rbAsc.isSelected()) {
-							//TODO Busqueda por Costo Ascendente
-							
-						} else if (rbDesc.isSelected()) {
-							//TODO Busqueda por Costo Descendente
-							
+							//Busqueda por Costo Ascendente
+							//TODO agregar try catch
+							listaAux = new ArrayList<Insumo>(datos.mapa.listarXprecioAce());
+						} else {
+							//Busqueda por Costo Descendente
+							//TODO agregar try catch
+							listaAux = new ArrayList<Insumo>(datos.mapa.listarXprecioDec());
 						}
-
+						for (Insumo insumo : listaAux) {
+							if(insumo.getCosto() >= costoMin && insumo.getCosto() <= costoMax) {
+								lista.add(insumo);
+							}
+						}
+						insumos = lista;
 					} else if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.STOCK) {
-						
+						Double stockMin = (tfStockMin.getText().isEmpty()) ? Double.MIN_VALUE : Double.valueOf(tfStockMin.getText());
+						Double stockMax = (tfStockMax.getText().isEmpty()) ? Double.MAX_VALUE : Double.valueOf(tfStockMax.getText());
 						if (rbAsc.isSelected()) {
-							//TODO Busqueda por Stock Ascendente
-							
-						} else if (rbDesc.isSelected()) {
-							//TODO Busqueda por Stock Descendente
-							
+							//Busqueda por Stock Ascendente
+							//TODO agregar try catch
+							listaAux = new ArrayList<Insumo>(datos.mapa.listarXcantidadStockAce());
+						} else {
+							//Busqueda por Stock Descendente
+							//TODO agregar try catch
+							listaAux = new ArrayList<Insumo>(datos.mapa.listarXcantidadStockDec());
 						}
-
+						for (Insumo insumo : listaAux) {
+							if(insumo.getCosto() >= stockMin && insumo.getCosto() <= stockMax) {
+								lista.add(insumo);
+							}
+						}
+						insumos = lista;
 					}
-				
+					new InterfazInsumo(datos, insumos);
+					dispose();
 				}
-
 			}
 		});
 		bBuscarPorTipo.setBounds(250, 180, 155, 55);
@@ -312,12 +330,7 @@ public class BuscarInsumo extends JFrame{	//TODO borrar si no se utiliza
 		pCuerpo.add(bAtrasBusqueda);
 		
 		
-		
 		this.setVisible(true);
 	}
-	
-	public static void main(String[] args) {
-//		BuscarInsumo buscarinsumo = new BuscarInsumo();
-		
-	}
+
 }

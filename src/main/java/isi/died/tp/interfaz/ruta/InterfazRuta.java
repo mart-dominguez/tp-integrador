@@ -19,7 +19,7 @@ import isi.died.tp.dominio.Planta;
 import isi.died.tp.dominio.Ruta;
 import isi.died.tp.interfaz.Menu;
 
-public class InterfazRuta extends JFrame{
+public class InterfazRuta extends JFrame{ //TODO Terminar
 	
 	private JPanel pNombre;
 	private JPanel pCuerpo;
@@ -38,7 +38,7 @@ public class InterfazRuta extends JFrame{
 	private Color c3;
 		
 	public InterfazRuta(Datos datos, ArrayList<Ruta> rutas) {
-				
+		
 		c0 = new Color(232, 232, 232);
 		c1 = new Color(85, 136, 163);
 		c2 = new Color(20, 83, 116);
@@ -81,7 +81,7 @@ public class InterfazRuta extends JFrame{
 		
 				
 		//Tabla
-		ModeloTablaRuta mtr = new ModeloTablaRuta(datos.mapa.getRutas());
+		ModeloTablaRuta mtr = new ModeloTablaRuta(rutas);
 		tabla = new JTable(mtr);
 		tabla.getColumn("Planta I").setPreferredWidth(135);
 		tabla.getColumn("Planta F").setPreferredWidth(135);
@@ -125,8 +125,9 @@ public class InterfazRuta extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(tabla.getSelectedRow() < 0) {
-					JOptionPane.showMessageDialog(null, "Seleccione una planta en la tabla para que pueda ser modificada.");
+					JOptionPane.showMessageDialog(null, "Seleccione una ruta en la tabla para que pueda ser modificada.");
 				} else {
+					//TODO falta
 //					new EditarPlanta(datos, rutas.get(tabla.getSelectedRow()), true);
 //					dispose();
 				}
@@ -143,13 +144,12 @@ public class InterfazRuta extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(tabla.getSelectedRow() < 0) {
-					JOptionPane.showMessageDialog(null, "Seleccione la planta que desea eliminar.");
+					JOptionPane.showMessageDialog(null, "Seleccione la ruta que desea eliminar.");
 				} else {
-					int mensaje = new JOptionPane().showConfirmDialog(null, "¿Estás seguro de que desea eliminar la planta?", "Mensaje", JOptionPane.YES_NO_OPTION);
+					int mensaje = new JOptionPane().showConfirmDialog(null, "¿Estás seguro de que desea eliminar la ruta?", "Mensaje", JOptionPane.YES_NO_OPTION);
 					if(mensaje == JOptionPane.YES_OPTION) {
-						//TODO problema en la funcion borrar planta, corregir
-//						datos.mapa.borrarPlanta(plantas.get(tabla.getSelectedRow()));
-//						new InterfazPlanta(datos);
+						//TODO Eliminar Ruta
+//						new InterfazRuta(datos, ....);
 //						dispose();
 					}
 				}

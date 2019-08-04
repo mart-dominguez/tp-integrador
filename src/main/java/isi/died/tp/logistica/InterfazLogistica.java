@@ -87,6 +87,7 @@ public class InterfazLogistica extends JFrame{
 		pCuerpo.add(lMensaje);
 		
 		//Grafico
+		//TODO Corregir que los nodos no queden dibujados fuera del jpanel
 		MapaGrafico mg = new MapaGrafico(datos.mapa);
 		mg.setBackground(c0);
 		pCuerpo.add(mg);
@@ -131,7 +132,8 @@ public class InterfazLogistica extends JFrame{
 				if(tabla.getSelectedRow() < 0) {
 					JOptionPane.showMessageDialog(null, "Seleccione un insumo en la tabla para poder visualizar las plantas que requieren stock del mismo.");
 				} else {
-					//TODO Mostrar Plantas con insumo faltante y mejor camino desde acopio a puerto final
+					//TODO Error, Mostrar Plantas con insumo faltante y mejor camino desde acopio a puerto final
+					
 					mg.remarcarNodos(datos.mapa.necesitaInsumo(insumos.get(tabla.getSelectedRowCount())));
 					repaint();
 				}

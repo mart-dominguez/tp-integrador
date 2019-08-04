@@ -161,7 +161,11 @@ public class InterfazVehiculo extends JFrame{
 				} else {
 					int mensaje = new JOptionPane().showConfirmDialog(null, "¿Estás seguro de que desea eliminar el vehículo?", "Mensaje", JOptionPane.YES_NO_OPTION);
 					if(mensaje == JOptionPane.YES_OPTION) {
-						datos.mapa.eliminarVehiculo(vehiculos.get(tabla.getSelectedRow()));
+						try {
+							datos.mapa.eliminarVehiculo(vehiculos.get(tabla.getSelectedRow()));							
+						} catch (Exception e2) {
+							JOptionPane.showMessageDialog(null, "Problema al eliminar el vehículo, comuniquese con servicio tecnico.");
+						}
 						new InterfazVehiculo(datos, new ArrayList<Vehiculo>(datos.mapa.getVehiculosAL()));
 						dispose();
 					}

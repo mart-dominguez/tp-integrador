@@ -147,7 +147,11 @@ public class EditarPlanta extends JFrame{
 				if(new JOptionPane().showConfirmDialog(null, "¿Desea cambiar los datos del insumo?", "Mensaje", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					planta.setNombre(tfNombre.getText());
 					if (!b) {
-						datos.mapa.addNodo(planta);
+						try {
+							datos.mapa.addNodo(planta);							
+						} catch (Exception e2) {
+							JOptionPane.showMessageDialog(null, "Problema al agregar una planta, comuniquese con el servicio técnico.");
+						}
 					}
 					new InterfazPlanta(datos, datos.mapa.getPlantas());
 					dispose();
@@ -159,7 +163,5 @@ public class EditarPlanta extends JFrame{
 		
 		this.setVisible(true);
 	}
-	
-	public static void main(String[] args) {
-	}
+
 }

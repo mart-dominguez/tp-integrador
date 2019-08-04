@@ -112,7 +112,7 @@ public class Menu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 //				ArrayList insumos = (ArrayList) datos.mapa.getInsumos().inOrden();
-				InterfazInsumo interfazInsumo = new InterfazInsumo(datos, new ArrayList<Insumo>(datos.mapa.getInsumos().inOrden()));
+				new InterfazInsumo(datos, new ArrayList<Insumo>(datos.mapa.getInsumos().inOrden()));
 				dispose();
 			}
 		});

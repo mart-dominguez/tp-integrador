@@ -1,5 +1,6 @@
 package isi.died.tp.interfaz.ruta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
@@ -11,7 +12,7 @@ public class ModeloTablaRuta extends DefaultTableModel {
 	final Object[][] data;
 	private int cantRutas;
 
-	public ModeloTablaRuta(List<Ruta> rutas) {
+	public ModeloTablaRuta(ArrayList<Ruta> rutas) {
 		int cantColumnas = columnNames.length;
 		cantRutas = rutas.size();
 		data = new Object[cantRutas][cantColumnas];
@@ -20,8 +21,8 @@ public class ModeloTablaRuta extends DefaultTableModel {
 			data[i][0] = ruta.getInicio().getValor().getNombre();
 			data[i][1] = ruta.getFin().getValor().getNombre();
 			data[i][2] = ruta.getDistancia();
-			data[i][2] = ruta.getDuracion();
-			data[i][2] = ruta.getPesoMax();
+			data[i][3] = ruta.getDuracion();
+			data[i][4] = ruta.getPesoMax();
 			i++;
 		}
 	}
