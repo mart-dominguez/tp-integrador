@@ -204,11 +204,17 @@ public class Mapa extends Grafo<Planta> {
 		Insumo actual;
 		do {
 			actual = insumos.poll();
-		} while (actual.nombre != nomb && !insumos.isEmpty());
-		if (actual.nombre == nomb) {
+		} while (actual.nombre.compareTo(nomb)!=0 && !insumos.isEmpty());
+		if (actual.nombre.compareTo(nomb)==0) {
 			return actual;
 		}
 		return null;
+//		for (Insumo actual : this.insumos.posOrden()) {
+//			if(actual.getNombre().compareTo(nomb)==0) {
+//				return actual;
+//			}
+//		}
+//		return null;
 	}
 
 	private PriorityQueue<Insumo> ListaAux(Comparator<Insumo> p) {

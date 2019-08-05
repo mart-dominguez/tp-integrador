@@ -6,7 +6,6 @@ import java.util.List;
 public class Vehiculo {
 	public List<Pedido> pedidos;
 	public Double pesoMax;
-//	public String nombre;
 	public String marca;
 	public Integer id;
 	public String modelo;
@@ -29,6 +28,7 @@ public class Vehiculo {
 
 	public Vehiculo(String marca, String modelo, String dominio, Integer anio, Double costokm, Double pesoMax, boolean transportaLiquido) {
 		this.id = hashCode();
+		this.pedidos = new ArrayList<Pedido>();
 		this.marca = marca;
 		this.modelo = modelo;
 		this.dominio = dominio;
@@ -154,8 +154,10 @@ public class Vehiculo {
 	}
 
 	public List<Pedido> vehiculoOptimo(List<Pedido> restantes) {
-		List<Pedido> marcados = new ArrayList<Pedido>();
-		this.vehiculoOptimoAux2(marcados, restantes, false);
+		if(!restantes.isEmpty()) {
+			List<Pedido> marcados = new ArrayList<Pedido>();
+			this.vehiculoOptimoAux2(marcados, restantes, false);
+		}
 		return this.pedidos;
 	}
 

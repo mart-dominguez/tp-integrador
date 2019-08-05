@@ -126,6 +126,8 @@ public class MapaTest {
 		g2.conectar(pl3, pl4, 10);
 		g2.conectar(pl4, pl2, 3);
 		g3 = new Mapa();
+		g3.agregarInsumo(elQueBusco);
+		g3.agregarInsumo(elQueNoBusco);
 		g3.addNodo(pl1);
 		g3.addNodo(pl2);
 		g3.addNodo(pl6);
@@ -151,7 +153,13 @@ public class MapaTest {
 		test.add(pd3);
 		test.add(pd4);
 	}
-	
+	@Test
+	public void buscarInsumo() {
+		System.out.println("---------------Busc insumo A---------------");
+		System.out.println(g3.buscarInsumoNombre(elQueBusco.nombre));
+		System.out.println("-----------------Busc insumo B--------------------");
+		System.out.println(g3.buscarInsumoNombre("B"));
+	}
 	@Test
 	public void pedidosOptimoTest() {
 		System.out.println("---------------Opciones---------------");
