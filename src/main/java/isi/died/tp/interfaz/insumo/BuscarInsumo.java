@@ -261,19 +261,18 @@ public class BuscarInsumo extends JFrame{
 						try {
 							
 							if (rbAsc.isSelected()) {
-								//TODO Error Busqueda por Nombre Ascendente
+								//Busqueda por Nombre Ascendente
 								listaAux = new ArrayList<Insumo>(datos.mapa.listarXnombreAce());
 							} else {
-								//TODO Error Busqueda por Nombre Descendente
+								//Busqueda por Nombre Descendente
 								listaAux = new ArrayList<Insumo>(datos.mapa.listarXnombreDec());
 							}
 							for (Insumo insumo : listaAux) {
 								if (insumo.getNombre().contains(tfNombre.getText())) {
 									lista.add(insumo);
 								}
-								lista.add(insumo);
 							}
-							lista = listaAux;
+							insumos = lista;
 						} catch (Exception e2) {
 							JOptionPane.showMessageDialog(null, "Error al realizar la busqueda");
 						}
@@ -295,7 +294,7 @@ public class BuscarInsumo extends JFrame{
 							}
 							insumos = lista;							
 						} catch (Exception e2) {
-							JOptionPane.showMessageDialog(null, "Error al realizar la busqueda");
+							JOptionPane.showMessageDialog(null, "Error al realizar la búsqueda");
 						}
 					} else if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.STOCK) {
 						try {

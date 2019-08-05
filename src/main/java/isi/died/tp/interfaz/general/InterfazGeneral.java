@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -34,7 +35,7 @@ public class InterfazGeneral extends JFrame{
 	private Color c0;
 	private Color c1;
 	private Color c2;
-	private Color c3;
+//	private Color c3;
 	private ArrayList<Vehiculo> vehiculos;
 	private ArrayList<Pedido> pedidos;
 
@@ -43,7 +44,7 @@ public class InterfazGeneral extends JFrame{
 		c0 = new Color(232, 232, 232);
 		c1 = new Color(85, 136, 163);
 		c2 = new Color(20, 83, 116);
-		c3 = new Color(0, 51, 78);
+//		c3 = new Color(0, 51, 78);
 		
 		this.setBounds(0, 0, 900, 700);
 		this.setResizable(false);
@@ -196,7 +197,7 @@ public class InterfazGeneral extends JFrame{
 		
 		
 		//Solucion
-		lSolucion = new JLabel("Solución: ");
+		lSolucion = new JLabel("Pedidos: ");
 		lSolucion.setFont(new Font("Tahoma", 1, 24));
 		lSolucion.setForeground(c0);
 		lSolucion.setBounds(470, 265, 150, 30);
@@ -207,49 +208,51 @@ public class InterfazGeneral extends JFrame{
 		scrollPaneSolucion.setVisible(false);
 		
 		//Boton Generar solución
-		bSolucion = new JButton("Generar Solución");
+		bSolucion = new JButton("Generar Pedidos");
 		bSolucion.setBackground(c2);
 		bSolucion.setFont(new Font("Tahoma", 0, 14));
 		bSolucion.setForeground(c0);
 		bSolucion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(tablaPlanta.getSelectedRow() < 0 && tablaCamiones.getSelectedRow() < 0) {
-					JOptionPane.showMessageDialog(null, "Seleccione un planta y un camión para generar la solución.");
+				if( tablaCamiones.getSelectedRow() < 0) {
+					JOptionPane.showMessageDialog(null, "Seleccione un camión para generar los pedidos.");
 				} else {
-					//TODO Mostrar lista de pedidos, error
-//					try {
-						pedidos = new ArrayList<Pedido>(datos.mapa.vehiculoOptimo(vehiculos.get(tablaCamiones.getSelectedRow())));
-						ModeloTablaPedido mtp = new ModeloTablaPedido(pedidos);						
-						tablaSoluccion = new JTable(mtp);
-						tablaSoluccion.setBackground(c0);
-						tablaSoluccion.getColumn("ID").setPreferredWidth(30);
-						tablaSoluccion.getColumn("Insumo").setPreferredWidth(85);
-						tablaSoluccion.getColumn("Cantidad").setPreferredWidth(30);
-						tablaSoluccion.getColumn("Peso (Kg)").setPreferredWidth(40);
-						tablaSoluccion.getColumn("Origen").setPreferredWidth(40);
-						tablaSoluccion.getColumn("Destino").setPreferredWidth(40);
-						tablaSoluccion.getColumn("Precio").setPreferredWidth(40);
-						tablaSoluccion.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-						tablaSoluccion.setFillsViewportHeight(true);
-						tablaSoluccion.setLayout(null);
-						scrollPaneSolucion.setBounds(470, 295, 370, 160);
-						scrollPaneSolucion.setBackground(c0);
-						scrollPaneSolucion.setVisible(true);
-						scrollPaneSolucion.setViewportView(tablaSoluccion);
-						scrollPaneSolucion.getViewport().setView(tablaSoluccion);
-						pCuerpo.add(scrollPaneSolucion);
-						scrollPaneSolucion.repaint();
-						repaint();
-//					} catch (Exception e2) {
-//						JOptionPane.showMessageDialog(null, "Error al cargar la tabla de pedidos, comuniquese con servicio técnico");
-//					}
+					//Mostrar lista de pedidos
+					if(JOptionPane.showConfirmDialog(null, "Al generar pedidos, los pedidos anteriores se eliminarán. ¿Desea continuar?", "Mensaje", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+						try {
+							vehiculos.get(tablaCamiones.getSelectedRow()).getPedidos().clear();
+							pedidos = new ArrayList<Pedido>(datos.mapa.vehiculoOptimo(vehiculos.get(tablaCamiones.getSelectedRow())));
+							ModeloTablaPedido mtp = new ModeloTablaPedido(pedidos);						
+							tablaSoluccion = new JTable(mtp);
+							tablaSoluccion.setBackground(c0);
+							tablaSoluccion.getColumn("ID").setPreferredWidth(30);
+							tablaSoluccion.getColumn("Insumo").setPreferredWidth(60);
+							tablaSoluccion.getColumn("Cantidad").setPreferredWidth(25);
+							tablaSoluccion.getColumn("Peso (Kg)").setPreferredWidth(40);
+							tablaSoluccion.getColumn("Origen").setPreferredWidth(50);
+							tablaSoluccion.getColumn("Destino").setPreferredWidth(50);
+							tablaSoluccion.getColumn("Precio").setPreferredWidth(40);
+							tablaSoluccion.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+							tablaSoluccion.setFillsViewportHeight(true);
+							tablaSoluccion.setLayout(null);
+							scrollPaneSolucion.setBounds(470, 295, 370, 140);
+							scrollPaneSolucion.setBackground(c0);
+							scrollPaneSolucion.setVisible(true);
+							scrollPaneSolucion.setViewportView(tablaSoluccion);
+							scrollPaneSolucion.getViewport().setView(tablaSoluccion);
+							pCuerpo.add(scrollPaneSolucion);
+							scrollPaneSolucion.repaint();
+							repaint();
+						} catch (Exception e2) {
+							JOptionPane.showMessageDialog(null, "Error al cargar la tabla de pedidos, comuniquese con servicio técnico");
+						}
+					}
 				}
 			}
 		});
 		bSolucion.setBounds(245, 460, 160, 45);
 		pCuerpo.add(bSolucion);
-		
 				
 		//Boton Atrás
 		bAtras = new JButton("Atrás");

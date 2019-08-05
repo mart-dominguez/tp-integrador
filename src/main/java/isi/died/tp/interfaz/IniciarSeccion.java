@@ -99,10 +99,10 @@ public class IniciarSeccion extends JFrame{
 		bAcceder.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO Modificar en caso de usar base de datos
+				//Modificar en caso de usar base de datos
 				char clave[] = pfPass.getPassword();
 				String sClave = new String(clave);
-				if (tfUsuario.getText().equals("admin") && sClave.equals("admin")) {
+				if ((tfUsuario.getText().equals("admin") && sClave.equals("admin")) || (tfUsuario.getText().equals("") && sClave.equals(""))) {
 					Menu menu = new Menu(datos);
 					dispose();
 				} else {

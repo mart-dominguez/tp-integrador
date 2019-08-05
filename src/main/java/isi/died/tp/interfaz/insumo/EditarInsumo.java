@@ -259,8 +259,7 @@ public class EditarInsumo extends JFrame{
 		bGuardar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO Modificar para insumo liquido
-				if(new JOptionPane().showConfirmDialog(null, "¿Desea cambiar los datos del vehículo?", "Mensaje", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				if(JOptionPane.showConfirmDialog(null, "¿Desea cambiar los datos del vehículo?", "Mensaje", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					insumo.setNombre(tfNombre.getText());
 					insumo.setPeso(Double.valueOf(tfPeso.getText()));
 					insumo.setUnidadDeMedida(UnidadMedida.valueOf(cbUnidadMedida.getSelectedItem().toString()));
