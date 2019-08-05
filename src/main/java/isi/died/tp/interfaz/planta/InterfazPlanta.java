@@ -36,11 +36,9 @@ public class InterfazPlanta extends JFrame{
 	private Color c1;
 	private Color c2;
 	private Color c3;
-//	private ArrayList<Planta> plantas;
 	
 	public InterfazPlanta(Datos datos, ArrayList<Planta> plantas) {
 		
-//		this.plantas = datos.mapa.getPlantas();
 		
 		c0 = new Color(232, 232, 232);
 		c1 = new Color(85, 136, 163);
@@ -146,20 +144,19 @@ public class InterfazPlanta extends JFrame{
 				if(tabla.getSelectedRow() < 0) {
 					JOptionPane.showMessageDialog(null, "Seleccione la planta que desea eliminar.");
 				} else {
-					int mensaje = new JOptionPane().showConfirmDialog(null, "¿Estás seguro de que desea eliminar la planta? También se eliminaran las rutas asociadas", "Mensaje", JOptionPane.YES_NO_OPTION);
+					int mensaje = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que desea eliminar la planta? También se eliminaran las rutas asociadas", "Mensaje", JOptionPane.YES_NO_OPTION);
 					if(mensaje == JOptionPane.YES_OPTION) {
-						//TODO problema en la funcion borrar planta, creo que se soluciono volver a ver
+						//Problema en la funcion borrar planta
 						try {
-							datos.mapa.borrarPlanta(plantas.get(tabla.getSelectedRow()));
 							for (Ruta ruta : datos.mapa.getRutas()) {
 								if (ruta.getInicio().equals(plantas.get(tabla.getSelectedRow())) || ruta.getFin().equals(plantas.get(tabla.getSelectedRow()))) {
 									datos.mapa.borrarRuta(ruta);;
 								}
+								datos.mapa.borrarPlanta(plantas.get(tabla.getSelectedRow()));
 							}							
 						} catch (Exception e2) {
 							new JOptionPane("Error al borrar una planta.");
 						}
-						
 						
 						new InterfazPlanta(datos, datos.mapa.getPlantas());
 						dispose();

@@ -22,6 +22,7 @@ import isi.died.tp.dominio.Insumo;
 import isi.died.tp.interfaz.TipoBusquedaInsumo;
 
 public class BuscarInsumo extends JFrame{
+
 	private JPanel pNombre;
 	private JPanel pCuerpo;
 	private JLabel lNombreEmpresa;
@@ -257,54 +258,63 @@ public class BuscarInsumo extends JFrame{
 					ArrayList<Insumo> lista = new ArrayList<Insumo>();
 					ArrayList<Insumo> listaAux;
 					if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.NOMBRE) {
-						if (rbAsc.isSelected()) {
-							//TODO Error Busqueda por Nombre Ascendente
-							listaAux = new ArrayList<Insumo>(datos.mapa.listarXnombreAce());
-						} else {
-							//TODO Error Busqueda por Nombre Descendente
-							listaAux = new ArrayList<Insumo>(datos.mapa.listarXnombreDec());
-						}
-						for (Insumo insumo : listaAux) {
-							if (insumo.getNombre().contains(tfNombre.getText())) {
-								lista.add(insumo);
+						try {
+							
+							if (rbAsc.isSelected()) {
+								//TODO Error Busqueda por Nombre Ascendente
+								listaAux = new ArrayList<Insumo>(datos.mapa.listarXnombreAce());
+							} else {
+								//TODO Error Busqueda por Nombre Descendente
+								listaAux = new ArrayList<Insumo>(datos.mapa.listarXnombreDec());
 							}
+							for (Insumo insumo : listaAux) {
+								if (insumo.getNombre().contains(tfNombre.getText())) {
+									lista.add(insumo);
+								}
+							}
+						} catch (Exception e2) {
+							JOptionPane.showMessageDialog(null, "Error al realizar la busqueda");
 						}
 					} else if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.COSTO){
-						Double costoMin = (tfCostoMin.getText().isEmpty()) ? Double.MIN_VALUE : Double.valueOf(tfCostoMin.getText());;
-						Double costoMax = (tfCostoMax.getText().isEmpty()) ? Double.MAX_VALUE : Double.valueOf(tfCostoMax.getText());
-						if (rbAsc.isSelected()) {
-							//Busqueda por Costo Ascendente
-							//TODO agregar try catch
-							listaAux = new ArrayList<Insumo>(datos.mapa.listarXprecioAce());
-						} else {
-							//Busqueda por Costo Descendente
-							//TODO agregar try catch
-							listaAux = new ArrayList<Insumo>(datos.mapa.listarXprecioDec());
-						}
-						for (Insumo insumo : listaAux) {
-							if(insumo.getCosto() >= costoMin && insumo.getCosto() <= costoMax) {
-								lista.add(insumo);
+						try {
+							Double costoMin = (tfCostoMin.getText().isEmpty()) ? Double.MIN_VALUE : Double.valueOf(tfCostoMin.getText());;
+							Double costoMax = (tfCostoMax.getText().isEmpty()) ? Double.MAX_VALUE : Double.valueOf(tfCostoMax.getText());
+							if (rbAsc.isSelected()) {
+								//Busqueda por Costo Ascendente
+								listaAux = new ArrayList<Insumo>(datos.mapa.listarXprecioAce());
+							} else {
+								//Busqueda por Costo Descendente
+								listaAux = new ArrayList<Insumo>(datos.mapa.listarXprecioDec());
 							}
+							for (Insumo insumo : listaAux) {
+								if(insumo.getCosto() >= costoMin && insumo.getCosto() <= costoMax) {
+									lista.add(insumo);
+								}
+							}
+							insumos = lista;							
+						} catch (Exception e2) {
+							JOptionPane.showMessageDialog(null, "Error al realizar la busqueda");
 						}
-						insumos = lista;
 					} else if (cbTipoBusqueda.getSelectedItem() == TipoBusquedaInsumo.STOCK) {
-						Double stockMin = (tfStockMin.getText().isEmpty()) ? Double.MIN_VALUE : Double.valueOf(tfStockMin.getText());
-						Double stockMax = (tfStockMax.getText().isEmpty()) ? Double.MAX_VALUE : Double.valueOf(tfStockMax.getText());
-						if (rbAsc.isSelected()) {
-							//Busqueda por Stock Ascendente
-							//TODO agregar try catch
-							listaAux = new ArrayList<Insumo>(datos.mapa.listarXcantidadStockAce());
-						} else {
-							//Busqueda por Stock Descendente
-							//TODO agregar try catch
-							listaAux = new ArrayList<Insumo>(datos.mapa.listarXcantidadStockDec());
-						}
-						for (Insumo insumo : listaAux) {
-							if(insumo.getCosto() >= stockMin && insumo.getCosto() <= stockMax) {
-								lista.add(insumo);
+						try {
+							Double stockMin = (tfStockMin.getText().isEmpty()) ? Double.MIN_VALUE : Double.valueOf(tfStockMin.getText());
+							Double stockMax = (tfStockMax.getText().isEmpty()) ? Double.MAX_VALUE : Double.valueOf(tfStockMax.getText());
+							if (rbAsc.isSelected()) {
+								//Busqueda por Stock Ascendente
+								listaAux = new ArrayList<Insumo>(datos.mapa.listarXcantidadStockAce());
+							} else {
+								//Busqueda por Stock Descendente
+								listaAux = new ArrayList<Insumo>(datos.mapa.listarXcantidadStockDec());
 							}
+							for (Insumo insumo : listaAux) {
+								if(insumo.getCosto() >= stockMin && insumo.getCosto() <= stockMax) {
+									lista.add(insumo);
+								}
+							}
+							insumos = lista;
+						} catch (Exception e2) {
+							JOptionPane.showMessageDialog(null, "Error al realizar la busqueda");
 						}
-						insumos = lista;
 					}
 					new InterfazInsumo(datos, insumos);
 					dispose();
@@ -322,7 +332,7 @@ public class BuscarInsumo extends JFrame{
 		bAtrasBusqueda.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				InterfazInsumo interfazInsumo = new InterfazInsumo(datos, new ArrayList<Insumo>(datos.mapa.getInsumos().inOrden()));
+				new InterfazInsumo(datos, new ArrayList<Insumo>(datos.mapa.getInsumos().inOrden()));
 				dispose();
 			}
 		});

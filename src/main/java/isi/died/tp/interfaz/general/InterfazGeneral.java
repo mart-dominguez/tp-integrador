@@ -31,7 +31,6 @@ public class InterfazGeneral extends JFrame{
 	private JTable tablaPlanta, tablaInsumos, tablaCamiones, tablaSoluccion;
 	private JScrollPane scrollPanePlanta, scrollPaneInsumos, scrollPaneCamiones, scrollPaneSolucion;
 	private JButton bAtras, bVer, bSolucion;
-//	private JComboBox<Planta> cbPlanta1, cbPlanta2;
 	private Color c0;
 	private Color c1;
 	private Color c2;

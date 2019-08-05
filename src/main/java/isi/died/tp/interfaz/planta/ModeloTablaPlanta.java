@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import isi.died.tp.dominio.Planta;
 
 public class ModeloTablaPlanta extends DefaultTableModel {
+
 	final String[] columnNames = { "ID", "Nombre", "Costo total"};
 	final Object[][] data;
 	private int cantPlantas;

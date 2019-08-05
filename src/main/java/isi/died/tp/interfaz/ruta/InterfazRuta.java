@@ -15,11 +15,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import isi.died.tp.datos.Datos;
-import isi.died.tp.dominio.Planta;
 import isi.died.tp.dominio.Ruta;
 import isi.died.tp.interfaz.Menu;
 
-public class InterfazRuta extends JFrame{ //TODO Terminar
+public class InterfazRuta extends JFrame{
 	
 	private JPanel pNombre;
 	private JPanel pCuerpo;
@@ -109,9 +108,8 @@ public class InterfazRuta extends JFrame{ //TODO Terminar
 		bCrear.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				Planta planta = new Planta();
-//				new EditarPlanta(datos, planta, false);
-//				dispose();
+				new EditarRuta(datos, new Ruta(), false);
+				dispose();
 			}
 		});
 		bCrear.setBounds(380, 10, 85, 35);
@@ -127,9 +125,8 @@ public class InterfazRuta extends JFrame{ //TODO Terminar
 				if(tabla.getSelectedRow() < 0) {
 					JOptionPane.showMessageDialog(null, "Seleccione una ruta en la tabla para que pueda ser modificada.");
 				} else {
-					//TODO falta
-//					new EditarPlanta(datos, rutas.get(tabla.getSelectedRow()), true);
-//					dispose();
+					new EditarRuta(datos, rutas.get(tabla.getSelectedRow()), true);
+					dispose();
 				}
 			}
 		});
@@ -146,11 +143,16 @@ public class InterfazRuta extends JFrame{ //TODO Terminar
 				if(tabla.getSelectedRow() < 0) {
 					JOptionPane.showMessageDialog(null, "Seleccione la ruta que desea eliminar.");
 				} else {
-					int mensaje = new JOptionPane().showConfirmDialog(null, "¿Estás seguro de que desea eliminar la ruta?", "Mensaje", JOptionPane.YES_NO_OPTION);
+					int mensaje = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que desea eliminar la ruta?", "Mensaje", JOptionPane.YES_NO_OPTION);
 					if(mensaje == JOptionPane.YES_OPTION) {
-						//TODO Eliminar Ruta
-//						new InterfazRuta(datos, ....);
-//						dispose();
+						//Eliminar Ruta
+						try {
+							datos.mapa.borrarRuta(rutas.remove(tabla.getSelectedRow()));
+						} catch (Exception e2) {
+							JOptionPane.showConfirmDialog(null, "Error al eliminar la ruta");
+						}
+						new InterfazRuta(datos, datos.mapa.getRutas());
+						dispose();
 					}
 				}
 			}

@@ -16,14 +16,12 @@ public class Datos {
 	public Mapa mapa;
 	public ArrayList<Pedido> pedidos;
 	public ArrayList<Planta> plantas;
-//	public ArrayList<Ruta> rutas;
 	private ArrayList<Stock> stocks1, stocks2, stocks3;
 	private Insumo i1, i2, i3;
 	
 	public Datos() {
 		pedidos = new ArrayList<Pedido>();
 		plantas = new ArrayList<Planta>();
-//		rutas = new ArrayList<Ruta>();
 		stocks1 = new ArrayList<Stock>();
 		stocks2 = new ArrayList<Stock>();
 		stocks3 = new ArrayList<Stock>();

@@ -144,13 +144,13 @@ public class EditarPlanta extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Guardo Planta
-				if(new JOptionPane().showConfirmDialog(null, "¿Desea cambiar los datos del insumo?", "Mensaje", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				if(JOptionPane.showConfirmDialog(null, "¿Desea cambiar los datos de la Planta?", "Mensaje", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					planta.setNombre(tfNombre.getText());
 					if (!b) {
 						try {
 							datos.mapa.addNodo(planta);							
 						} catch (Exception e2) {
-							JOptionPane.showMessageDialog(null, "Problema al agregar una planta, comuniquese con el servicio técnico.");
+							JOptionPane.showMessageDialog(null, "Problema al agregar la planta, comuniquese con el servicio técnico.");
 						}
 					}
 					new InterfazPlanta(datos, datos.mapa.getPlantas());
