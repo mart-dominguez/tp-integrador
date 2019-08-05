@@ -302,7 +302,6 @@ public class Mapa extends Grafo<Planta> {
 		List<Planta> buscopia = null;
 		if (!buscados.isEmpty()) {
 			if (!aby.isEmpty()) {
-
 				for (Planta planta : aby) {
 					marcopia = marcados.stream().collect(Collectors.toList());
 					buscopia = buscados.stream().collect(Collectors.toList());
