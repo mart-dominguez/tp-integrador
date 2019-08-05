@@ -135,7 +135,7 @@ public class InterfazLogistica extends JFrame{
 					//TODO Error, Mostrar Plantas con insumo faltante y mejor camino desde acopio a puerto final
 					
 					mg.remarcarNodos(datos.mapa.necesitaInsumo(insumos.get(tabla.getSelectedRowCount())));
-					repaint();
+					mg.repaint();
 				}
 			}
 		});

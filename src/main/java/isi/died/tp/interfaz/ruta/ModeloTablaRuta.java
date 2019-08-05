@@ -20,9 +20,9 @@ public class ModeloTablaRuta extends DefaultTableModel {
 		for (Ruta ruta : rutas) {
 			data[i][0] = ruta.getInicio().getValor().getNombre();
 			data[i][1] = ruta.getFin().getValor().getNombre();
-			data[i][2] = ruta.getDistancia();
-			data[i][3] = ruta.getDuracion();
-			data[i][4] = ruta.getPesoMax();
+			data[i][2] = ruta.getDistancia() + " Km";
+			data[i][3] = ruta.getDuracion() + " min";
+			data[i][4] = ruta.getPesoMax() + " Kg";
 			i++;
 		}
 	}

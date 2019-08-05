@@ -271,7 +271,9 @@ public class BuscarInsumo extends JFrame{
 								if (insumo.getNombre().contains(tfNombre.getText())) {
 									lista.add(insumo);
 								}
+								lista.add(insumo);
 							}
+							lista = listaAux;
 						} catch (Exception e2) {
 							JOptionPane.showMessageDialog(null, "Error al realizar la busqueda");
 						}

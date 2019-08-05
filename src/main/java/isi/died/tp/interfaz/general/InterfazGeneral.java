@@ -218,7 +218,7 @@ public class InterfazGeneral extends JFrame{
 					JOptionPane.showMessageDialog(null, "Seleccione un planta y un camión para generar la solución.");
 				} else {
 					//TODO Mostrar lista de pedidos, error
-					try {
+//					try {
 						pedidos = new ArrayList<Pedido>(datos.mapa.vehiculoOptimo(vehiculos.get(tablaCamiones.getSelectedRow())));
 						ModeloTablaPedido mtp = new ModeloTablaPedido(pedidos);						
 						tablaSoluccion = new JTable(mtp);
@@ -241,9 +241,9 @@ public class InterfazGeneral extends JFrame{
 						pCuerpo.add(scrollPaneSolucion);
 						scrollPaneSolucion.repaint();
 						repaint();
-					} catch (Exception e2) {
-						JOptionPane.showMessageDialog(null, "Error al cargar la tabla de pedidos, comuniquese con servicio técnico");
-					}
+//					} catch (Exception e2) {
+//						JOptionPane.showMessageDialog(null, "Error al cargar la tabla de pedidos, comuniquese con servicio técnico");
+//					}
 				}
 			}
 		});

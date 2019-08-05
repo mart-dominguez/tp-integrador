@@ -127,10 +127,8 @@ public class EditarRuta extends JFrame{
 				cbPlanta2.setForeground(c3);
 				plantas = new ArrayList<Planta>(datos.mapa.getPlantas());
 				for (Planta planta : plantas) {
-					if(!b) {	//TODO corregir, no funciona 
-						if(planta.equals(ruta.getInicio())) cbPlanta1.setSelectedItem(planta);
-						if(planta.equals(ruta.getFin())) cbPlanta2.setSelectedItem(planta);
-					}
+					if(planta.equals(ruta.getInicio())) cbPlanta1.setSelectedItem(planta);
+					if(planta.equals(ruta.getFin())) cbPlanta2.setSelectedItem(planta);
 					cbPlanta1.addItem(planta);
 					cbPlanta2.addItem(planta);
 				}
