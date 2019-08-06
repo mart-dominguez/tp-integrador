@@ -4,11 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArbolVacio<E extends Comparable<E>> extends Arbol<E> {
-
-	public ArbolVacio(){
-		this.valor=null;
+	@Override
+	public E buscar(E valor) {
+		return null;
 	}
-	
+
+	public String toString() {
+		return "null";
+	}
+
+	public ArbolVacio() {
+		this.valor = null;
+	}
+
 	@Override
 	public List<E> preOrden() {
 		return new ArrayList<E>();
@@ -56,12 +64,12 @@ public class ArbolVacio<E extends Comparable<E>> extends Arbol<E> {
 
 	@Override
 	public void agregar(E a) {
-		// TODO Auto-generated method stub
-		
+
 	}
-        @Override
+
+	@Override
 	public int profundidad() {
-		return 0;
+		return -1;
 	}
 
 	@Override
@@ -78,7 +86,5 @@ public class ArbolVacio<E extends Comparable<E>> extends Arbol<E> {
 	public boolean esLleno() {
 		return false;
 	}
-
-
 
 }

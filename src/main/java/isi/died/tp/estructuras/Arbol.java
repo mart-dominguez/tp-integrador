@@ -4,8 +4,9 @@ import java.util.List;
 
 public abstract class Arbol<E extends Comparable<E>> {
 
-
 	protected E valor;
+
+	public abstract E buscar(E val);
 
 	public abstract List<E> preOrden();
 
@@ -20,11 +21,11 @@ public abstract class Arbol<E extends Comparable<E>> {
 	public abstract Arbol<E> izquierdo();
 
 	public abstract Arbol<E> derecho();
-	
+
 	public abstract boolean contiene(E unValor);
 
 	public abstract boolean equals(Arbol<E> unArbol);
-	
+
 	public abstract void agregar(E a);
 
 	public abstract int profundidad();
@@ -35,5 +36,4 @@ public abstract class Arbol<E extends Comparable<E>> {
 
 	public abstract boolean esLleno();
 
-	
 }
