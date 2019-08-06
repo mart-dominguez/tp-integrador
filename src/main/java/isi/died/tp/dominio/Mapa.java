@@ -374,7 +374,7 @@ public class Mapa extends Grafo<Planta> {
 
 	public List<Planta> caminoMenorDuracion(Insumo i) {
 		List<List<Planta>> caminos = this.camino(i);
-		List<Planta> result = null;
+		List<Planta> result = new ArrayList<Planta>();
 		Double dur = Double.MAX_VALUE;
 		for (List<Planta> list : caminos) {
 			if (dur > this.durCamino(list)) {
