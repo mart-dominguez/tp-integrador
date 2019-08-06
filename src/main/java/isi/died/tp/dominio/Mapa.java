@@ -275,7 +275,7 @@ public class Mapa extends Grafo<Planta> {
 
 	public List<Planta> caminoMenorDistancia(Insumo i) {
 		List<List<Planta>> caminos = this.camino(i);
-		List<Planta> result = null;
+		List<Planta> result = new ArrayList<Planta>();
 		Double dist = Double.MAX_VALUE;
 		for (List<Planta> list : caminos) {
 			if (dist > this.distCamino(list)) {
@@ -292,7 +292,12 @@ public class Mapa extends Grafo<Planta> {
 		Planta inicial = this.recorridoTopologico().get(0);
 		marcados.add(inicial);
 		List<Planta> necesitanInsumo = this.necesitaInsumo(i);
-		this.camino(inicial, marcados, necesitanInsumo, listas);
+		if(!necesitanInsumo.isEmpty()) {
+			if(necesitanInsumo.contains(inicial)) {
+				necesitanInsumo.remove(inicial);
+			}
+			this.camino(inicial, marcados, necesitanInsumo, listas);
+		}
 		return listas;
 	}
 

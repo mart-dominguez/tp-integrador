@@ -119,19 +119,21 @@ public class MapaGrafico extends JPanel implements MouseListener, MouseMotionLis
 	}
 	
 	public void remarcarNodos(List<Planta> l) {
-		if (nodosMarc) {
-			this.desmarcarNodos();
-			this.remarcarNodos(l);
-		}
-		else {
-			for (PlantaG plantaG : this.plantasG) {
-				if(l.contains(plantaG.getP())) {
-					plantaG.marcar();
-				}
+		if(!l.isEmpty()) {
+			if (nodosMarc) {
+				this.desmarcarNodos();
+				this.remarcarNodos(l);
 			}
-			nodosMarc = true;
+			else {
+				for (PlantaG plantaG : this.plantasG) {
+					if(l.contains(plantaG.getP())) {
+						plantaG.marcar();
+					}
+				}
+				nodosMarc = true;
+			}
+			repaint();
 		}
-		repaint();
 	}
 	
 	public void desmarcarRutas() {
@@ -143,28 +145,30 @@ public class MapaGrafico extends JPanel implements MouseListener, MouseMotionLis
 	}
 	
 	public void remarcarRutas(List<Planta> p) {
-		if (rutMarc) {
-			this.desmarcarRutas();
-			this.remarcarRutas(p);
-		} else {
-			Queue<Planta> lista = new LinkedList<Planta>();
-			lista.addAll(p);
-			Planta inicio = null;
-			Planta fin = null;
-			while(!lista.isEmpty()) {
-				fin = lista.poll();
-				if(fin != null) {
-					for (RutaG rutaG : rutasG) {
-						if (rutaG.getInicial().getP().equals(inicio) && rutaG.getFfinal().getP().equals(fin)) {
-							rutaG.marcar();
+		if(!p.isEmpty()) {
+			if (rutMarc) {
+				this.desmarcarRutas();
+				this.remarcarRutas(p);
+			} else {
+				Queue<Planta> lista = new LinkedList<Planta>();
+				lista.addAll(p);
+				Planta inicio = null;
+				Planta fin = null;
+				while(!lista.isEmpty()) {
+					fin = lista.poll();
+					if(fin != null) {
+						for (RutaG rutaG : rutasG) {
+							if (rutaG.getInicial().getP().equals(inicio) && rutaG.getFfinal().getP().equals(fin)) {
+								rutaG.marcar();
+							}
 						}
 					}
+					inicio = fin;
 				}
-				inicio = fin;
+				rutMarc = true;
 			}
-			rutMarc = true;
+			repaint();
 		}
-		repaint();
 	}
 
 	private void armar(Mapa m) {
