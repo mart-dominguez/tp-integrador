@@ -134,6 +134,9 @@ public class MapaGrafico extends JPanel implements MouseListener, MouseMotionLis
 			}
 			repaint();
 		}
+		else {
+			this.desmarcarNodos();
+		}
 	}
 	
 	public void desmarcarRutas() {
@@ -168,6 +171,9 @@ public class MapaGrafico extends JPanel implements MouseListener, MouseMotionLis
 				rutMarc = true;
 			}
 			repaint();
+		}
+		else {
+			this.desmarcarRutas();
 		}
 	}
 
