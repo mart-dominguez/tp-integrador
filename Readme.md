@@ -1,2 +1,2 @@
 # Integrantes del grupo
-## Romang Ignacio Martin - Cortina Facundo Javier
+## Romang Ignacio Martin - Cortina Facundo Javier - Herrmann Cristian Andres
