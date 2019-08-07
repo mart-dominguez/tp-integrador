@@ -1,10 +1,7 @@
 package isi.died.tp.datos;
 
-import java.util.ArrayList;
-
 import isi.died.tp.dominio.Insumo;
 import isi.died.tp.dominio.Mapa;
-import isi.died.tp.dominio.Pedido;
 import isi.died.tp.dominio.Planta;
 import isi.died.tp.dominio.Ruta;
 import isi.died.tp.dominio.Stock;
@@ -14,22 +11,18 @@ import isi.died.tp.estructuras.Vertice;
 
 public class Datos {
 	public Mapa mapa;
-	public ArrayList<Pedido> pedidos;
 	public Planta planta1, planta2, planta3, planta4;
 	private Stock stock1, stock2, stock3, stock4, stock5, stock6;
 	private Insumo i1, i2, i3;
 	
-	public Datos() {
-		pedidos = new ArrayList<Pedido>();	
+	public Datos() {	
 		
 		mapa = new Mapa();
-		
 		
 		cargarInsumos();
 		cargarVehiculos();
 		cargarPlantas();
 		cargarRutas();
-		cargarPedidos();
 	}
 
 
@@ -86,17 +79,9 @@ public class Datos {
 	private void cargarRutas() {
 		mapa.nuevaRuta(new Ruta(new Vertice<Planta>(planta1), new Vertice<Planta>(planta2), 250.5, 180.0, 7000.0));
 		mapa.nuevaRuta(new Ruta(new Vertice<Planta>(planta2), new Vertice<Planta>(planta3), 190.0, 145.0, 6500.0));
-		mapa.nuevaRuta(new Ruta(new Vertice<Planta>(planta4), new Vertice<Planta>(planta3), 105.0, 355.0, 8000.0));
+		mapa.nuevaRuta(new Ruta(new Vertice<Planta>(planta3), new Vertice<Planta>(planta4), 105.0, 355.0, 8000.0));
+		mapa.nuevaRuta(new Ruta(new Vertice<Planta>(planta2), new Vertice<Planta>(planta4), 500.0, 200.0, 3000.0));
 	}
 	
-	private void cargarPedidos() {
-		mapa.agregarPedido(new Pedido(mapa.buscarInsumoNombre("Insumo01"), 14, planta1, planta3));
-		mapa.agregarPedido(new Pedido(mapa.buscarInsumoNombre("Insumo02"), 36, planta3, planta4));
-		mapa.agregarPedido(new Pedido(mapa.buscarInsumoNombre("Insumo01"), 27, planta4, planta2));
-		mapa.agregarPedido(new Pedido(mapa.buscarInsumoNombre("Insumo02"), 10, planta1, planta4));
-		mapa.agregarPedido(new Pedido(mapa.buscarInsumoNombre("Insumo03"), 34, planta3, planta4));
-		mapa.agregarPedido(new Pedido(mapa.buscarInsumoNombre("Insumo02"), 24, planta2, planta3));
-		
-	}
 	
 }

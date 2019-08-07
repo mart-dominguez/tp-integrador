@@ -18,9 +18,9 @@ import isi.died.tp.dominio.Vehiculo;
 import isi.died.tp.interfaz.camion.InterfazVehiculo;
 import isi.died.tp.interfaz.general.InterfazGeneral;
 import isi.died.tp.interfaz.insumo.InterfazInsumo;
+import isi.died.tp.interfaz.logistica.InterfazLogistica;
 import isi.died.tp.interfaz.planta.InterfazPlanta;
 import isi.died.tp.interfaz.ruta.InterfazRuta;
-import isi.died.tp.logistica.InterfazLogistica;
 
 public class Menu extends JFrame {
 	private JPanel pNombre;

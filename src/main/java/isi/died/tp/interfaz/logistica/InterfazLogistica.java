@@ -1,4 +1,4 @@
-package isi.died.tp.logistica;
+package isi.died.tp.interfaz.logistica;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -26,7 +26,7 @@ public class InterfazLogistica extends JFrame{
 	private JLabel lLogistica, lInsumos;
 	private JTable tabla;
 	private JScrollPane scrollPane;
-	private JButton bAtras, bVer;
+	private JButton bAtras, bVer, bDistancia, bDuracion;
 	private Color c0;
 	private Color c1;
 	private Color c2;
@@ -104,7 +104,7 @@ public class InterfazLogistica extends JFrame{
 		tabla.setFillsViewportHeight(true);
 		tabla.setLayout(null);
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(560, 40, 290, 380);
+		scrollPane.setBounds(560, 40, 290, 280);
 		scrollPane.setBackground(c0);
 		scrollPane.setVisible(true);
 		scrollPane.setViewportView(tabla);
@@ -114,7 +114,7 @@ public class InterfazLogistica extends JFrame{
 		lVerInsumo = new JLabel("<html>Elija un insumo para ver que plantas necesitan de este.</html>");
 		lVerInsumo.setFont(new Font("Tahoma", 0, 14));
 		lVerInsumo.setForeground(c0);
-		lVerInsumo.setBounds(565, 420, 180, 60);
+		lVerInsumo.setBounds(565, 320, 180, 60);
 		pCuerpo.add(lVerInsumo);
 		//Boton Seleccionar
 		bVer = new JButton("Ver");
@@ -127,20 +127,64 @@ public class InterfazLogistica extends JFrame{
 				if(tabla.getSelectedRow() < 0) {
 					JOptionPane.showMessageDialog(null, "Seleccione un insumo en la tabla para poder visualizar las plantas que requieren stock del mismo.");
 				} else {
-					//Mostrar Plantas con insumo faltante y mejor camino desde acopio a puerto final
-					//TODO Error al mostrar los caminos
-
+					//Mostrar Plantas con insumo faltante
 					mg.remarcarNodos(datos.mapa.necesitaInsumo(insumos.get(tabla.getSelectedRow())));
-					List<Planta> ps = datos.mapa.caminoMenorDuracion(insumos.get(tabla.getSelectedRow()));
-					mg.remarcarRutas(ps);
-					repaint();
 					mg.repaint();
 				}
 			}
 		});
-		bVer.setBounds(750, 430, 100, 35);
+		bVer.setBounds(750, 330, 100, 35);
 		pCuerpo.add(bVer);
-				
+		
+		//Ver Insumo
+		lVerInsumo = new JLabel("<html>Mostrar mejor camino por:</html>");
+		lVerInsumo.setFont(new Font("Tahoma", 1, 16));
+		lVerInsumo.setForeground(c0);
+		lVerInsumo.setBounds(565, 390, 180, 60);
+		pCuerpo.add(lVerInsumo);
+		
+		//Boton Distancia
+		bDistancia = new JButton("Distancia");
+		bDistancia.setBackground(c2);
+		bDistancia.setFont(new Font("Tahoma", 0, 14));
+		bDistancia.setForeground(c0);
+		bDistancia.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(tabla.getSelectedRow() < 0) {
+					JOptionPane.showMessageDialog(null, "Seleccione un insumo en la tabla para poder visualizar el mejor camino.");
+				} else {
+					//Mostrar Plantas con insumo faltante y mejor camino desde acopio a puerto final
+					mg.remarcarNodos(datos.mapa.necesitaInsumo(insumos.get(tabla.getSelectedRow())));
+					mg.remarcarRutas(datos.mapa.caminoMenorDistancia(insumos.get(tabla.getSelectedRow())));
+					mg.repaint();
+				}
+			}
+		});
+		bDistancia.setBounds(700, 400, 100, 35);
+		pCuerpo.add(bDistancia);
+		
+		bDuracion = new JButton("Duración");
+		bDuracion.setBackground(c2);
+		bDuracion.setFont(new Font("Tahoma", 0, 14));
+		bDuracion.setForeground(c0);
+		bDuracion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(tabla.getSelectedRow() < 0) {
+					JOptionPane.showMessageDialog(null, "Seleccione un insumo en la tabla para poder visualizar el mejor camino.");
+				} else {
+					//Mostrar Plantas con insumo faltante y mejor camino desde acopio a puerto final
+					mg.remarcarNodos(datos.mapa.necesitaInsumo(insumos.get(tabla.getSelectedRow())));
+					mg.remarcarRutas(datos.mapa.caminoMenorDuracion(insumos.get(tabla.getSelectedRow())));
+					mg.repaint();
+				}
+			}
+		});
+		bDuracion.setBounds(700, 440, 100, 35);
+		pCuerpo.add(bDuracion);
+		
+		
 		//Boton Atrás
 		bAtras = new JButton("Atrás");
 		bAtras.setBackground(c2);

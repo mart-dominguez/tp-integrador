@@ -1,4 +1,4 @@
-package isi.died.tp.logistica;
+package isi.died.tp.interfaz.logistica;
 
 import java.util.ArrayList;
 
