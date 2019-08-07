@@ -209,7 +209,7 @@ public class EditarRuta extends JFrame{
 		bGuardar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Guardo Planta
+				//Guardo Ruta
 				if(JOptionPane.showConfirmDialog(null, "¿Desea cambiar los datos de la Ruta?", "Mensaje", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					try {
 						if(!b) {

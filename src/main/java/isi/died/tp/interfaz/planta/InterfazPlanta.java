@@ -28,7 +28,7 @@ public class InterfazPlanta extends JFrame{
 	private JLabel lPlantas;
 	private JTable tabla;
 	private JScrollPane scrollPane;
-	private JButton bCrear;
+	private JButton bCrear, bAgregarStock;
 	private JButton bEditar;
 	private JButton bEliminar;
 	private JButton bAtras;
@@ -100,6 +100,24 @@ public class InterfazPlanta extends JFrame{
 		scrollPane.getViewport().setView(tabla);
 		pCuerpo.add(scrollPane);
 		
+		
+		bAgregarStock = new JButton("Agregar Stock");
+		bAgregarStock.setBackground(c2);
+		bAgregarStock.setFont(new Font("Tahoma", 0, 14));
+		bAgregarStock.setForeground(c0);
+		bAgregarStock.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(tabla.getSelectedRow() < 0) {
+					JOptionPane.showMessageDialog(null, "Seleccione una planta para agregar Stock.");
+				} else {
+					new AgregarStock(datos, plantas.get(tabla.getSelectedRow()));
+					dispose();					
+				}
+			}
+		});
+		bAgregarStock.setBounds(245, 10, 130, 35);
+		pCuerpo.add(bAgregarStock);
 		
 		bCrear = new JButton("Crear");
 		bCrear.setBackground(c2);

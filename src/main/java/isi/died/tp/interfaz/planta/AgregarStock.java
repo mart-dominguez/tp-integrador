@@ -7,41 +7,38 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import isi.died.tp.datos.Datos;
-import isi.died.tp.dominio.Insumo;
 import isi.died.tp.dominio.Planta;
-import isi.died.tp.dominio.UnidadMedida;
-import isi.died.tp.dominio.Vehiculo;
-import isi.died.tp.interfaz.camion.InterfazVehiculo;
-import isi.died.tp.interfaz.insumo.EditarInsumo;
-import isi.died.tp.interfaz.insumo.InterfazInsumo;
+import isi.died.tp.dominio.Stock;
+import isi.died.tp.dominio.Insumo;
 
-public class EditarPlanta extends JFrame{
+public class AgregarStock extends JFrame{
 	private JPanel pNombre;
 	private JPanel pCuerpo;
 	private JLabel lNombreEmpresa;
 	private JLabel lTitulo;
 	private JLabel lPlanta;
-	private JLabel lId, lNombre;
-	private JTextField tfId, tfNombre;
+	private JLabel lId, lInsumo, lCantidad, lPuntoPedido;
+	private JComboBox<Insumo> cbInsumo;
+	private JTextField tfId, tfCantidad, tfPuntoPedido;
 	private JButton bGuardar, bCancelar;
+	private Stock stock;
 	
 	private Color c0;
 	private Color c1;
 	private Color c2;
 	private Color c3;
 
-	public EditarPlanta(Datos datos, Planta planta, boolean b) {
+	public AgregarStock(Datos datos, Planta planta) {
+		
+		stock = new Stock();
 		
 		c0 = new Color(232, 232, 232);
 		c1 = new Color(85, 136, 163);
@@ -77,7 +74,7 @@ public class EditarPlanta extends JFrame{
 		pCuerpo.setBackground(c1);
 		this.add(pCuerpo);
 
-		lPlanta = new JLabel("Planta: ");
+		lPlanta = new JLabel("Planta: " + planta.getNombre());
 		lPlanta.setFont(new Font("Tahoma", 1, 24));
 		lPlanta.setForeground(c0);
 		lPlanta.setBounds(20, 10, 150, 30);
@@ -90,31 +87,66 @@ public class EditarPlanta extends JFrame{
 		lId.setBounds(30, 50, 150, 30);
 		pCuerpo.add(lId);
 		
-		tfId = new JTextField(planta.getId().toString());
+		tfId = new JTextField(stock.getId().toString());
 		tfId.setEditable(false);
-		tfId.setBounds(120, 50, 200, 24);
+		tfId.setBounds(190, 50, 200, 24);
 		tfId.setBackground(c0);
 		tfId.setFont(new Font("Tahoma", 0, 14));
 		tfId.setForeground(c3);
 		tfId.setHorizontalAlignment(JTextField.RIGHT);
 		pCuerpo.add(tfId);
 		
-		//Nombre
-		lNombre = new JLabel("Nombre: ");
-		lNombre.setFont(new Font("Tahoma", 1, 16));
-		lNombre.setForeground(c0);
-		lNombre.setBounds(30, 90, 150, 30);
-		pCuerpo.add(lNombre);
+		//Insumo
+		lInsumo = new JLabel("Insumo: ");
+		lInsumo.setFont(new Font("Tahoma", 1, 16));
+		lInsumo.setForeground(c0);
+		lInsumo.setBounds(30, 90, 150, 30);
+		pCuerpo.add(lInsumo);
 		
-		tfNombre = new JTextField(planta.getNombre());
-		tfNombre.setBounds(120, 90, 200, 24);
-		tfNombre.setBackground(c0);
-		tfNombre.setFont(new Font("Tahoma", 0, 14));
-		tfNombre.setForeground(c3);
-		tfNombre.setHorizontalAlignment(JTextField.RIGHT);
-		pCuerpo.add(tfNombre);
+		try {
+			cbInsumo = new JComboBox<Insumo>();
+			cbInsumo.setBounds(190, 90, 200, 24);
+			cbInsumo.setBackground(c0);
+			cbInsumo.setFont(new Font("Tahoma", 0, 14));
+			cbInsumo.setForeground(c3);
+			ArrayList<Insumo> insumos = new ArrayList<Insumo>(datos.mapa.getInsumos().inOrden());
+			for (Insumo insumo : insumos) {
+				cbInsumo.addItem(insumo);
+			}
+			pCuerpo.add(cbInsumo);			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error al cargar los insumos");
+		}
 		
+		//Cantidad
+		lCantidad = new JLabel("Cantidad: ");
+		lCantidad.setFont(new Font("Tahoma", 1, 16));
+		lCantidad.setForeground(c0);
+		lCantidad.setBounds(30, 130, 150, 30);
+		pCuerpo.add(lCantidad);
 		
+		tfCantidad = new JTextField();
+		tfCantidad.setBounds(190, 130, 200, 24);
+		tfCantidad.setBackground(c0);
+		tfCantidad.setFont(new Font("Tahoma", 0, 14));
+		tfCantidad.setForeground(c3);
+		tfCantidad.setHorizontalAlignment(JTextField.RIGHT);
+		pCuerpo.add(tfCantidad);
+		
+		//Punto de Pedido
+		lPuntoPedido = new JLabel("Punto de pedido: ");
+		lPuntoPedido.setFont(new Font("Tahoma", 1, 16));
+		lPuntoPedido.setForeground(c0);
+		lPuntoPedido.setBounds(30, 170, 150, 30);
+		pCuerpo.add(lPuntoPedido);
+		
+		tfPuntoPedido = new JTextField();
+		tfPuntoPedido.setBounds(190, 170, 200, 24);
+		tfPuntoPedido.setBackground(c0);
+		tfPuntoPedido.setFont(new Font("Tahoma", 0, 14));
+		tfPuntoPedido.setForeground(c3);
+		tfPuntoPedido.setHorizontalAlignment(JTextField.RIGHT);
+		pCuerpo.add(tfPuntoPedido);
 		
 		//Cancelar
 		bCancelar = new JButton("Cancelar");
@@ -139,18 +171,18 @@ public class EditarPlanta extends JFrame{
 		bGuardar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Guardo Planta
-				if(JOptionPane.showConfirmDialog(null, "¿Desea cambiar los datos de la Planta?", "Mensaje", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					planta.setNombre(tfNombre.getText());
-					if (!b) {
-						try {
-							datos.mapa.addNodo(planta);							
-						} catch (Exception e2) {
-							JOptionPane.showMessageDialog(null, "Problema al agregar la planta, comuniquese con el servicio técnico.");
-						}
-					}
-					new InterfazPlanta(datos, datos.mapa.getPlantas());
-					dispose();
+				//Guardo Stock
+				if(JOptionPane.showConfirmDialog(null, "¿Desea guardar el stock?", "Mensaje", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				try {
+					stock.setInsumo(datos.mapa.buscarInsumoNombre(((Insumo) cbInsumo.getSelectedItem()).getNombre()));
+					stock.setCantidad(Integer.valueOf(tfCantidad.getText()));
+					stock.setPuntoPedido(Integer.valueOf(tfPuntoPedido.getText()));
+					planta.addStock(stock);
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Problema al agregar el stock a la planta, comuniquese con el servicio técnico.");
+				}
+				new InterfazPlanta(datos, datos.mapa.getPlantas());
+				dispose();
 				}
 			}
 		});
@@ -159,5 +191,4 @@ public class EditarPlanta extends JFrame{
 		
 		this.setVisible(true);
 	}
-
 }
